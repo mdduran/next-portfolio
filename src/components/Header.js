@@ -1,14 +1,14 @@
-import { AppBar, Typography } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
-import * as React from "react";
-import theme from "../styles/theme";
+import { AppBar, Typography } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import * as React from 'react';
+import theme from '../styles/theme';
 
 const StyledAppBar = withStyles({
   root: {
     color: theme.palette.secondary,
     backgroundColor: theme.palette.primary,
-    zIndex: 1,
-  },
+    zIndex: 2
+  }
 })(AppBar);
 
 const Header = () => {

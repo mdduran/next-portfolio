@@ -1,6 +1,6 @@
-import { Typography } from "@material-ui/core";
-import styled from "styled-components";
-import * as React from "react";
+import { Typography } from '@material-ui/core';
+import styled from 'styled-components';
+import * as React from 'react';
 
 const Footer = () => {
   return (
