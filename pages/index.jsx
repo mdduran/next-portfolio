@@ -1,13 +1,11 @@
-import * as React from 'react';
-import Content from '../src/components/Content';
-import { initialState, reducer } from '../src/reducer';
-import { isMobile } from 'react-device-detect';
+import { Container, Paper } from '@material-ui/core';
 
 export default function Home() {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
   return (
     <>
-      <Content isMobile={isMobile} dispatch={dispatch} state={state} />
+      <Container>
+        <Paper>This is currently under construction.</Paper>
+      </Container>
     </>
   );
 }
