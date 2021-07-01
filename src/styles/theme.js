@@ -1,7 +1,6 @@
-import { createMuiTheme } from '@material-ui/core';
 import colors from './colors';
 
-const theme = createMuiTheme({
+const theme = {
   palette: {
     primary: {
       light: colors.zomp,
@@ -34,6 +33,6 @@ const theme = createMuiTheme({
       dark: colors.blackCoffee
     }
   }
-});
+};
 
 export default theme;

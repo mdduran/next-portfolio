@@ -8,6 +8,7 @@ const projectData = {
       accomplishments: 'First independent game released on the Google Play Store, uses Unreal Engine 4',
       splashImage: '',
       description: '',
+      website: 'https://laika-62929912.web.app/',
       downloadLink: 'https://play.google.com/store/apps/details?id=com.NightApparatus.Laika&hl=en_US&gl=US'
     },
     {
@@ -17,8 +18,7 @@ const projectData = {
       genre: 'Action, Adventure, Indie, RPG',
       accomplishments: 'First independent game released on Steam',
       splashImage: 'osmorrow.png',
-      description: '',
-      downloadLink: 'http://store.steampowered.com/app/758220/Osmorrow/?beta=0'
+      description: ''
     },
     {
       title: 'Step Symphony',

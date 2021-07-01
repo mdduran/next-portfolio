@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Grid, Paper, Typography, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@material-ui/core';
+import { Container, Grid, Paper, Typography, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import styled from 'styled-components';
 
@@ -13,6 +13,7 @@ const generate = (element) => {
 
 const Project = ({ title, yearDeveloped, platform, genre, accomplishments, splashImage, description, downloadLink, trailer }) => {
   return (
+    <Container fixed maxWidth="sm">
     <Paper style={{ width: '90vw' }}>
       <Grid container>
         <Grid item md>
@@ -33,7 +34,8 @@ const Project = ({ title, yearDeveloped, platform, genre, accomplishments, splas
           </List>
         </Grid>
       </Grid>
-    </Paper>
+      </Paper>
+      </Container>
   );
 };
 
