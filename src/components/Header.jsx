@@ -1,4 +1,5 @@
-import { AppBar, IconButton, Typography, Toolbar, Link as MLink } from '@material-ui/core';
+import { AppBar, ClickAwayListener, IconButton, Typography, Toolbar, Link as MLink } from '@material-ui/core';
+import ContactIcon from '@material-ui/icons/ContactMail';
 import MenuIcon from '@material-ui/icons/Menu';
 import FolderIcon from '@material-ui/icons/Folder';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
@@ -17,6 +18,14 @@ const StyledMLink = styled(MLink)`
 `;
 
 const Header = () => {
+  const [contactsOpen, setContactsOpen] = React.useState(false);
+  const handleOpen = () => {
+    setContactsOpen(true);
+  };
+  const handleClickAway = () => {
+    setContactsOpen(false);
+  }
+
   return (
     <AppBar position="static">
       <Toolbar>
@@ -35,23 +44,34 @@ const Header = () => {
           {!isMobile && (<>Projects</>)}
           </IconButton>
         </Link>
-        <div id="contacts">
-          <StyledMLink href="https://www.linkedin.com/in/mdduran" target="_blank">
-            <IconButton>
-              <LinkedInIcon />
-            </IconButton>
-          </StyledMLink>
-          <StyledMLink href="https://github.com/mdduran" target="_blank">
-            <IconButton>
-              <GitHubIcon aria-label="github icon" />
-            </IconButton>
-          </StyledMLink>
-          <StyledMLink href="mailto:marco.duran456@gmail.com" target="_blank">
-            <IconButton>
-              <EmailIcon />
-            </IconButton>
-          </StyledMLink>
-        </div>
+        <ClickAwayListener onClickAway={handleClickAway}>
+          <div id="contacts">
+            {contactsOpen ? (
+              <>
+              <StyledMLink href="https://www.linkedin.com/in/mdduran" target="_blank">
+                <IconButton>
+                  <LinkedInIcon />
+                </IconButton>
+              </StyledMLink>
+              <StyledMLink href="https://github.com/mdduran" target="_blank">
+                <IconButton>
+                  <GitHubIcon aria-label="github icon" />
+                </IconButton>
+              </StyledMLink>
+              <StyledMLink href="mailto:marco.duran456@gmail.com" target="_blank">
+                <IconButton>
+                  <EmailIcon />
+                </IconButton>
+                </StyledMLink>
+                </>
+            ) : (
+                <IconButton onClick={handleOpen}>
+                  <ContactIcon style={{ paddingRight: '0.25em' }} />
+                  {!isMobile && (<>Contact</>)}
+                </IconButton>
+            )}
+            </div>
+          </ClickAwayListener>
       </Toolbar>
     </AppBar>
   );
