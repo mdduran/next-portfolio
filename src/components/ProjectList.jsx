@@ -30,17 +30,40 @@ const StyledMenuText = styled.p`
   text-overflow: ellipsis;
 `;
 
-const renderGameRow = (props) => {
-  const { index } = props;
-  return <StyledSubMenuItem key={index + 1}><StyledMenuText>{gamesList[index].title}</StyledMenuText></StyledSubMenuItem>;
-};
+const ProjectList = ({ state, setProjectState }) => {
+  const setGameProject = (index) => {
+    setProjectState({ selectedProject: gamesList[index] });
+  };
+  const setSoftwareProject = (index) => {
+    setProjectState({ selectedProject: softwareList[index] });
+  };
+  const { selectedProject } = state;
+  const renderGameRow = (props) => {
+    const { index } = props;
+    return (
+      <>
+        {selectedProject && (
+          <StyledSubMenuItem key={index + 1} selected={selectedProject.title === gamesList[index].title} onClick={() => setGameProject(index)}>
+            <StyledMenuText>{gamesList[index].title}</StyledMenuText>
+          </StyledSubMenuItem>
+        )}
+      </>
+    );
+  };
 
-const renderSoftwareRow = (props) => {
-  const { index } = props;
-  return <StyledSubMenuItem key={index + gamesList.length + 2}><StyledMenuText>{softwareList[index].title}</StyledMenuText></StyledSubMenuItem>;
-};
+  const renderSoftwareRow = (props) => {
+    const { index } = props;
+    return (
+      <>
+        {selectedProject && (
+          <StyledSubMenuItem key={index + gamesList.length + 2} selected={selectedProject.title === softwareList[index].title} onClick={() => setSoftwareProject(index)}>
+            <StyledMenuText>{softwareList[index].title}</StyledMenuText>
+          </StyledSubMenuItem>
+        )}
+      </>
+    );
+  };
 
-const ProjectList = () => {
   return (
     <StyledWrapper>
       <MenuList>
