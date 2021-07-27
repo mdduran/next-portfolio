@@ -1,38 +1,50 @@
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { makeStyles, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import Header from '../src/components/Header';
-import theme from '../src/styles/theme';
 import { isMobile } from 'react-device-detect';
+import Head from 'next/head';
+import theme from '../src/styles/theme';
 
-const GlobalStyle = createGlobalStyle`
-  html {
-    height: 100%;
-    background-color: ${theme.palette.primary.main};
+const useStyles = makeStyles({
+  '@global': {
+    html: {
+      height: '100%',
+      backgroundColor: '#2b3b37',
+      fontFamily: "'Press Start 2P', cursive",
+      fontSize: 'medium'
+    },
+    body: {
+      padding: 0,
+      margin: 0
+    },
+    site: {
+      display: 'flex',
+      minHeight: '100vh',
+      flexDirection: 'column'
+    },
+    h1: {
+      fontSize: 'medium'
+    }
   }
-  body {
-    padding: 0;
-    margin: 0;
-  }
-  .site {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
-  header.MuiAppBar-root {
-      background-color: ${theme.palette.primary.main};
-  }
-`;
+});
 
 export default function App({ Component, pageProps }) {
+  useStyles(theme);
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <title>Marco Daniel Duran</title>
-        <GlobalStyle />
-        <div className="site">
-          <Header isMobile={isMobile} dispatch={null} />
-          <Component {...pageProps} />
-        </div>
-      </ThemeProvider>
+      <StylesProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <Head>
+            <link rel="preconnect" href="https://fonts.googleapis.com" />
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
+            <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+            <title>Marco Daniel Duran</title>
+          </Head>
+          <div className="site">
+            <Header isMobile={isMobile} />
+            <Component {...pageProps} />
+          </div>
+        </ThemeProvider>
+      </StylesProvider>
     </>
   );
 }

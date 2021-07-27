@@ -16,7 +16,9 @@ const colors = {
   roseDust: '#a06a7a',
   deepTaupe: '#6b5b5f',
   rocketMetallic: '#98868a',
-  blackCoffee: '#42383a'
+  blackCoffee: '#42383a',
+  white: '#fff',
+  black: '#000'
 };
 
 export default colors;

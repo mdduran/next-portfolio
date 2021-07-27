@@ -1,6 +1,10 @@
+import { createMuiTheme } from '@material-ui/core';
 import colors from './colors';
 
-const theme = {
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: "'Press Start 2P', cursive"
+  },
   palette: {
     primary: {
       light: colors.zomp,
@@ -31,8 +35,21 @@ const theme = {
       light: colors.rocketMetallic,
       main: colors.deepTaupe,
       dark: colors.blackCoffee
+    },
+    header: {
+      light: colors.zomp,
+      main: colors.white,
+      dark: colors.black
+    }
+  },
+  overrides: {
+    MuiIconButton: {
+      root: {
+        fontFamily: "'Press Start 2P', cursive",
+        fontSize: 'small'
+      }
     }
   }
-};
+});
 
 export default theme;
