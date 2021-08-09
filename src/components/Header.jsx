@@ -21,11 +21,11 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Link href="/">
+        <Link href="/" passHref>
           <Button component="h1">Marco Daniel Duran</Button>
         </Link>
         <div style={{ flexGrow: '1' }} />
-        <Link href="/projects">
+        <Link href="/projects" passHref>
           <IconButton>
             <FolderIcon style={{ paddingRight: '0.25em' }} />
             {!isMobile && <>Projects</>}

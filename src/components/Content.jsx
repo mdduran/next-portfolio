@@ -1,5 +1,7 @@
+import * as React from 'react';
 import { Grid } from '@material-ui/core';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import ProjectList from './ProjectList';
 import ProjectPanel from './ProjectPanel';
 import theme from '../styles/theme';
@@ -21,6 +23,18 @@ const Content = ({ isMobile, state, dispatch }) => {
       </StyledGrid>
     </StyledGrid>
   );
+};
+
+Content.propTypes = {
+  isMobile: PropTypes.bool,
+  state: PropTypes.object,
+  dispatch: PropTypes.object
+};
+
+Content.defaultProps = {
+  isMobile: false,
+  state: {},
+  dispatch: {}
 };
 
 const StyledContent = styled(Content)``;

@@ -1,5 +1,7 @@
+import * as React from 'react';
 import { Container, Paper } from '@material-ui/core';
 import styled from 'styled-components';
+
 const StyledPaper = styled(Paper)`
   padding: 1em;
   height: 85vh;
@@ -12,7 +14,7 @@ const StyledPaper = styled(Paper)`
 export default function Home() {
   return (
     <>
-      <Container style={{ paddingTop: '1em'}}>
+      <Container style={{ paddingTop: '1em' }}>
         <StyledPaper>This is currently under construction.</StyledPaper>
       </Container>
     </>

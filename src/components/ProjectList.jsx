@@ -1,3 +1,5 @@
+import * as React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MenuList, MenuItem, ListItem } from '@material-ui/core';
 import { FixedSizeList } from 'react-window';
@@ -39,6 +41,7 @@ const ProjectList = ({ state, setProjectState }) => {
   };
   const { selectedProject } = state;
   const renderGameRow = (props) => {
+    // eslint-disable-next-line react/prop-types
     const { index } = props;
     return (
       <>
@@ -51,7 +54,15 @@ const ProjectList = ({ state, setProjectState }) => {
     );
   };
 
+  renderGameRow.propTypes = {
+    index: PropTypes.string
+  };
+  renderGameRow.defaultProps = {
+    index: -1
+  };
+
   const renderSoftwareRow = (props) => {
+    // eslint-disable-next-line react/prop-types
     const { index } = props;
     return (
       <>
@@ -64,20 +75,47 @@ const ProjectList = ({ state, setProjectState }) => {
     );
   };
 
+  renderSoftwareRow.propTypes = {
+    index: PropTypes.string
+  };
+  renderSoftwareRow.defaultProps = {
+    index: -1
+  };
+
   return (
     <StyledWrapper>
       <MenuList>
         <StyledMenuItem key={0}>Games</StyledMenuItem>
-        <FixedSizeList height={425} width={'100%'} itemSize={10} itemCount={gamesList.length}>
+        <FixedSizeList height={425} width="100%" itemSize={10} itemCount={gamesList.length}>
           {renderGameRow}
         </FixedSizeList>
         <StyledMenuItem>Software</StyledMenuItem>
-        <FixedSizeList height={350} width={'100%'} itemSize={10} itemCount={softwareList.length}>
+        <FixedSizeList height={350} width="100%" itemSize={10} itemCount={softwareList.length}>
           {renderSoftwareRow}
         </FixedSizeList>
       </MenuList>
     </StyledWrapper>
   );
+};
+
+ProjectList.propTypes = {
+  state: PropTypes.shape({
+    selectedProject: PropTypes.shape({
+      title: PropTypes.string,
+      yearDeveloped: PropTypes.string,
+      platform: PropTypes.string,
+      genre: PropTypes.string,
+      downloadLink: PropTypes.string,
+      website: PropTypes.string,
+      accomplishments: PropTypes.string
+    })
+  }),
+  setProjectState: PropTypes.func
+};
+
+ProjectList.defaultProps = {
+  state: {},
+  setProjectState: () => {}
 };
 
 export default ProjectList;

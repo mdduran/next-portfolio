@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { Card, CardContent, Typography, List, ListItem, Link } from '@material-ui/core';
 import styled from 'styled-components';
 
@@ -49,6 +50,21 @@ const ProjectCard = (props) => {
       </div>
     </StyledCard>
   );
+};
+
+ProjectCard.propTypes = {
+  selectedProject: PropTypes.shape({
+    title: PropTypes.string,
+    yearDeveloped: PropTypes.string,
+    platform: PropTypes.string,
+    genre: PropTypes.string,
+    downloadLink: PropTypes.string,
+    website: PropTypes.string,
+    accomplishments: PropTypes.string
+  })
+};
+ProjectCard.defaultProps = {
+  selectedProject: {}
 };
 
 export default ProjectCard;

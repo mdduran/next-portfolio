@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { isMobile } from 'react-device-detect';
-import { Button, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import FolderIcon from '@material-ui/icons/Folder';
 import styled from 'styled-components';
 import ProjectList from '../src/components/ProjectList';
@@ -13,7 +13,7 @@ const StyledGrid = styled(Grid)`
   height: 100%;
 `;
 
-const StyledButton = styled(Button)`
+const StyledButton = styled.button`
   max-width: 500px;
   width: 100%;
 `;
@@ -27,7 +27,7 @@ const StyledFooter = styled.footer`
 
 function Projects() {
   const openMobileNavigation = () => {
-    console.log('OPENING NAV');
+    // console.log('OPENING NAV');
   };
   const [projectState, setProjectState] = React.useState(initialState);
   return (
@@ -43,10 +43,10 @@ function Projects() {
       {isMobile && (
         <StyledGrid container item>
           <StyledFooter>
-            <button onClick={openMobileNavigation}>
+            <StyledButton type="button" onClick={openMobileNavigation}>
               <FolderIcon />
               Projects
-            </button>
+            </StyledButton>
           </StyledFooter>
         </StyledGrid>
       )}

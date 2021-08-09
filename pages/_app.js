@@ -1,7 +1,9 @@
+import * as React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
-import Header from '../src/components/Header';
 import { isMobile } from 'react-device-detect';
 import Head from 'next/head';
+import Header from '../src/components/Header';
 import theme from '../src/styles/theme';
 
 const useStyles = makeStyles({
@@ -40,9 +42,6 @@ export default function App({ Component, pageProps }) {
       <StylesProvider injectFirst>
         <ThemeProvider theme={theme}>
           <Head>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
-            <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
             <title>Marco Daniel Duran</title>
           </Head>
           <div className="site">
@@ -54,3 +53,12 @@ export default function App({ Component, pageProps }) {
     </>
   );
 }
+
+App.propTypes = {
+  Component: PropTypes.any,
+  pageProps: PropTypes.any
+};
+App.defaultProps = {
+  Component: {},
+  pageProps: {}
+};
