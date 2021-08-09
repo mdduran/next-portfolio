@@ -8,25 +8,25 @@ const gamesList = projectData.games;
 const softwareList = projectData.software;
 
 const StyledWrapper = styled.div`
-  width: 325px;
   background-color: ${theme.palette.secondary.main};
 `;
 
 const StyledMenuItem = styled(ListItem)`
   color: #fff;
-  font-size: x-large;
+  font-size: large;
   cursor: default;
+  padding: 1em 0 1.5em 0.5em;
 `;
 
 const StyledSubMenuItem = styled(MenuItem)`
   color: #fff;
-  font-size: large;
+  font-size: small;
+  padding: 0 0.5em;
 `;
 
 const StyledMenuText = styled.p`
   white-space: nowrap;
   overflow: hidden;
-  width: 300px;
   text-overflow: ellipsis;
 `;
 
@@ -68,11 +68,11 @@ const ProjectList = ({ state, setProjectState }) => {
     <StyledWrapper>
       <MenuList>
         <StyledMenuItem key={0}>Games</StyledMenuItem>
-        <FixedSizeList height={425} width={325} itemSize={10} itemCount={gamesList.length}>
+        <FixedSizeList height={425} width={'100%'} itemSize={10} itemCount={gamesList.length}>
           {renderGameRow}
         </FixedSizeList>
         <StyledMenuItem>Software</StyledMenuItem>
-        <FixedSizeList height={350} width={325} itemSize={10} itemCount={softwareList.length}>
+        <FixedSizeList height={350} width={'100%'} itemSize={10} itemCount={softwareList.length}>
           {renderSoftwareRow}
         </FixedSizeList>
       </MenuList>

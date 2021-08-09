@@ -7,17 +7,24 @@ import theme from '../src/styles/theme';
 const useStyles = makeStyles({
   '@global': {
     html: {
-      height: '100%',
       fontFamily: "'Press Start 2P', cursive",
-      fontSize: 'medium'
+      fontSize: 'medium',
+      height: '100%'
     },
     body: {
       padding: 0,
-      margin: 0
+      margin: 0,
+      height: '100%'
     },
-    site: {
+    'body > div:first-child': {
+      height: '100%'
+    },
+    'div#__next': {
+      height: '100%'
+    },
+    'div#__next > div': {
+      height: '100%',
       display: 'flex',
-      minHeight: '100vh',
       flexDirection: 'column'
     },
     h1: {

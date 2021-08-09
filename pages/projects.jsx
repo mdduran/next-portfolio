@@ -8,9 +8,9 @@ import ProjectPanel from '../src/components/ProjectPanel';
 import theme from '../src/styles/theme';
 import initialState from '../src/data/initialState';
 
-
 const StyledGrid = styled(Grid)`
   background-color: ${theme.palette.primary.main};
+  height: 100%;
 `;
 
 const StyledButton = styled(Button)`
