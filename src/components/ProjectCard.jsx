@@ -55,7 +55,7 @@ const ProjectCard = (props) => {
 ProjectCard.propTypes = {
   selectedProject: PropTypes.shape({
     title: PropTypes.string,
-    yearDeveloped: PropTypes.string,
+    yearDeveloped: PropTypes.number,
     platform: PropTypes.string,
     genre: PropTypes.string,
     downloadLink: PropTypes.string,

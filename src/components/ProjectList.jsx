@@ -55,7 +55,7 @@ const ProjectList = ({ state, setProjectState }) => {
   };
 
   renderGameRow.propTypes = {
-    index: PropTypes.string
+    index: PropTypes.number
   };
   renderGameRow.defaultProps = {
     index: -1
@@ -76,7 +76,7 @@ const ProjectList = ({ state, setProjectState }) => {
   };
 
   renderSoftwareRow.propTypes = {
-    index: PropTypes.string
+    index: PropTypes.number
   };
   renderSoftwareRow.defaultProps = {
     index: -1
@@ -102,7 +102,7 @@ ProjectList.propTypes = {
   state: PropTypes.shape({
     selectedProject: PropTypes.shape({
       title: PropTypes.string,
-      yearDeveloped: PropTypes.string,
+      yearDeveloped: PropTypes.number,
       platform: PropTypes.string,
       genre: PropTypes.string,
       downloadLink: PropTypes.string,

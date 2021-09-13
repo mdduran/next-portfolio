@@ -1,7 +1,7 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 import colors from './colors';
 
-const theme = createMuiTheme({
+const theme = createTheme({
   typography: {
     fontFamily: "'Press Start 2P', cursive"
   },

@@ -15,12 +15,12 @@ const StyledGrid = styled(Grid)`
 
 const ProjectPanel = ({ state }) => {
   const { selectedProject } = state;
-  const ref = React.useRef();
+  const ref = React.useRef({});
   return (
     <>
       {selectedProject && (
         <StyledGrid container style={{ marginTop: '0.5rem' }} spacing={0}>
-          <StyledGrid container item justify="center">
+          <StyledGrid container item justifyContent="center">
             <Canvas shadows dpr={[1, 2]} camera={{ fov: 50 }} style={{ width: '400px', height: '300px' }}>
               <ambientLight intensity={0.5} />
               <pointLight position={[10, 15, 5]} />
@@ -32,7 +32,7 @@ const ProjectPanel = ({ state }) => {
               </React.Suspense>
             </Canvas>
           </StyledGrid>
-          <StyledGrid container item justify="center">
+          <StyledGrid container item justifyContent="center">
             <ProjectCard selectedProject={selectedProject} />
           </StyledGrid>
         </StyledGrid>
@@ -45,7 +45,7 @@ ProjectPanel.propTypes = {
   state: PropTypes.shape({
     selectedProject: PropTypes.shape({
       title: PropTypes.string,
-      yearDeveloped: PropTypes.string,
+      yearDeveloped: PropTypes.number,
       platform: PropTypes.string,
       genre: PropTypes.string,
       downloadLink: PropTypes.string,
