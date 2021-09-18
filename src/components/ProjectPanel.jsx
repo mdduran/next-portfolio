@@ -15,7 +15,7 @@ const StyledGrid = styled(Grid)`
 
 const ProjectPanel = ({ state }) => {
   const { selectedProject } = state;
-  const ref = React.useRef({});
+  const ref = React.useRef(null);
   return (
     <>
       {selectedProject && (
