@@ -5,6 +5,7 @@ import { MenuList, MenuItem, ListItem } from '@material-ui/core';
 import { FixedSizeList } from 'react-window';
 import projectData from '../data/projects';
 import theme from '../styles/theme';
+import { Project } from '../types';
 
 const gamesList = projectData.games;
 const softwareList = projectData.software;
@@ -32,7 +33,12 @@ const StyledMenuText = styled.p`
   text-overflow: ellipsis;
 `;
 
-const ProjectList = ({ state, setProjectState }) => {
+type ProjectListPropsType = {
+  state: any;
+  setProjectState: React.SetStateAction<any>;
+}
+
+const ProjectList = ({ state, setProjectState }: ProjectListPropsType): React.ReactElement => {
   const setGameProject = (index) => {
     setProjectState({ selectedProject: gamesList[index] });
   };
@@ -85,37 +91,17 @@ const ProjectList = ({ state, setProjectState }) => {
   return (
     <StyledWrapper>
       <MenuList>
-        <StyledMenuItem key={0}>Games</StyledMenuItem>
+        <StyledMenuItem button key='games'>Games</StyledMenuItem>
         <FixedSizeList height={425} width="100%" itemSize={10} itemCount={gamesList.length}>
           {renderGameRow}
         </FixedSizeList>
-        <StyledMenuItem>Software</StyledMenuItem>
+        <StyledMenuItem button key='software'>Software</StyledMenuItem>
         <FixedSizeList height={350} width="100%" itemSize={10} itemCount={softwareList.length}>
           {renderSoftwareRow}
         </FixedSizeList>
       </MenuList>
     </StyledWrapper>
   );
-};
-
-ProjectList.propTypes = {
-  state: PropTypes.shape({
-    selectedProject: PropTypes.shape({
-      title: PropTypes.string,
-      yearDeveloped: PropTypes.number,
-      platform: PropTypes.string,
-      genre: PropTypes.string,
-      downloadLink: PropTypes.string,
-      website: PropTypes.string,
-      accomplishments: PropTypes.string
-    })
-  }),
-  setProjectState: PropTypes.func
-};
-
-ProjectList.defaultProps = {
-  state: {},
-  setProjectState: () => {}
 };
 
 export default ProjectList;

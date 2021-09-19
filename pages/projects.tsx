@@ -25,7 +25,7 @@ const StyledFooter = styled.footer`
   text-align: 'center';
 `;
 
-function Projects() {
+function Projects(): React.ReactNode {
   const openMobileNavigation = () => {
     // console.log('OPENING NAV');
   };
@@ -45,7 +45,6 @@ function Projects() {
           <StyledFooter>
             <StyledButton type="button" onClick={openMobileNavigation}>
               <FolderIcon />
-              Projects
             </StyledButton>
           </StyledFooter>
         </StyledGrid>
