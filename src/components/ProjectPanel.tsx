@@ -13,9 +13,9 @@ const StyledGrid = styled(Grid)`
   background-color: ${theme.palette.primary.main};
 `;
 
-const ProjectPanel = ({ state }) => {
+const ProjectPanel = ({ state }): React.ReactElement => {
   const { selectedProject } = state;
-  const ref = React.useRef({});
+  const ref = React.useRef(null);
   return (
     <>
       {selectedProject && (
@@ -28,7 +28,7 @@ const ProjectPanel = ({ state }) => {
                 <Stage controls={ref} preset="rembrandt" intensity={1} environment="city">
                   <GameCartModel />
                 </Stage>
-                <OrbitControls ref={ref} autoRotate autoRotateSpeed={5} />
+                <OrbitControls ref={ref} autoRotate autoRotateSpeed={5} addEventListener={undefined} hasEventListener={undefined} removeEventListener={undefined} dispatchEvent={undefined} />
               </React.Suspense>
             </Canvas>
           </StyledGrid>

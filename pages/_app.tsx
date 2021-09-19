@@ -1,8 +1,7 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { makeStyles, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
-import { isMobile } from 'react-device-detect';
 import Head from 'next/head';
+import { AppProps } from 'next/dist/shared/lib/router/router';
 import Header from '../src/components/Header';
 import theme from '../src/styles/theme';
 
@@ -35,7 +34,8 @@ const useStyles = makeStyles({
   }
 });
 
-export default function App({ Component, pageProps }) {
+
+export default function App({ Component, pageProps }: AppProps): React.ReactElement {
   useStyles(theme);
   return (
     <>
@@ -45,7 +45,7 @@ export default function App({ Component, pageProps }) {
             <title>Marco Daniel Duran</title>
           </Head>
           <div className="site">
-            <Header isMobile={isMobile} />
+            <Header />
             <Component {...pageProps} />
           </div>
         </ThemeProvider>
@@ -53,12 +53,3 @@ export default function App({ Component, pageProps }) {
     </>
   );
 }
-
-App.propTypes = {
-  Component: PropTypes.any,
-  pageProps: PropTypes.any
-};
-App.defaultProps = {
-  Component: {},
-  pageProps: {}
-};

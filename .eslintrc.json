@@ -3,7 +3,8 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["next", "airbnb", "plugin:react/recommended", "plugin:react-hooks/recommended", "prettier"],
+  "parser": "@typescript-eslint/parser", 
+  "extends": ["next", "airbnb", "plugin:react/recommended", "plugin:react-hooks/recommended", "prettier", "plugin:@typescript-eslint/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -18,7 +19,19 @@
     "react/jsx-props-no-spreading": "off",
     "arrow-body-style": "off",
     "react/forbid-prop-types": "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+   ]
   },
   "root": true
 }

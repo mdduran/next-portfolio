@@ -1,7 +1,7 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Card, CardContent, Typography, List, ListItem, Link } from '@material-ui/core';
 import styled from 'styled-components';
+import { Project } from "../types";
 
 const StyledCard = styled(Card)`
   width: 650px;
@@ -15,7 +15,7 @@ const StyledListItem = styled(ListItem)`
   text-align: center;
 `;
 
-const ProjectCard = (props) => {
+const ProjectCard = (props: { selectedProject: Project; }): React.ReactElement => {
   const { selectedProject } = props;
   return (
     <StyledCard>
@@ -25,17 +25,17 @@ const ProjectCard = (props) => {
             {selectedProject.title ?? 'Project title'}
           </Typography>
           <List>
-            <StyledListItem>Year developed: {selectedProject.yearDeveloped}</StyledListItem>
-            <StyledListItem>Platform: {selectedProject.platform}</StyledListItem>
-            <StyledListItem>Genre: {selectedProject.genre}</StyledListItem>
+            <StyledListItem button>Year developed: {selectedProject.yearDeveloped}</StyledListItem>
+            <StyledListItem button>Platform: {selectedProject.platform}</StyledListItem>
+            <StyledListItem button>Genre: {selectedProject.genre}</StyledListItem>
 
             {selectedProject.downloadLink && (
-              <StyledListItem>
+              <StyledListItem button>
                 <Link href={selectedProject.downloadLink}>Download</Link>
               </StyledListItem>
             )}
             {selectedProject.website && (
-              <StyledListItem>
+              <StyledListItem button>
                 <Link href={selectedProject.website} target="_blank">
                   Website
                 </Link>
@@ -50,21 +50,6 @@ const ProjectCard = (props) => {
       </div>
     </StyledCard>
   );
-};
-
-ProjectCard.propTypes = {
-  selectedProject: PropTypes.shape({
-    title: PropTypes.string,
-    yearDeveloped: PropTypes.number,
-    platform: PropTypes.string,
-    genre: PropTypes.string,
-    downloadLink: PropTypes.string,
-    website: PropTypes.string,
-    accomplishments: PropTypes.string
-  })
-};
-ProjectCard.defaultProps = {
-  selectedProject: {}
 };
 
 export default ProjectCard;

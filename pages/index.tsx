@@ -11,7 +11,7 @@ const StyledPaper = styled(Paper)`
     text-align: center;
   }
 `;
-export default function Home() {
+export default function Home(): React.ReactNode {
   return (
     <>
       <Container style={{ paddingTop: '1em' }}>
@@ -20,3 +20,4 @@ export default function Home() {
     </>
   );
 }
+

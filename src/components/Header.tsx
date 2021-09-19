@@ -8,7 +8,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { isMobile } from 'react-device-detect';
 
-const Header = () => {
+const Header = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const handleOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -24,7 +24,7 @@ const Header = () => {
         <Link href="/" passHref>
           <Button component="h1">Marco Daniel Duran</Button>
         </Link>
-        <div style={{ flexGrow: '1' }} />
+        <div style={{ flexGrow: 1 }} />
         <Link href="/projects" passHref>
           <IconButton>
             <FolderIcon style={{ paddingRight: '0.25em' }} />
