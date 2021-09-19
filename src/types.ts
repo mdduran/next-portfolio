@@ -1,12 +1,16 @@
 export type Project = {
   title: string;
-  yearDeveloped: string;
-  platform: string;
-  genre: string;
+  yearDeveloped: number;
+  platform?: string;
+  genre?: string;
   accomplishments: string;
-  splashImage: string;
+  splashImage?: string;
   description: string;
-  downloadLink: string;
+  downloadLink?: string;
   trailer?: string;
-  website: string;
+  website?: string;
 };
+
+export type ProjectState = {
+    selectedProject: Project;
+}

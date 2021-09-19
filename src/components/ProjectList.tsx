@@ -5,10 +5,10 @@ import { MenuList, MenuItem, ListItem } from '@material-ui/core';
 import { FixedSizeList } from 'react-window';
 import projectData from '../data/projects';
 import theme from '../styles/theme';
-import { Project } from '../types';
+import { Project, ProjectState } from '../types';
 
-const gamesList = projectData.games;
-const softwareList = projectData.software;
+const gamesList: Project[] = projectData.games;
+const softwareList: Project[] = projectData.software;
 
 const StyledWrapper = styled.div`
   background-color: ${theme.palette.secondary.main};
@@ -34,8 +34,8 @@ const StyledMenuText = styled.p`
 `;
 
 type ProjectListPropsType = {
-  state: any;
-  setProjectState: React.SetStateAction<any>;
+  state: ProjectState;
+  setProjectState: React.Dispatch<React.SetStateAction<ProjectState>>;
 }
 
 const ProjectList = ({ state, setProjectState }: ProjectListPropsType): React.ReactElement => {

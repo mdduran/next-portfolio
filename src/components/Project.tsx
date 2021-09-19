@@ -4,7 +4,7 @@ import FolderIcon from '@material-ui/icons/Folder';
 import styled from 'styled-components';
 import { Project as ProjectProps } from "../types";
 
-const generate = (element) => {
+const generate = (element: React.ReactElement) => {
   return [0, 1, 2].map((value) =>
     React.cloneElement(element, {
       key: value

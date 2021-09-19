@@ -1,5 +1,4 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import { Canvas } from '@react-three/fiber';
@@ -8,12 +7,13 @@ import theme from '../styles/theme';
 import ProjectCard from './ProjectCard';
 import GameCartModel from './GameCartModel';
 import ModelLoader from './ModelLoader';
+import { Project } from '../types';
 
 const StyledGrid = styled(Grid)`
   background-color: ${theme.palette.primary.main};
 `;
 
-const ProjectPanel = ({ state }): React.ReactElement => {
+const ProjectPanel = ({ state }: { state: { selectedProject: Project } }): React.ReactElement => {
   const { selectedProject } = state;
   const ref = React.useRef(null);
   return (
@@ -39,24 +39,6 @@ const ProjectPanel = ({ state }): React.ReactElement => {
       )}
     </>
   );
-};
-
-ProjectPanel.propTypes = {
-  state: PropTypes.shape({
-    selectedProject: PropTypes.shape({
-      title: PropTypes.string,
-      yearDeveloped: PropTypes.number,
-      platform: PropTypes.string,
-      genre: PropTypes.string,
-      downloadLink: PropTypes.string,
-      website: PropTypes.string,
-      accomplishments: PropTypes.string
-    })
-  })
-};
-
-ProjectPanel.defaultProps = {
-  state: {}
 };
 
 export default ProjectPanel;

@@ -1,0 +1,8 @@
+Notes:
+
+Header: Need to change our little contact switch over to a popover with menu containing both icons and text (For accessibility).
+
+Project list: Need to figure out how to send a dispatch with the clicked project over to the project panel
+
+Mobile: Should i just make a different panel experience? Current one seems like its not to the point, hard to navigate. Desktop approach seems good in current state
+
