@@ -2,8 +2,8 @@ import * as React from 'react';
 import { makeStyles, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import Head from 'next/head';
 import { AppProps } from 'next/dist/shared/lib/router/router';
-import Header from '../src/components/Header';
-import theme from '../src/styles/theme';
+import Header from '@components/Header';
+import theme from '@theme';
 
 const useStyles = makeStyles({
   '@global': {
@@ -33,7 +33,6 @@ const useStyles = makeStyles({
     }
   }
 });
-
 
 export default function App({ Component, pageProps }: AppProps): React.ReactElement {
   useStyles(theme);

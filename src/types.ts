@@ -1,16 +1,13 @@
 export type Project = {
   title: string;
-  yearDeveloped: number;
+  projectType: 'game' | 'software';
+  yearDeveloped?: number;
   platform?: string;
   genre?: string;
-  accomplishments: string;
+  accomplishments?: string;
   splashImage?: string;
-  description: string;
+  description?: string;
   downloadLink?: string;
   trailer?: string;
   website?: string;
 };
-
-export type ProjectState = {
-    selectedProject: Project;
-}

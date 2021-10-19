@@ -1,7 +1,7 @@
+import type { Project } from '@type';
 import * as React from 'react';
 import { Card, CardContent, Typography, List, ListItem, Link } from '@material-ui/core';
 import styled from 'styled-components';
-import { Project } from "../types";
 
 const StyledCard = styled(Card)`
   width: 650px;
@@ -15,38 +15,38 @@ const StyledListItem = styled(ListItem)`
   text-align: center;
 `;
 
-const ProjectCard = (props: { selectedProject: Project; }): React.ReactElement => {
-  const { selectedProject } = props;
+const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
+  const { title, yearDeveloped, platform, genre, downloadLink, website, accomplishments } = selectedProject;
   return (
     <StyledCard>
       <div style={{ padding: '2em', display: 'block', textAlign: 'center' }}>
         <CardContent>
           <Typography variant="h4" component="h2">
-            {selectedProject.title ?? 'Project title'}
+            {title ?? 'Project title'}
           </Typography>
           <List>
-            <StyledListItem button>Year developed: {selectedProject.yearDeveloped}</StyledListItem>
-            <StyledListItem button>Platform: {selectedProject.platform}</StyledListItem>
-            <StyledListItem button>Genre: {selectedProject.genre}</StyledListItem>
+            <StyledListItem button>Year developed: {yearDeveloped}</StyledListItem>
+            <StyledListItem button>Platform: {platform}</StyledListItem>
+            <StyledListItem button>Genre: {genre}</StyledListItem>
 
-            {selectedProject.downloadLink && (
+            {downloadLink && (
               <StyledListItem button>
-                <Link href={selectedProject.downloadLink}>Download</Link>
+                <Link href={downloadLink}>Download</Link>
               </StyledListItem>
             )}
-            {selectedProject.website && (
+            {website && (
               <StyledListItem button>
-                <Link href={selectedProject.website} target="_blank">
+                <Link href={website} target="_blank">
                   Website
                 </Link>
               </StyledListItem>
             )}
           </List>
           <Typography variant="body1" component="p">
-            Accomplishments: {selectedProject.accomplishments}
+            Accomplishments: {accomplishments}
           </Typography>
         </CardContent>
-        <p>{selectedProject.yearDeveloped}</p>
+        <p>{yearDeveloped}</p>
       </div>
     </StyledCard>
   );
