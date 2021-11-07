@@ -7,13 +7,17 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "buildDev": "next build && next start"
+    "buildDev": "next build && next start",
+    "test": "jest"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
-    "@react-three/drei": "^7.2.1",
-    "@react-three/fiber": "^7.0.6",
+    "@react-three/drei": "^7.8.5",
+    "@react-three/fiber": "^7.0.17",
+    "@react-three/test-renderer": "^7.0.16",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.2",
     "@types/styled-components": "^5.1.14",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
@@ -25,12 +29,16 @@
     "react-is": "^17.0.2",
     "react-virtualized-auto-sizer": "^1.0.6",
     "react-window": "^1.8.6",
+    "scheduler": "^0.20.2",
     "styled-components": "^5.2.3",
-    "three": "^0.130.1"
+    "three": "^0.130.1",
+    "three-stdlib": "^2.4.0"
   },
   "devDependencies": {
+    "@types/jest-axe": "^3.5.3",
     "@types/node": "^16.9.2",
     "@types/react": "^17.0.21",
+    "@types/three": "^0.133.1",
     "babel-plugin-styled-components": "^1.12.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
@@ -41,6 +49,8 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "jest": "^27.3.1",
+    "jest-axe": "^5.0.1",
     "next-transpile-modules": "^8.0.0",
     "typescript": "^4.4.3"
   }

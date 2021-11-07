@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { TextureLoader, MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, Mesh, BufferGeometry } from 'three';
 import { useGLTF } from '@react-three/drei';
+import { GLTF as GLTFThree } from 'three/examples/jsm/loaders/GLTFLoader';
 
 declare module 'three-stdlib' {
-  export interface GLTF extends GLTFLoader {
+  export interface GLTF extends GLTFThree {
     nodes: Record<string, Mesh>;
     materials: Record<string, Material>;
   }
