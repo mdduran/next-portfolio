@@ -1,10 +1,9 @@
 import type { Project } from '@type';
 import * as React from 'react';
-import styled, { CSSProperties } from 'styled-components';
-import { MenuList, MenuItem, ListItem, ListItemText, Tooltip } from '@material-ui/core';
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
+import styled from 'styled-components';
+import { MenuList, MenuItem, ListItem, ListItemText, Tooltip, Collapse, List } from '@material-ui/core';
 import theme from '@theme';
+import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 const StyledWrapper = styled.div`
   background-color: ${theme.palette.secondary.main};
@@ -27,8 +26,8 @@ const StyledMenuText = styled.p`
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  font-size: small;
-  padding: 15px 15px;
+  font-size: xx-small;
+  margin: 15px 15px;
 `;
 
 const ProjectList = ({
@@ -40,83 +39,73 @@ const ProjectList = ({
   selectedProject: Project;
   setSelectedProject: React.Dispatch<React.SetStateAction<Project>>;
 }): React.ReactElement => {
-  const projectsLength = projects.length;
-  const GUTTER_SIZE = 10;
-  const COLUMN_WIDTH = 200;
-  const ROW_HEIGHT = 100;
-  const renderProjectList = ({ index, style }: { index: number; style: CSSProperties }) => {
-    const currentProject = projects[index];
-    const listItemTitle = currentProject.title;
-    // const isListHeader = listItemTitle === ('Games' || 'Software');
+  const [gamesList, setGamesList] = React.useState<Project[]>([]);
+  const [softwareList, setSoftwareList] = React.useState<Project[]>([]);
+  const [gamesOpen, setGamesOpen] = React.useState(true);
+  const [softwareOpen, setSoftwareOpen] = React.useState(true);
 
-    return (
-      <>
-        {listItemTitle === ('Games' || 'Software') ? (
-          <>
-            <StyledMenuItem
-              button
-              key={listItemTitle}
-              style={{
-                ...style,
-                bottom: (style.bottom as number) + GUTTER_SIZE * 2
-              }}
-            >
-              <ListItemText>{listItemTitle}</ListItemText>
-            </StyledMenuItem>
-          </>
-        ) : (
-          <Tooltip title={listItemTitle} enterDelay={500} leaveDelay={50}>
-            <StyledSubMenuItem
-              key={listItemTitle}
-              selected={selectedProject.title === listItemTitle}
-              onClick={() => setSelectedProject(currentProject)}
-              style={{
-                ...style,
-                top: (style.top as number) + GUTTER_SIZE
-              }}
-            >
-              <StyledMenuText>{listItemTitle}</StyledMenuText>
-            </StyledSubMenuItem>
-          </Tooltip>
-        )}
-      </>
-    );
+  const handleGamesClick = () => {
+    setGamesOpen(!gamesOpen);
   };
 
-  type InnerElProps = { rest?: { children?: React.ReactNode }; style: unknown };
-  // eslint-disable-next-line react/display-name
-  const innerElementType = React.forwardRef<InnerElProps, HTMLElement>(
-    ({ style, ...rest }: InnerElProps, ref: React.MutableRefObject<HTMLDivElement>) => (
-      <div
-        ref={ref}
-        style={{
-          ...(style as Record<string, unknown>),
-          paddingLeft: GUTTER_SIZE,
-          paddingTop: GUTTER_SIZE
-        }}
-        {...rest}
-      />
-    )
-  );
+  const handleSoftwareClick = () => {
+    setSoftwareOpen(!softwareOpen);
+  };
+
+  React.useEffect(() => {
+    for (let i = 0; i < projects.length; i += 1) {
+      if (projects[i].projectType === 'game' && projects[i].title !== 'Games') {
+        gamesList.push(projects[i]);
+      } else if (projects[i].projectType === 'software' && projects[i].title !== 'Software') {
+        softwareList.push(projects[i]);
+      }
+    }
+    setGamesList(gamesList);
+    setSoftwareList(softwareList);
+    setSelectedProject(projects[1]);
+    // only want to run this once for initalizization
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <StyledWrapper>
       <MenuList style={{ height: '100%', width: '100%', maxWidth: '36ch' }}>
-        <AutoSizer>
-          {({ height, width }) => (
-            <FixedSizeList
-              height={height}
-              width={width}
-              itemSize={30}
-              itemCount={projectsLength}
-              rowHeight={ROW_HEIGHT + GUTTER_SIZE}
-              columnWidth={COLUMN_WIDTH + GUTTER_SIZE}
-              innerElementType={innerElementType}
-            >
-              {renderProjectList}
-            </FixedSizeList>
-          )}
-        </AutoSizer>
+        <StyledMenuItem button key="Games" onClick={handleGamesClick}>
+          <ListItemText>Games</ListItemText>
+          {gamesOpen ? <ExpandLess /> : <ExpandMore />}
+        </StyledMenuItem>
+        <Collapse in={gamesOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {gamesList.map((game: Project) => {
+              const { title } = game;
+              return (
+                <Tooltip key={title} title={title} enterDelay={500} leaveDelay={50}>
+                  <StyledSubMenuItem selected={selectedProject.title === title} onClick={() => setSelectedProject(game)}>
+                    <StyledMenuText>{title}</StyledMenuText>
+                  </StyledSubMenuItem>
+                </Tooltip>
+              );
+            })}
+          </List>
+        </Collapse>
+        <StyledMenuItem button key="Software" onClick={handleSoftwareClick}>
+          <ListItemText>Software</ListItemText>
+          {softwareOpen ? <ExpandLess /> : <ExpandMore />}
+        </StyledMenuItem>
+        <Collapse in={softwareOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {softwareList.map((software: Project) => {
+              const { title } = software;
+              return (
+                <Tooltip key={title} title={title} enterDelay={500} leaveDelay={50}>
+                  <StyledSubMenuItem selected={selectedProject.title === title} onClick={() => setSelectedProject(software)}>
+                    <StyledMenuText>{title}</StyledMenuText>
+                  </StyledSubMenuItem>
+                </Tooltip>
+              );
+            })}
+          </List>
+        </Collapse>
       </MenuList>
     </StyledWrapper>
   );

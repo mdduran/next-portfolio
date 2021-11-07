@@ -22,7 +22,7 @@ const Header = (): React.ReactElement => {
     <AppBar position="static">
       <Toolbar>
         <Link href="/" passHref>
-          <Button component="h1">Marco Daniel Duran</Button>
+          <Button component="h1">Marco Duran</Button>
         </Link>
         <div style={{ flexGrow: 1 }} />
         <Link href="/projects" passHref>
