@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const StyledCard = styled(Card)`
   width: 650px;
-  height: 500px;
+  height: 450px;
   overflow-y: auto;
 
   --aug-inlay: initial;

@@ -18,7 +18,7 @@ export default function Home(): React.ReactNode {
 
   const StyledCard = styled(Card)({
     marginTop: theme.spacing(4),
-    height: '80vh',
+    minHeight: '80%',
     '--aug-inlay': 'initial',
     '--aug-delegated-inlay': 'initial',
     '--aug-border-all': '8px'
@@ -26,7 +26,7 @@ export default function Home(): React.ReactNode {
 
   const StyledCardContent = styled(CardContent)({
     flex: '1 0 auto',
-    margin: `0 ${theme.spacing(4)}px`
+    margin: `0 ${theme.spacing(4)}px ${theme.spacing(2)}px ${theme.spacing(4)}px`
   });
 
   return (

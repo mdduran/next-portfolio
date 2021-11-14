@@ -10,8 +10,7 @@ const useStyles = makeStyles({
   '@global': {
     html: {
       fontFamily: "'Press Start 2P', cursive",
-      fontSize: 'medium',
-      height: '100%'
+      fontSize: 'medium'
     },
     body: {
       padding: 0,
