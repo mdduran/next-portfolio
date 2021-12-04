@@ -1,4 +1,4 @@
-import type { Project } from 'types';
+import type { Project } from 'types/types';
 
 const projects: Project[] = [
   {
@@ -87,7 +87,7 @@ const projects: Project[] = [
     accomplishments: '',
     splashImage: '',
     description: '',
-    downloadLink: '#'
+    downloadLink: 'https://github.com/mdduran/spicy-nan-facts'
   },
   {
     title: 'Somaria',
@@ -115,7 +115,7 @@ const projects: Project[] = [
     accomplishments: '',
     // splashImage: "",
     description:
-      'An aquarium with three different types of fish that separated into schools based on color. When the fish collide with one another, depending on which fish collides, will change the color of the fish. The red fish will chase the blue fish, and run away from the green fish. The blue fish will chase the green fish and run away from the red fish. Finally the green fish will chase the red fish and run away from the blue fish. The fish are animated with a technique called behavioral animation where the fish are considered boids. The fish have their own respective flocks, or schools (since we are talking about fish) and move together using characteristics such as cohesion, separation and alignment.',
+      'An aquarium with three different types of fish that separated into schools based on color. When the fish collide with one another, depending on which fish collides, will change the color of the fish. The fish are animated with a technique called behavioral animation where the fish are considered boids. The fish have their own respective flocks, or schools (since we are talking about fish) and move together using characteristics such as cohesion, separation and alignment.',
     trailer: 'https://youtube.com/embed/t-_ZESSl280'
   }
 ];

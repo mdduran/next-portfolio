@@ -1,4 +1,4 @@
-import type { Project } from '@type';
+import type { Project } from 'types/types';
 import * as React from 'react';
 import styled from 'styled-components';
 import { MenuList, MenuItem, ListItem, ListItemText, Tooltip, Collapse, List } from '@material-ui/core';

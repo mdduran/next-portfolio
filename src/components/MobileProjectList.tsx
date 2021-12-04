@@ -1,5 +1,5 @@
 import { InputLabel, Select } from '@material-ui/core';
-import type { Project } from '@type';
+import type { Project } from 'types/types';
 import * as React from 'react';
 
 const MobileProjectList = ({

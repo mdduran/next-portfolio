@@ -1,25 +1,35 @@
 import * as React from 'react';
 import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { TextureLoader, MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, Mesh, BufferGeometry } from 'three';
+import { TextureLoader, MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry } from 'three';
 import { useGLTF } from '@react-three/drei';
-
-declare module 'three-stdlib' {
-  export interface GLTF extends GLTFLoader {
-    nodes: Record<string, Mesh>;
-    materials: Record<string, Material>;
-  }
-}
+import { Project } from '@type';
 
 const modelPath = './gltf/gamecart.gltf';
-const texturePath = './gltf/LaikasJourneyLabel.png';
-export default function GameCartModel(): React.ReactElement {
+const baseTexturePath = './gltf/snesCartLabel.png';
+const laikaTexturePath = './gltf/LaikasJourneyLabel.png';
+
+type GameCartModelProps = {
+  selectedProject: Project;
+};
+
+export default function GameCartModel({ selectedProject }: GameCartModelProps): React.ReactElement {
+  const [currentTexturePath, setCurrentTexturePath] = React.useState(baseTexturePath);
+  React.useEffect(() => {
+    if (selectedProject.title === `Laika's Journey`) {
+      setCurrentTexturePath(laikaTexturePath);
+    } else if (currentTexturePath !== baseTexturePath) {
+      setCurrentTexturePath(baseTexturePath);
+    }
+  }, [selectedProject.title, currentTexturePath]);
+
   const group: React.MutableRefObject<JSX.IntrinsicAttributes> = React.useRef(null);
   const { nodes, materials } = useGLTF(modelPath);
-  const texture: Texture = useLoader(TextureLoader, texturePath);
-  texture.rotation = MathUtils.degToRad(180);
-  texture.wrapS = MirroredRepeatWrapping;
-  texture.wrapT = RepeatWrapping;
+  const texture: Texture = useLoader(TextureLoader, currentTexturePath);
+  if (texture) {
+    texture.rotation = MathUtils.degToRad(180);
+    texture.wrapS = MirroredRepeatWrapping;
+    texture.wrapT = RepeatWrapping;
+  }
   const plasticMaterial: Material = materials.Plastic;
   const outerMeshGeometry: BufferGeometry = nodes['Cartridge-Mesh'].geometry;
   const innerMeshGeometry: BufferGeometry = nodes['Cartridge-Mesh_1'].geometry;
