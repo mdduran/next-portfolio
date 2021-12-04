@@ -7,8 +7,8 @@ import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 const StyledWrapper = styled.div`
   background-color: ${theme.palette.secondary.main};
-  height: 100%;
   overflow-x: none;
+  height: 100vh;
 `;
 
 const StyledMenuItem = styled(ListItem)`
@@ -69,7 +69,7 @@ const ProjectList = ({
 
   return (
     <StyledWrapper>
-      <MenuList style={{ height: '100%', width: '100%', maxWidth: '36ch' }}>
+      <MenuList style={{ width: '100%', maxWidth: '36ch' }}>
         <StyledMenuItem button key="Games" onClick={handleGamesClick}>
           <ListItemText>Games</ListItemText>
           {gamesOpen ? <ExpandLess /> : <ExpandMore />}

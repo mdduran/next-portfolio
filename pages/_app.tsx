@@ -4,13 +4,13 @@ import Head from 'next/head';
 import { AppProps } from 'next/dist/shared/lib/router/router';
 import Header from '@components/Header';
 import theme from '@theme';
+import 'augmented-ui/augmented-ui.min.css';
 
 const useStyles = makeStyles({
   '@global': {
     html: {
       fontFamily: "'Press Start 2P', cursive",
-      fontSize: 'medium',
-      height: '100%'
+      fontSize: 'medium'
     },
     body: {
       padding: 0,
