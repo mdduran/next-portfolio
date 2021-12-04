@@ -1,12 +1,13 @@
-import type { Project } from '@type';
+import type { Project } from 'types/types';
 import * as React from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stage } from '@react-three/drei';
+import { OrbitControls, Stage, Preload } from '@react-three/drei';
 import theme from '@theme';
 import ProjectCard from './ProjectCard';
 import GameCartModel from './GameCartModel';
+import CDRomModel from './CDRomModel';
 import ModelLoader from './ModelLoader';
 
 const StyledGrid = styled(Grid)`
@@ -25,7 +26,8 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
               <pointLight position={[10, 15, 5]} />
               <React.Suspense fallback={<ModelLoader />}>
                 <Stage controls={ref} preset="rembrandt" intensity={1} environment="city">
-                  <GameCartModel />
+                  {selectedProject.projectType === 'game' ? <GameCartModel selectedProject={selectedProject} /> : <CDRomModel />}
+                  <Preload all />
                 </Stage>
                 <OrbitControls
                   ref={ref}

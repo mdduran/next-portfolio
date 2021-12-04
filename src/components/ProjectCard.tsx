@@ -1,4 +1,4 @@
-import type { Project } from '@type';
+import type { Project } from 'types/types';
 import * as React from 'react';
 import { Card, CardContent, Typography, List, ListItem, ListItemText, Link, styled } from '@material-ui/core';
 
