@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useLoader } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { TextureLoader, MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry } from 'three';
 import { useGLTF } from '@react-three/drei';
 import '../../public/gltf/lowpoly_cd/lowpolycd.gltf';
@@ -9,7 +10,7 @@ const modelPath = './gltf/lowpoly_cd/lowpolycd.gltf';
 const texturePath = './gltf/lowpoly_cd/textures/lambert2SG_baseColor.png';
 export default function CDRomModel(): React.ReactElement {
   const group: React.MutableRefObject<JSX.IntrinsicAttributes> = React.useRef(null);
-  const { nodes, materials } = useGLTF(modelPath);
+  const { nodes, materials } = useLoader(GLTFLoader, modelPath);
   const texture: Texture = useLoader(TextureLoader, texturePath);
   texture.rotation = MathUtils.degToRad(180);
   texture.wrapS = MirroredRepeatWrapping;

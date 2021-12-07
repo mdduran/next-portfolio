@@ -1,5 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as React from 'react';
+import { useLoader } from '@react-three/fiber';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry } from 'three';
 import { useGLTF, useTexture } from '@react-three/drei';
 import { Project } from '@type';
@@ -36,7 +38,7 @@ export default function GameCartModel({ selectedProject }: GameCartModelProps): 
   }, []);
 
   const group: React.MutableRefObject<JSX.IntrinsicAttributes> = React.useRef(null);
-  const { nodes, materials } = useGLTF(modelPath);
+  const { nodes, materials } = useLoader(GLTFLoader, modelPath);
   const plasticMaterial: Material = materials.Plastic;
   const outerMeshGeometry: BufferGeometry = nodes['Cartridge-Mesh'].geometry;
   const innerMeshGeometry: BufferGeometry = nodes['Cartridge-Mesh_1'].geometry;
