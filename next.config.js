@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 // eslint-disable-next-line import/no-extraneous-dependencies
 const withTM = require('next-transpile-modules')(['three', '@react-three/fiber', '@react-three/drei']);
+
 module.exports = withTM({
   i18n: {
     locales: ['en-US'],
@@ -9,15 +10,15 @@ module.exports = withTM({
   eslint: {
     dirs: ['pages', 'src/components']
   },
-  swcMinify: true,
+  swcMinify: false,
   webpack(config) {
     config.module.rules.push({
       test: /\.(gltf)$/i,
       use: {
         loader: 'file-loader',
         options: {
-          publicPath: '/_next/static/gltf/',
-          outputPath: 'static/gltf/'
+          publicPath: '/_next/static/images/',
+          outputPath: 'static/images/'
         }
       }
     });
