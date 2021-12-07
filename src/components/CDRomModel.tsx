@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { TextureLoader, MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry } from 'three';
-import { useGLTF } from '@react-three/drei';
 import '../../public/gltf/lowpoly_cd/lowpolycd.gltf';
 import '../../public/gltf/lowpoly_cd/lowpolycd.bin';
 
@@ -19,12 +18,10 @@ export default function CDRomModel(): React.ReactElement {
   const outerMeshGeometry: BufferGeometry = nodes.Object_2.geometry;
 
   return (
-    <group ref={group} dispose={null}>
+    <group ref={group}>
       <mesh castShadow receiveShadow geometry={outerMeshGeometry} material={meshMaterial} rotation={[Math.PI / 2, 0, 0]}>
         <meshStandardMaterial map={texture} />
       </mesh>
     </group>
   );
 }
-
-useGLTF.preload(modelPath);

@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stage } from '@react-three/drei';
+import { OrbitControls, Stage, Preload } from '@react-three/drei';
 import theme from '@theme';
 import dynamic from 'next/dynamic';
 import ProjectCard from './ProjectCard';
@@ -43,6 +43,7 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
                   removeEventListener={undefined}
                   dispatchEvent={undefined}
                 />
+                <Preload all />
                 {/* {selectedProject.projectType === 'game' ? <GameCartModel selectedProject={selectedProject} /> : <CDRomModel />} */}
               </React.Suspense>
             </Canvas>
