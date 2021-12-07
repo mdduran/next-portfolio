@@ -3,12 +3,18 @@ import * as React from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stage, Preload } from '@react-three/drei';
+import { OrbitControls, Stage } from '@react-three/drei';
 import theme from '@theme';
+import dynamic from 'next/dynamic';
 import ProjectCard from './ProjectCard';
-import GameCartModel from './GameCartModel';
-import CDRomModel from './CDRomModel';
 import ModelLoader from './ModelLoader';
+
+const GameCartModel = dynamic(() => import('./GameCartModel'), {
+  ssr: false
+});
+const CDRomModel = dynamic(() => import('./CDRomModel'), {
+  ssr: false
+});
 
 const StyledGrid = styled(Grid)`
   background-color: ${theme.palette.primary.main};
@@ -27,7 +33,6 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
               <React.Suspense fallback={<ModelLoader />}>
                 <Stage controls={ref} preset="rembrandt" intensity={1} environment="city">
                   {selectedProject.projectType === 'game' ? <GameCartModel selectedProject={selectedProject} /> : <CDRomModel />}
-                  <Preload all />
                 </Stage>
                 <OrbitControls
                   ref={ref}
@@ -38,6 +43,7 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
                   removeEventListener={undefined}
                   dispatchEvent={undefined}
                 />
+                {/* {selectedProject.projectType === 'game' ? <GameCartModel selectedProject={selectedProject} /> : <CDRomModel />} */}
               </React.Suspense>
             </Canvas>
           </StyledGrid>
