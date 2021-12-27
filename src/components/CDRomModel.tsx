@@ -1,16 +1,13 @@
 import * as React from 'react';
-import { useLoader } from '@react-three/fiber';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { TextureLoader, MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry } from 'three';
-import '../../public/gltf/lowpoly_cd/lowpolycd.gltf';
-import '../../public/gltf/lowpoly_cd/lowpolycd.bin';
+import { useGLTF, useTexture, Stage } from '@react-three/drei';
+import { MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry } from 'three';
 
 const modelPath = './gltf/lowpoly_cd/lowpolycd.gltf';
 const texturePath = './gltf/lowpoly_cd/textures/lambert2SG_baseColor.png';
 export default function CDRomModel(): React.ReactElement {
   const group: React.MutableRefObject<JSX.IntrinsicAttributes> = React.useRef(null);
-  const { nodes, materials } = useLoader(GLTFLoader, modelPath);
-  const texture: Texture = useLoader(TextureLoader, texturePath);
+  const { nodes, materials } = useGLTF(modelPath);
+  const texture: Texture = useTexture(texturePath);
   texture.rotation = MathUtils.degToRad(180);
   texture.wrapS = MirroredRepeatWrapping;
   texture.wrapT = RepeatWrapping;
@@ -18,10 +15,19 @@ export default function CDRomModel(): React.ReactElement {
   const outerMeshGeometry: BufferGeometry = nodes.Object_2.geometry;
 
   return (
-    <group ref={group}>
-      <mesh castShadow receiveShadow geometry={outerMeshGeometry} material={meshMaterial} rotation={[Math.PI / 2, 0, 0]}>
-        <meshStandardMaterial map={texture} />
-      </mesh>
-    </group>
+    <Stage makeDefault intensity={1}>
+      <group ref={group}>
+        <mesh
+          name="Object_2"
+          morphTargetDictionary={nodes.Object_2.morphTargetDictionary}
+          morphTargetInfluences={nodes.Object_2.morphTargetInfluences}
+          position={[0, -30, 0]}
+          rotation={[Math.PI / 2, 0, 0]}
+        >
+          <bufferGeometry attach="geometry" {...outerMeshGeometry} />
+          <meshStandardMaterial attach="material" {...meshMaterial} />
+        </mesh>
+      </group>
+    </Stage>
   );
 }
