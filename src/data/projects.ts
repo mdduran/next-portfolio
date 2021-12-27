@@ -25,6 +25,7 @@ const projects: Project[] = [
     genre: 'Action, Adventure, Indie, RPG',
     accomplishments: 'First independent game released on Steam',
     splashImage: 'osmorrow.png',
+    website: 'https://osmorrow.net',
     description: 'An adventure set on the planet of Osmorrow, where the Ogre clan has run rampant. Your mission is to help restore peace and order to this world as you liberate Osmorrow from the Ogre oppression. Use high skilled melee and ranged combat along with swift and precise movement to quell the Ogre threat.'
   },
   {
@@ -37,7 +38,10 @@ const projects: Project[] = [
       'Created using the Unity game engine for the front end and used a Django backend to store game information using a relational database.',
     splashImage: 'step_symphony.png',
     description:
-      "Step Symphony is a location-based mobile game in which players can search for run-away creatures throughout Central Kyoto. These creatures, known as kyokubou (short for kyoku no bouame, or Musical Candy), are colorful animals in Japanese attire that play instruments. In order to find and catch these kyokubou, players must utilize panning directional music as well as their phone's camera to locate them. While searching for the kyokubou, the player is accompanied by the monkey kyokubou Sarushi. When the player finds the kyokubou, they are then prompted to capture the kyokubou by playing a rhythm game. When the kyokubou has  been captured, they are added to the player's collection and their instruments can be played. You can also view a story about the relationship of each kyokubou and their location within central Kyoto."
+      `Step Symphony is a location-based mobile game in which players can search for run-away creatures throughout Central Kyoto.
+       These creatures, known as kyokubou, are colorful animals in Japanese attire that play instruments.
+       In order to find and catch these kyokubou, players must utilize panning directional music as well as their phone's camera to locate them.
+       When the player finds the kyokubou, they are then prompted to capture the kyokubou by playing a rhythm game.`
   },
   {
     title: 'Rock Lives',
@@ -49,7 +53,10 @@ const projects: Project[] = [
       'This game was a group project for the final assignment in IMGD 3000 "Technical Game Development 1" course taught at WPI. This game was developed in a custom game engine called the Dragonfly. This version of the engine has sounds and procedural generation. I created the music and sound effects in the game. I also wrote the pathfinding aspect, monster stats and classes, as well as item stats and classes.',
     splashImage: 'rock-lives.png',
     description:
-      'Rock Lives is a survival game in which the player must defeat a horde of monsters while traveling through a rocky pass. When the player initiates play of the game he is given control of his avatar which will be referred to in game as a “Wanderer” He is then be placed in the game world to explore. The game world consists of a 2D grid of ASCII Characters. The world is made of an array of monsters, items, and environment tiles. The environment has two different types of tiles, walkable and unwalkable. Unwalkable tiles are represented by mountains. The goal of this game is to survive as long as possible until the player is defeated in battle by one of the monsters or starves to death. Along the way, the player will be able to find new weapons and armor to make the wanderer stronger. There are also items that heal, feed, and increase the strength of the wanderer. After defeating a foe the Wanderer may level up increasing the base stats of the character.',
+      `Rock Lives is a survival game in which the player must defeat a horde of monsters while traveling through a rocky pass.
+       The world is made of an array of monsters, items, and environment tiles.
+       The goal of this game is to survive as long as possible until the player is defeated in battle by one of the monsters or starves to death.
+       Along the way, the player will be able to explore to find new weapons, armor and food to keep yourself alive.`,
     trailer: 'https://youtube.com/embed/y741xuc-Ndc'
   },
   {
@@ -61,7 +68,11 @@ const projects: Project[] = [
     accomplishments: 'This game was a group project for the CS 3733 "Software Engineering" course taught at WPI.',
     splashImage: 'sixes-wild.png',
     description:
-      "This project consists of a playable game called Sixes Wild Game, and an accompanying Sixes Wild Level Builder. The Sixes Wild Game is a tile selection based game. The goal in each level is to create selections of tiles that add to a sum of six (6). Tiles have number values that represent how much they contribute towards a sum of six during a move, as well as a multiplier to increase the move's score. The level builder is used to create playable levels with tiles that can be added into the game."
+      `This project consists of a playable game called Sixes Wild, and an accompanying Sixes Wild Level Builder.
+       The goal of Sixes Wild is to create selections of tiles that add to a sum of six (6).
+       Tiles have number values that represent how much they contribute towards a sum of six during a move,
+       as well as a multiplier to increase the move's score.
+       The level builder is used to create playable levels with tiles that can be added into the game.`
   },
   {
     title: 'American Toad',
@@ -100,12 +111,12 @@ const projects: Project[] = [
     website: 'https://github.com/pegasystems/somaria'
   },
   {
-    title: 'Audio Visualizer using FMOD and OpenGL',
+    title: 'Audio Visualizer',
     projectType: 'software',
     yearDeveloped: 2017,
     accomplishments: '',
     // splashImage: "",
-    description: '',
+    description: 'Animated arbitrary models using spectrum data from a music player. Software was written in C++ and used the OpenGL programmable rendering pipeline. SFML was used for window creation and input. GLM was used for linear algebra classes. FMOD was used for playing music and calculating the real time sound spectrum.',
     trailer: 'https://youtube.com/embed/inPkhC5sN3Q'
   },
   {

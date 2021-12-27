@@ -25,10 +25,10 @@ const Header = (): React.ReactElement => {
           <Button component="h1">Marco Duran</Button>
         </Link>
         <div style={{ flexGrow: 1 }} />
-        <Link href="/projects" passHref>
+        <Link href="/portfolio" passHref>
           <IconButton>
             <FolderIcon style={{ paddingRight: '0.25em' }} />
-            {!isMobile && <>Projects</>}
+            {!isMobile && <>Portfolio</>}
           </IconButton>
         </Link>
         <div id="contacts">

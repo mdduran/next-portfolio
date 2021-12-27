@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "buildDev": "next build && next start"
+    "prod": "next build && next start"
   },
   "dependencies": {
     "@material-ui/core": "^4.12.3",

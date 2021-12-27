@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { useLoader } from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { Stage } from '@react-three/drei';
 import { MathUtils, TextureLoader, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry } from 'three';
 import { Project } from '@type';
 import '../../public/gltf/gamecart/gamecart.gltf';
@@ -40,11 +41,13 @@ export default function GameCartModel({ selectedProject }: GameCartModelProps): 
   const innerMeshGeometry: BufferGeometry = nodes['Cartridge-Mesh_1'].geometry;
 
   return (
-    <group ref={group} dispose={null}>
-      <mesh castShadow receiveShadow geometry={outerMeshGeometry} material={plasticMaterial} />
-      <mesh castShadow receiveShadow geometry={innerMeshGeometry}>
-        <meshStandardMaterial map={currentTexture} />
-      </mesh>
-    </group>
+    <Stage makeDefault intensity={1}>
+      <group ref={group} dispose={null}>
+        <mesh castShadow receiveShadow position={[0, 40, 0]} geometry={outerMeshGeometry} material={plasticMaterial} />
+        <mesh castShadow receiveShadow position={[0, 40, 0]} geometry={innerMeshGeometry}>
+          <meshStandardMaterial map={currentTexture} />
+        </mesh>
+      </group>
+    </Stage>
   );
 }

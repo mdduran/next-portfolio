@@ -20,7 +20,7 @@ const StyledCard = styled(Card)({
 });
 
 const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
-  const { title, yearDeveloped, platform, genre, downloadLink, website, description } = selectedProject;
+  const { title, yearDeveloped, platform, genre, downloadLink, website, description, projectType } = selectedProject;
   return (
     <StyledCard data-augmented-ui="tl-2-scoop t-round-xy r-round-xy br-2-round-xy b-clip l-rect-x both">
       <CardContent>
@@ -31,12 +31,16 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
           <ListItem>
             <ListItemText>Year developed: {yearDeveloped}</ListItemText>
           </ListItem>
-          <ListItem>
-            <ListItemText>Platform: {platform}</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemText>Genre: {genre}</ListItemText>
-          </ListItem>
+          {projectType === 'game' && (
+            <>
+              <ListItem>
+                <ListItemText>Platform: {platform}</ListItemText>
+              </ListItem>
+              <ListItem>
+                <ListItemText>Genre: {genre}</ListItemText>
+              </ListItem>
+            </>
+          )}
 
           {downloadLink && (
             <ListItem button>
