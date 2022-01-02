@@ -6,6 +6,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import theme from '@theme';
 import dynamic from 'next/dynamic';
+import type { Vector3 } from '@react-three/fiber';
 import ProjectCard from './ProjectCard';
 import ModelLoader from './ModelLoader';
 
@@ -23,11 +24,10 @@ const StyledGrid = styled(Grid)`
 const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
   const ref = React.useRef(null);
   const [currentProjectType, setCurrentProjectType] = React.useState(selectedProject.projectType);
-  const context = React.createContext(currentProjectType);
-
   React.useEffect(() => {
     setCurrentProjectType(selectedProject.projectType);
   }, [selectedProject]);
+  const modelPosition: Vector3 = currentProjectType === 'game' ? [0, 0, 0] : [0, -5, 0];
 
   return (
     <>
@@ -37,31 +37,26 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
             {/* Using a provider to specify the project type as there is an issue with re-rendering state objects in the canvas.
                   https://docs.pmnd.rs/react-three-fiber/advanced/gotchas
               */}
-            <Canvas
-              shadows
-              mode="concurrent"
-              dpr={[1, 2]}
-              camera={{ fov: 60, position: [0, 0, 0] }}
-              style={{ width: '400px', height: '300px' }}
-            >
-              <context.Provider value={currentProjectType}>
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 15, 5]} />
-                <OrbitControls
-                  ref={ref}
-                  autoRotate
-                  autoRotateSpeed={5}
-                  addEventListener={undefined}
-                  hasEventListener={undefined}
-                  removeEventListener={undefined}
-                  dispatchEvent={undefined}
-                />
-                <React.Suspense fallback={<ModelLoader />}>
-                  <context.Consumer>
-                    {(value) => (value === 'game' ? <GameCartModel selectedProject={selectedProject} /> : <CDRomModel />)}
-                  </context.Consumer>
-                </React.Suspense>
-              </context.Provider>
+            <Canvas style={{ width: '600px', height: '400px' }}>
+              <ambientLight intensity={0.5} />
+              <pointLight position={[10, 15, 5]} />
+              <OrbitControls
+                ref={ref}
+                autoRotate
+                autoRotateSpeed={5}
+                addEventListener={undefined}
+                hasEventListener={undefined}
+                removeEventListener={undefined}
+                dispatchEvent={undefined}
+                position={modelPosition}
+              />
+              <React.Suspense fallback={<ModelLoader />}>
+                {currentProjectType === 'game' ? (
+                  <GameCartModel selectedProject={selectedProject} position={modelPosition} />
+                ) : (
+                  <CDRomModel position={modelPosition} />
+                )}
+              </React.Suspense>
             </Canvas>
           </StyledGrid>
           <StyledGrid container item justifyContent="center">
