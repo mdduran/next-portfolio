@@ -26,6 +26,7 @@ const projects: Project[] = [
     accomplishments: 'First independent game released on Steam',
     splashImage: 'osmorrow.png',
     website: 'https://osmorrow.net',
+    shortDescription: 'A fast paced adventure game that challenges you to use high skilled melee and ranged combat to save Osmorrow from the Ogre clan threat.',
     description: 'An adventure set on the planet of Osmorrow, where the Ogre clan has run rampant. Your mission is to help restore peace and order to this world as you liberate Osmorrow from the Ogre oppression. Use high skilled melee and ranged combat along with swift and precise movement to quell the Ogre threat.'
   },
   {
@@ -37,8 +38,9 @@ const projects: Project[] = [
     accomplishments:
       'Created using the Unity game engine for the front end and used a Django backend to store game information using a relational database.',
     splashImage: 'step_symphony.png',
+    shortDescription: 'Step Symphony is a location-based mobile game in which players can search for run-away creatures throughout Central Kyoto.',
     description:
-      `Step Symphony is a location-based mobile game in which players can search for run-away creatures throughout Central Kyoto.
+      `
        These creatures, known as kyokubou, are colorful animals in Japanese attire that play instruments.
        In order to find and catch these kyokubou, players must utilize panning directional music as well as their phone's camera to locate them.
        When the player finds the kyokubou, they are then prompted to capture the kyokubou by playing a rhythm game.`

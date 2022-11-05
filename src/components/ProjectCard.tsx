@@ -1,6 +1,6 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import { Card, CardContent, Typography, List, ListItem, ListItemText, Link, styled } from '@material-ui/core';
+import { Card, CardContent, Typography, List, ListItem, ListItemText, Link, styled, Button } from '@material-ui/core';
 
 const StyledCard = styled(Card)({
   width: '80%',
@@ -20,7 +20,7 @@ const StyledCard = styled(Card)({
 });
 
 const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
-  const { title, yearDeveloped, platform, genre, downloadLink, website, description, projectType } = selectedProject;
+  const { title, yearDeveloped, platform, genre, downloadLink, website, description, projectType, shortDescription } = selectedProject;
   return (
     <StyledCard data-augmented-ui="tl-2-scoop t-round-xy r-round-xy br-2-round-xy b-clip l-rect-x both">
       <CardContent>
@@ -42,21 +42,35 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
             </>
           )}
 
-          {downloadLink && (
+          {downloadLink && downloadLink.length > 0 && (
             <ListItem button>
               <Link href={downloadLink}>Download</Link>
             </ListItem>
           )}
-          {website && (
+          {website && website.length > 0 && (
             <ListItem button>
               <Link href={website} target="_blank">
                 Website
               </Link>
             </ListItem>
           )}
-          <ListItem style={{ marginBottom: '32px' }}>
-            <ListItemText>Description: {description}</ListItemText>
-          </ListItem>
+          {shortDescription && (
+            <>
+              <ListItem style={{ marginBottom: '32px', paddingBottom: '32px', overflowY: 'scroll' }}>
+                <ListItemText>Short Description: {shortDescription}</ListItemText>
+              </ListItem>
+              <ListItem button>
+                <Button variant="contained" href={`#-${shortDescription}`}>
+                  Read more
+                </Button>
+              </ListItem>
+            </>
+          )}
+          {!shortDescription && (
+            <ListItem style={{ marginBottom: '32px', overflowY: 'scroll' }}>
+              <ListItemText>Description: {description}</ListItemText>
+            </ListItem>
+          )}
         </List>
       </CardContent>
     </StyledCard>

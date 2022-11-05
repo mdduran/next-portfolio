@@ -6,6 +6,7 @@ export type Project = {
   genre?: string;
   accomplishments?: string;
   splashImage?: string;
+  shortDescription?: string;
   description?: string;
   downloadLink?: string;
   trailer?: string;
