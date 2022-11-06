@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { isMobile } from 'react-device-detect';
 
 const Header = (): React.ReactElement => {
-  const [anchorEl, setAnchorEl] = React.useState<Element>(null);
+  const [anchorEl, setAnchorEl] = React.useState<Element | null>(null);
   const handleOpen = (event: React.SyntheticEvent) => {
     setAnchorEl(event.currentTarget);
   };

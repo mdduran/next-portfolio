@@ -1,4 +1,4 @@
-import { InputLabel, Select } from '@material-ui/core';
+import { Select, InputLabel, SelectChangeEvent } from '@mui/material';
 import type { Project } from 'types/types';
 import * as React from 'react';
 
@@ -26,14 +26,14 @@ const MobileProjectList = ({
     setSoftwareList(softwareList);
     setSelectedProject(projects[1]);
     // only want to run this once for initalizization
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (
-    e: React.ChangeEvent<{
+    e: SelectChangeEvent<{
       name?: string;
       value: string;
-    }>
+    }>,
+    child?: React.ReactNode
   ) => {
     const { value } = e.target;
     const filteredProjects = projects.filter((project) => project.title === value);
@@ -43,7 +43,13 @@ const MobileProjectList = ({
   return (
     <div id="mobile-project-list" style={{ margin: '0 20px', paddingTop: '20px' }}>
       <InputLabel id="selected-project">Selected Project</InputLabel>
-      <Select labelId="selected-project" style={{ width: '100%' }} native defaultValue={selectedProject.title} onChange={handleChange}>
+      <Select
+        labelId="selected-project"
+        style={{ width: '100%' }}
+        native
+        defaultValue={{ value: selectedProject.title }}
+        onChange={handleChange}
+      >
         <optgroup label="Games">
           {gamesList.map((game) => {
             return (

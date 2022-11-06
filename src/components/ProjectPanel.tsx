@@ -30,41 +30,37 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
   const modelPosition: Vector3 = currentProjectType === 'game' ? [0, 0, 0] : [0, -5, 0];
 
   return (
-    <>
-      {selectedProject && (
-        <StyledGrid container style={{ marginTop: '0.5rem' }} spacing={0}>
-          <StyledGrid container item justifyContent="center">
-            {/* Using a provider to specify the project type as there is an issue with re-rendering state objects in the canvas.
+    selectedProject && (
+      <StyledGrid container style={{ marginTop: '0.5rem' }} spacing={0}>
+        <StyledGrid container item justifyContent="center">
+          {/* Using a provider to specify the project type as there is an issue with re-rendering state objects in the canvas.
                   https://docs.pmnd.rs/react-three-fiber/advanced/gotchas
               */}
-            <Canvas style={{ width: '600px', height: '400px' }}>
-              <ambientLight intensity={0.5} />
-              <pointLight position={[10, 15, 5]} />
-              <OrbitControls
-                ref={ref}
-                autoRotate
-                autoRotateSpeed={5}
-                addEventListener={undefined}
-                hasEventListener={undefined}
-                removeEventListener={undefined}
-                dispatchEvent={undefined}
-                position={modelPosition}
-              />
-              <React.Suspense fallback={<ModelLoader />}>
-                {currentProjectType === 'game' ? (
-                  <GameCartModel selectedProject={selectedProject} position={modelPosition} />
-                ) : (
-                  <CDRomModel position={modelPosition} />
-                )}
-              </React.Suspense>
-            </Canvas>
-          </StyledGrid>
-          <StyledGrid container item justifyContent="center">
-            <ProjectCard selectedProject={selectedProject} />
-          </StyledGrid>
+          <Canvas style={{ width: '600px', height: '400px' }}>
+            <OrbitControls
+              ref={ref}
+              autoRotate
+              autoRotateSpeed={5}
+              addEventListener={undefined}
+              hasEventListener={undefined}
+              removeEventListener={undefined}
+              dispatchEvent={undefined}
+              position={modelPosition}
+            />
+            <React.Suspense fallback={<ModelLoader />}>
+              {currentProjectType === 'game' ? (
+                <GameCartModel selectedProject={selectedProject} position={modelPosition} />
+              ) : (
+                <CDRomModel position={modelPosition} />
+              )}
+            </React.Suspense>
+          </Canvas>
         </StyledGrid>
-      )}
-    </>
+        <StyledGrid container item justifyContent="center">
+          <ProjectCard selectedProject={selectedProject} />
+        </StyledGrid>
+      </StyledGrid>
+    )
   );
 };
 
