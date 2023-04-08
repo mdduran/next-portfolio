@@ -6,6 +6,18 @@ const projects: Project[] = [
     projectType: 'game'
   },
   {
+    title: 'Frame One',
+    projectType: 'game',
+    yearDeveloped: 2021,
+    platform: 'Web',
+    genre: 'Fighting',
+    accomplishments: '',
+    description: `A fighting game where move effects happen on the first frame of a button's press and release.
+                  The objective is to knock your opponent out until they lose all of their hearts.
+                  You can lose hearts when you lose all of your health or if you get knocked off the edge of the stage.`,
+    website: 'https://nightapparatus.itch.io/frame-one'
+  },
+  {
     title: "Laika's Journey",
     projectType: 'game',
     yearDeveloped: 2019,
@@ -13,7 +25,8 @@ const projects: Project[] = [
     genre: 'Puzzle',
     accomplishments: 'First independent game released on the Google Play Store, uses Unreal Engine 4',
     splashImage: '',
-    description: 'A 3D puzzle game where you play as Laika, a dog sent into space on a mission to explore the galaxy. The objective is to jump from planet to planet and explore the unique dangers that are found in Outer Space.',
+    description:
+      'A 3D puzzle game where you play as Laika, a dog sent into space on a mission to explore the galaxy. The objective is to jump from planet to planet and explore the unique dangers that are found in Outer Space.',
     website: 'https://laika-62929912.web.app/',
     downloadLink: 'https://play.google.com/store/apps/details?id=com.NightApparatus.Laika&hl=en_US&gl=US'
   },
@@ -26,8 +39,10 @@ const projects: Project[] = [
     accomplishments: 'First independent game released on Steam',
     splashImage: 'osmorrow.png',
     website: 'https://osmorrow.net',
-    shortDescription: 'A fast paced adventure game that challenges you to use high skilled melee and ranged combat to save Osmorrow from the Ogre clan threat.',
-    description: 'An adventure set on the planet of Osmorrow, where the Ogre clan has run rampant. Your mission is to help restore peace and order to this world as you liberate Osmorrow from the Ogre oppression. Use high skilled melee and ranged combat along with swift and precise movement to quell the Ogre threat.'
+    shortDescription:
+      'A fast paced adventure game that challenges you to use high skilled melee and ranged combat to save Osmorrow from the Ogre clan threat.',
+    description:
+      'An adventure set on the planet of Osmorrow, where the Ogre clan has run rampant. Your mission is to help restore peace and order to this world as you liberate Osmorrow from the Ogre oppression. Use high skilled melee and ranged combat along with swift and precise movement to quell the Ogre threat.'
   },
   {
     title: 'Step Symphony',
@@ -38,9 +53,9 @@ const projects: Project[] = [
     accomplishments:
       'Created using the Unity game engine for the front end and used a Django backend to store game information using a relational database.',
     splashImage: 'step_symphony.png',
-    shortDescription: 'Step Symphony is a location-based mobile game in which players can search for run-away creatures throughout Central Kyoto.',
-    description:
-      `
+    shortDescription:
+      'Step Symphony is a location-based mobile game in which players can search for run-away creatures throughout Central Kyoto.',
+    description: `
        These creatures, known as kyokubou, are colorful animals in Japanese attire that play instruments.
        In order to find and catch these kyokubou, players must utilize panning directional music as well as their phone's camera to locate them.
        When the player finds the kyokubou, they are then prompted to capture the kyokubou by playing a rhythm game.`
@@ -54,8 +69,7 @@ const projects: Project[] = [
     accomplishments:
       'This game was a group project for the final assignment in IMGD 3000 "Technical Game Development 1" course taught at WPI. This game was developed in a custom game engine called the Dragonfly. This version of the engine has sounds and procedural generation. I created the music and sound effects in the game. I also wrote the pathfinding aspect, monster stats and classes, as well as item stats and classes.',
     splashImage: 'rock-lives.png',
-    description:
-      `Rock Lives is a survival game in which the player must defeat a horde of monsters while traveling through a rocky pass.
+    description: `Rock Lives is a survival game in which the player must defeat a horde of monsters while traveling through a rocky pass.
        The world is made of an array of monsters, items, and environment tiles.
        The goal of this game is to survive as long as possible until the player is defeated in battle by one of the monsters or starves to death.
        Along the way, the player will be able to explore to find new weapons, armor and food to keep yourself alive.`,
@@ -69,8 +83,7 @@ const projects: Project[] = [
     genre: 'Puzzle Game',
     accomplishments: 'This game was a group project for the CS 3733 "Software Engineering" course taught at WPI.',
     splashImage: 'sixes-wild.png',
-    description:
-      `This project consists of a playable game called Sixes Wild, and an accompanying Sixes Wild Level Builder.
+    description: `This project consists of a playable game called Sixes Wild, and an accompanying Sixes Wild Level Builder.
        The goal of Sixes Wild is to create selections of tiles that add to a sum of six (6).
        Tiles have number values that represent how much they contribute towards a sum of six during a move,
        as well as a multiplier to increase the move's score.
@@ -94,21 +107,13 @@ const projects: Project[] = [
     projectType: 'software'
   },
   {
-    title: 'spicy-nan-facts',
-    projectType: 'software',
-    yearDeveloped: 2017,
-    accomplishments: '',
-    splashImage: '',
-    description: '',
-    downloadLink: 'https://github.com/mdduran/spicy-nan-facts'
-  },
-  {
     title: 'Somaria',
     projectType: 'software',
     yearDeveloped: 2018,
     accomplishments: 'First contribution to an open source project.',
     // splashImage: '',
-    description: 'Somaria draws shapes in WebGL based on a JSON object describing how data influences those shapes. This data is composed of "blocks" which interconnect so that data flows through calculations and into shapes.',
+    description:
+      'Somaria draws shapes in WebGL based on a JSON object describing how data influences those shapes. This data is composed of "blocks" which interconnect so that data flows through calculations and into shapes.',
     downloadLink: '#',
     website: 'https://github.com/pegasystems/somaria'
   },
@@ -118,7 +123,8 @@ const projects: Project[] = [
     yearDeveloped: 2017,
     accomplishments: '',
     // splashImage: "",
-    description: 'Animated arbitrary models using spectrum data from a music player. Software was written in C++ and used the OpenGL programmable rendering pipeline. SFML was used for window creation and input. GLM was used for linear algebra classes. FMOD was used for playing music and calculating the real time sound spectrum.',
+    description:
+      'Animated arbitrary models using spectrum data from a music player. Software was written in C++ and used the OpenGL programmable rendering pipeline. SFML was used for window creation and input. GLM was used for linear algebra classes. FMOD was used for playing music and calculating the real time sound spectrum.',
     trailer: 'https://youtube.com/embed/inPkhC5sN3Q'
   },
   {

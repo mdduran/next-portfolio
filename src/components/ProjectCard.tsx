@@ -1,28 +1,45 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import { Card, CardContent, Typography, List, ListItem, ListItemText, Link, styled, Button } from '@material-ui/core';
+import styled from '@emotion/styled';
+import { Box, Card, CardContent, CardMedia, Typography, List, ListItem, ListItemText, Link, Button } from '@mui/material';
+import { isMobile } from 'react-device-detect';
 
 const StyledCard = styled(Card)({
-  width: '80%',
-  height: '70%',
+  width: '80cw',
+  height: '50cw',
   '--aug-inlay': 'initial',
   '--aug-delegated-inlay': 'initial',
   '--aug-border-all': '8px',
   padding: '32px',
-  marginBottom: '48px',
+  margin: '32px',
   display: 'block',
   textAlign: 'center',
   '& .MuiListItem-root': {
     display: 'block',
     textAlign: 'center'
   }
-  /* TODO: Add mobile styles */
 });
 
+const StyledDescription = styled(ListItem)`
+  margin-bottom: ${isMobile ? '25px' : '200px'},
+  padding-bottom: '32px'
+`;
+
+const StyledShortDescription = styled(ListItem)`
+  margin-bottom: ${isMobile ? '0' : '48px'};
+  padding-bottom: '48px';
+`;
+
 const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
-  const { title, yearDeveloped, platform, genre, downloadLink, website, description, projectType, shortDescription } = selectedProject;
+  const { title, yearDeveloped, platform, genre, downloadLink, website, description, projectType, shortDescription, trailer } =
+    selectedProject;
   return (
     <StyledCard data-augmented-ui="tl-2-scoop t-round-xy r-round-xy br-2-round-xy b-clip l-rect-x both">
+      {trailer && (
+        <Box component="div" display="flex" justifyContent="center" alignItems="center" mt={2}>
+          <CardMedia component="iframe" title={title} src={trailer} />
+        </Box>
+      )}
       <CardContent>
         <Typography variant="h4" component="h2">
           {title ?? 'Project title'}
@@ -44,32 +61,34 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
 
           {downloadLink && downloadLink.length > 0 && (
             <ListItem button>
-              <Link href={downloadLink}>Download</Link>
+              <Link href={downloadLink} underline="hover">
+                Download
+              </Link>
             </ListItem>
           )}
           {website && website.length > 0 && (
             <ListItem button>
-              <Link href={website} target="_blank">
+              <Link href={website} target="_blank" underline="hover">
                 Website
               </Link>
             </ListItem>
           )}
           {shortDescription && (
             <>
-              <ListItem style={{ marginBottom: '32px', paddingBottom: '32px', overflowY: 'scroll' }}>
+              <StyledShortDescription>
                 <ListItemText>Short Description: {shortDescription}</ListItemText>
-              </ListItem>
+              </StyledShortDescription>
               <ListItem button>
-                <Button variant="contained" href={`#-${shortDescription}`}>
+                <Button variant="contained" href="#">
                   Read more
                 </Button>
               </ListItem>
             </>
           )}
           {!shortDescription && (
-            <ListItem style={{ marginBottom: '32px', overflowY: 'scroll' }}>
+            <StyledDescription>
               <ListItemText>Description: {description}</ListItemText>
-            </ListItem>
+            </StyledDescription>
           )}
         </List>
       </CardContent>

@@ -1,9 +1,12 @@
 /* eslint-disable no-param-reassign */
 import * as React from 'react';
 import { useGLTF, useTexture, Stage } from '@react-three/drei';
-import { MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry } from 'three';
+import { MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry, Group } from 'three';
 import { Project } from '@type';
+import { extend, Vector3 } from '@react-three/fiber';
 import '../../public/gltf/gamecart/gamecart.gltf';
+
+extend({ MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry, Group });
 
 const modelPath = './gltf/gamecart/gamecart.gltf';
 const baseTexturePath = './gltf/snesCartLabel.png';
@@ -11,7 +14,7 @@ const laikaTexturePath = './gltf/LaikasJourneyLabel.png';
 
 type GameCartModelProps = {
   selectedProject: Project;
-  position: number[];
+  position: Vector3;
 };
 
 export default function GameCartModel({ selectedProject, position }: GameCartModelProps): React.ReactElement {
@@ -23,7 +26,7 @@ export default function GameCartModel({ selectedProject, position }: GameCartMod
   baseTexture.rotation = MathUtils.degToRad(180);
   baseTexture.wrapS = MirroredRepeatWrapping;
   baseTexture.wrapT = RepeatWrapping;
-  const [currentTexture, setCurrentTexture] = React.useState<Texture | null>(baseTexture);
+  const [currentTexture, setCurrentTexture] = React.useState<Texture>(baseTexture);
   // Load the texture
   React.useEffect(() => {
     if (selectedProject.title === `Laika's Journey`) {
@@ -33,14 +36,16 @@ export default function GameCartModel({ selectedProject, position }: GameCartMod
     }
   }, [selectedProject.title, baseTexture, laikaTexture]);
 
-  const group: React.MutableRefObject<JSX.IntrinsicAttributes> = React.useRef(null);
+  const group = React.useRef<Group>(null);
   const { nodes, materials } = useGLTF(modelPath);
   const plasticMaterial: Material = materials.Plastic;
-  const outerMeshGeometry: BufferGeometry = nodes['Cartridge-Mesh'].geometry;
-  const innerMeshGeometry: BufferGeometry = nodes['Cartridge-Mesh_1'].geometry;
+  const cartMesh: any = nodes['Cartridge-Mesh'];
+  const cartMesh1: any = nodes['Cartridge-Mesh_1'];
+  const outerMeshGeometry: BufferGeometry = cartMesh.geometry;
+  const innerMeshGeometry: BufferGeometry = cartMesh1.geometry;
 
   return (
-    <Stage makeDefault intensity={1}>
+    <Stage intensity={1}>
       <group ref={group} dispose={null} position={position}>
         <mesh castShadow receiveShadow geometry={outerMeshGeometry} material={plasticMaterial} />
         <mesh castShadow receiveShadow geometry={innerMeshGeometry}>

@@ -3,8 +3,15 @@
     "browser": true,
     "es2021": true
   },
-  "parser": "@typescript-eslint/parser", 
-  "extends": ["next", "airbnb", "plugin:react/recommended", "plugin:react-hooks/recommended", "prettier", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "next",
+    "airbnb",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -15,13 +22,26 @@
   "plugins": ["react", "prettier", "react-hooks", "jsx-a11y"],
   "rules": {
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
-    "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+    "react/no-unknown-property": [
+      1,
+      { "ignore": ["position", "rotation", "dispose", "castShadow", "receiveShadow", "geometry", "material", "map", "intensity"] }
+    ],
+    "react-hooks/exhaustive-deps": "off", // Checks effect dependencies (Yes, i know what i'm doing!)
     "react/jsx-props-no-spreading": "off",
     "arrow-body-style": "off",
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": ["function-declaration", "arrow-function"],
+        "unnamedComponents": "arrow-function"
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -31,7 +51,7 @@
         "ts": "never",
         "tsx": "never"
       }
-   ]
+    ]
   },
   "root": true
 }

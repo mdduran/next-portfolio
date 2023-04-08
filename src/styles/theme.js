@@ -1,9 +1,20 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material/styles';
 import colors from './colors';
 
+const themeBreakpoints = {
+  xs: 0,
+  sm: 700,
+  md: 900,
+  lg: 1200,
+  xl: 1536
+};
+export const MediaQueries = Object.values(themeBreakpoints).map((breakpoint) => `@media (min-width: ${breakpoint}px)`);
 const theme = createTheme({
   typography: {
     fontFamily: "'Press Start 2P', cursive"
+  },
+  breakpoints: {
+    values: themeBreakpoints
   },
   palette: {
     primary: {
@@ -44,9 +55,40 @@ const theme = createTheme({
   },
   overrides: {
     MuiIconButton: {
-      root: {
-        fontFamily: "'Press Start 2P', cursive",
-        fontSize: 'small'
+      styleOverrides: {
+        root: {
+          'font-family': "'Press Start 2P', cursive",
+          'font-size': 'small'
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: colors.black
+        }
+      }
+    }
+  },
+  components: {
+    MuiCardMedia: {
+      styleOverrides: {
+        media: {
+          width: '100%',
+          [MediaQueries[0]]: {
+            height: '300px'
+          },
+          [MediaQueries[1]]: {
+            height: '300px'
+          },
+          [MediaQueries[2]]: {
+            height: '400px'
+          },
+          [MediaQueries[3]]: {
+            height: '600px',
+            width: '90%'
+          }
+        }
       }
     }
   }

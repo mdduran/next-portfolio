@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { isMobile } from 'react-device-detect';
-import { Grid } from '@material-ui/core';
-import styled from 'styled-components';
+import { Grid } from '@mui/material';
+import styled from '@emotion/styled';
 import { Project } from 'types/types';
 import ProjectList from '@components/ProjectList';
 import ProjectPanel from '@components/ProjectPanel';
