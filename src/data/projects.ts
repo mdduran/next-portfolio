@@ -107,15 +107,6 @@ const projects: Project[] = [
     projectType: 'software'
   },
   {
-    title: 'spicy-nan-facts',
-    projectType: 'software',
-    yearDeveloped: 2017,
-    accomplishments: '',
-    splashImage: '',
-    description: '',
-    downloadLink: 'https://github.com/mdduran/spicy-nan-facts'
-  },
-  {
     title: 'Somaria',
     projectType: 'software',
     yearDeveloped: 2018,

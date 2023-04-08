@@ -5,10 +5,15 @@ import { MenuList, MenuItem, ListItem, ListItemText, Tooltip, Collapse, List } f
 import theme from '@theme';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-const StyledWrapper = styled('div')`
+const StyledWrapper = styled.div`
   background-color: ${theme.palette.secondary.main};
   overflow-x: none;
   height: 100vh;
+`;
+
+const StyledMenuList = styled(MenuList)`
+  width: '100%';
+  max-width: '36ch';
 `;
 
 const StyledMenuItem = styled(ListItem)`
@@ -69,7 +74,7 @@ const ProjectList = ({
 
   return (
     <StyledWrapper>
-      <MenuList style={{ width: '100%', maxWidth: '36ch' }}>
+      <StyledMenuList>
         <StyledMenuItem key="Games" onClick={handleGamesClick}>
           <ListItemText>Games</ListItemText>
           {gamesOpen ? <ExpandLess /> : <ExpandMore />}
@@ -106,7 +111,7 @@ const ProjectList = ({
             })}
           </List>
         </Collapse>
-      </MenuList>
+      </StyledMenuList>
     </StyledWrapper>
   );
 };
