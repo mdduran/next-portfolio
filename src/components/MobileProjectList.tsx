@@ -1,4 +1,5 @@
 import { Select, InputLabel, SelectChangeEvent } from '@mui/material';
+import styled from '@emotion/styled';
 import type { Project } from 'types/types';
 import * as React from 'react';
 
@@ -40,8 +41,13 @@ const MobileProjectList = ({
     setSelectedProject(filteredProjects[0]);
   };
 
+  const StyledMobileProjectList = styled.div`
+    margin: 0 20px;
+    paddingtop: 20px;
+  `;
+
   return (
-    <div id="mobile-project-list" style={{ margin: '0 20px', paddingTop: '20px' }}>
+    <StyledMobileProjectList id="mobile-project-list">
       <InputLabel id="selected-project">Selected Project</InputLabel>
       <Select
         labelId="selected-project"
@@ -69,7 +75,7 @@ const MobileProjectList = ({
           })}
         </optgroup>
       </Select>
-    </div>
+    </StyledMobileProjectList>
   );
 };
 

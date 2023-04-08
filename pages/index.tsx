@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Card, CardContent, Divider, Link, Typography, styled, useTheme } from '@material-ui/core';
+import { Container, Card, CardContent, Divider, Link, Typography, styled, useTheme } from '@mui/material';
 
 export default function Home(): React.ReactNode {
   const theme = useTheme();
@@ -9,10 +9,10 @@ export default function Home(): React.ReactNode {
     display: 'flex',
     '& h1': {
       textAlign: 'center',
-      padding: `${theme.spacing(2)}px 0 0 ${theme.spacing(2)}px`
+      padding: `${theme.spacing(2)} 0 0 ${theme.spacing(2)}`
     },
     '& p': {
-      padding: `${theme.spacing(2)}px 0 ${theme.spacing(2)}px 0`
+      padding: `${theme.spacing(2)} 0 ${theme.spacing(2)} 0`
     }
   });
 
@@ -26,7 +26,7 @@ export default function Home(): React.ReactNode {
 
   const StyledCardContent = styled(CardContent)({
     flex: '1 0 auto',
-    margin: `0 ${theme.spacing(4)}px ${theme.spacing(2)}px ${theme.spacing(4)}px`
+    margin: `0 ${theme.spacing(4)} ${theme.spacing(2)} ${theme.spacing(4)}`
   });
 
   return (

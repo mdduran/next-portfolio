@@ -1,24 +1,67 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import styled from 'styled-components';
-import Grid from '@material-ui/core/Grid';
+import styled from '@emotion/styled';
+import Box from '@mui/material/Box';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { OrbitControls, Html, useProgress, Preload } from '@react-three/drei';
 import theme from '@theme';
 import dynamic from 'next/dynamic';
 import type { Vector3 } from '@react-three/fiber';
 import ProjectCard from './ProjectCard';
-import ModelLoader from './ModelLoader';
+
+function ModelLoader(): React.ReactElement {
+  const { progress } = useProgress();
+  return <Html center>{progress} % loaded</Html>;
+}
 
 const GameCartModel = dynamic(() => import('./GameCartModel'), {
-  ssr: false
+  loading: () => <ModelLoader />
 });
 const CDRomModel = dynamic(() => import('./CDRomModel'), {
-  ssr: false
+  loading: () => <ModelLoader />
 });
 
-const StyledGrid = styled(Grid)`
+const StyledOuterBox = styled(Box)`
   background-color: ${theme.palette.primary.main};
+  margin-top: 1rem;
+`;
+const mediaQueries = Object.values(theme.breakpoints.values).map((bp) => `@media (min-width: ${bp}px)`);
+const StyledInnerBox = styled(Box)`
+  background-color: ${theme.palette.secondary.main};
+  border: 2px solid;
+  ${mediaQueries[0]} {
+    width: 300px;
+    height: 300px;
+    margin: 0 10%;
+  }
+  ${mediaQueries[1]} {
+    width: 400px;
+    height: 300px;
+    margin: 0 25%;
+  }
+  ${mediaQueries[2]} {
+    width: 800px;
+    height: 600px;
+    margin: 0 25%;
+  }
+`;
+
+const StyledProjectCardBox = styled(Box)`
+  background-color: ${theme.palette.primary.main};
+`;
+const StyledCanvas = styled(Canvas)`
+  ${mediaQueries[0]} {
+    width: 300px;
+    height: 200px;
+  }
+  ${mediaQueries[1]} {
+    width: 400px;
+    height: 300px;
+  }
+  ${mediaQueries[2]} {
+    width: 800px;
+    height: 600px;
+  }
 `;
 
 const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
@@ -31,12 +74,12 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
 
   return (
     selectedProject && (
-      <StyledGrid container style={{ marginTop: '0.5rem' }} spacing={0}>
-        <StyledGrid container item justifyContent="center">
+      <StyledOuterBox>
+        <StyledInnerBox sx={{ justifyContent: 'center' }}>
           {/* Using a provider to specify the project type as there is an issue with re-rendering state objects in the canvas.
                   https://docs.pmnd.rs/react-three-fiber/advanced/gotchas
               */}
-          <Canvas style={{ width: '600px', height: '400px' }}>
+          <StyledCanvas>
             <OrbitControls
               ref={ref}
               autoRotate
@@ -47,19 +90,22 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
               dispatchEvent={undefined}
               position={modelPosition}
             />
-            <React.Suspense fallback={<ModelLoader />}>
-              {currentProjectType === 'game' ? (
+            {currentProjectType === 'game' ? (
+              <React.Suspense fallback={null}>
                 <GameCartModel selectedProject={selectedProject} position={modelPosition} />
-              ) : (
+              </React.Suspense>
+            ) : (
+              <React.Suspense fallback={null}>
                 <CDRomModel position={modelPosition} />
-              )}
-            </React.Suspense>
-          </Canvas>
-        </StyledGrid>
-        <StyledGrid container item justifyContent="center">
+              </React.Suspense>
+            )}
+            <Preload all />
+          </StyledCanvas>
+        </StyledInnerBox>
+        <StyledProjectCardBox sx={{ justifyContent: 'center' }}>
           <ProjectCard selectedProject={selectedProject} />
-        </StyledGrid>
-      </StyledGrid>
+        </StyledProjectCardBox>
+      </StyledOuterBox>
     )
   );
 };

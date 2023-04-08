@@ -1,13 +1,32 @@
 /* eslint-disable @next/next/no-document-import-in-page */
 import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { ServerStyleSheets } from '@material-ui/core/styles';
+import ServerStyleSheets from '@mui/styles/ServerStyleSheets';
 import theme from '@theme';
+import { styled } from '@mui/material/styles';
+
+const StyledHTML = styled(Html)`
+  font-family: 'Press Start 2P', cursive;
+  font-size: medium;
+`;
+const StyledBody = styled('body')`
+  padding: 0;
+  margin: 0;
+  height: 100%;
+`;
+
+const StyledNext = styled(NextScript)`
+  height: 100%;
+`;
+
+const StyledMain = styled(Main)`
+  height: 100%;
+`;
 
 export default class MyDocument extends Document {
   render(): React.ReactElement {
     return (
-      <Html lang="en">
+      <StyledHTML lang="en">
         <Head>
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
@@ -16,11 +35,11 @@ export default class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
           <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
         </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </Html>
+        <StyledBody>
+          <StyledMain />
+          <StyledNext />
+        </StyledBody>
+      </StyledHTML>
     );
   }
 }

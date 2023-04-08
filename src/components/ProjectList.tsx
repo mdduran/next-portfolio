@@ -1,11 +1,11 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import styled from 'styled-components';
-import { MenuList, MenuItem, ListItem, ListItemText, Tooltip, Collapse, List } from '@material-ui/core';
+import styled from '@emotion/styled';
+import { MenuList, MenuItem, ListItem, ListItemText, Tooltip, Collapse, List } from '@mui/material';
 import theme from '@theme';
-import { ExpandLess, ExpandMore } from '@material-ui/icons';
+import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled('div')`
   background-color: ${theme.palette.secondary.main};
   overflow-x: none;
   height: 100vh;
@@ -70,7 +70,7 @@ const ProjectList = ({
   return (
     <StyledWrapper>
       <MenuList style={{ width: '100%', maxWidth: '36ch' }}>
-        <StyledMenuItem button key="Games" onClick={handleGamesClick}>
+        <StyledMenuItem key="Games" onClick={handleGamesClick}>
           <ListItemText>Games</ListItemText>
           {gamesOpen ? <ExpandLess /> : <ExpandMore />}
         </StyledMenuItem>
@@ -88,7 +88,7 @@ const ProjectList = ({
             })}
           </List>
         </Collapse>
-        <StyledMenuItem button key="Software" onClick={handleSoftwareClick}>
+        <StyledMenuItem key="Software" onClick={handleSoftwareClick}>
           <ListItemText>Software</ListItemText>
           {softwareOpen ? <ExpandLess /> : <ExpandMore />}
         </StyledMenuItem>

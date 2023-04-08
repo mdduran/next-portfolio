@@ -1,9 +1,18 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme } from '@mui/material/styles';
 import colors from './colors';
 
 const theme = createTheme({
   typography: {
     fontFamily: "'Press Start 2P', cursive"
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 700,
+      md: 900,
+      lg: 1200,
+      xl: 1536
+    }
   },
   palette: {
     primary: {
@@ -44,9 +53,18 @@ const theme = createTheme({
   },
   overrides: {
     MuiIconButton: {
-      root: {
-        fontFamily: "'Press Start 2P', cursive",
-        fontSize: 'small'
+      styleOverrides: {
+        root: {
+          'font-family': "'Press Start 2P', cursive",
+          'font-size': 'small'
+        }
+      }
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          color: colors.black
+        }
       }
     }
   }
