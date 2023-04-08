@@ -1,16 +1,18 @@
 {
-  "extends": [
-    "development"
-  ],
+  "extends": ["development"],
   "hints": {
     "compat-api/html": [
       "default",
       {
-        "ignore": [
-          "meta[name=theme-color]"
-        ]
+        "ignore": ["meta[name=theme-color]"]
       }
     ],
-    "no-inline-styles": "off"
+    "no-inline-styles": "warning",
+    "axe/forms": [
+      "default",
+      {
+        "select-name": "off"
+      }
+    ]
   }
 }
