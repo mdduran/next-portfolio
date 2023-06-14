@@ -60,14 +60,14 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
           )}
 
           {downloadLink && downloadLink.length > 0 && (
-            <ListItem button>
+            <ListItem>
               <Link href={downloadLink} underline="hover">
                 Download
               </Link>
             </ListItem>
           )}
           {website && website.length > 0 && (
-            <ListItem button>
+            <ListItem>
               <Link href={website} target="_blank" underline="hover">
                 Website
               </Link>
@@ -78,7 +78,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
               <StyledShortDescription>
                 <ListItemText>Short Description: {shortDescription}</ListItemText>
               </StyledShortDescription>
-              <ListItem button>
+              <ListItem>
                 <Button variant="contained" href="#">
                   Read more
                 </Button>
