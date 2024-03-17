@@ -26,24 +26,18 @@ const MobileProjectList = ({
     setGamesList(gamesList);
     setSoftwareList(softwareList);
     setSelectedProject(projects[1]);
-    // only want to run this once for initalizization
+    // only want to run this once for initialization
   }, []);
 
-  const handleChange = (
-    e: SelectChangeEvent<{
-      name?: string;
-      value: string;
-    }>,
-    child?: React.ReactNode
-  ) => {
-    const { value } = e.target;
+  const handleChange = (event: SelectChangeEvent) => {
+    const { value } = event.target;
     const filteredProjects = projects.filter((project) => project.title === value);
     setSelectedProject(filteredProjects[0]);
   };
 
   const StyledMobileProjectList = styled.div`
-    margin: 0 20px;
-    paddingtop: 20px;
+    padding-top: 20px;
+    margin: 0 15px;
   `;
 
   return (
@@ -51,9 +45,9 @@ const MobileProjectList = ({
       <InputLabel id="selected-project">Selected Project</InputLabel>
       <Select
         labelId="selected-project"
-        style={{ width: '100%' }}
         native
-        defaultValue={{ value: selectedProject.title }}
+        defaultValue={selectedProject.title}
+        value={selectedProject.title}
         onChange={handleChange}
       >
         <optgroup label="Games">
