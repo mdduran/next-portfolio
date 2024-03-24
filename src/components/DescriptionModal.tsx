@@ -50,8 +50,8 @@ const StyledDescriptionModal = styled(Box)`
     overflow-x: auto;
   }
 `;
-
-const DescriptionModal = ({ description, handleClose }: { description: string | undefined, handleClose: () => React.ComponentState }): React.ReactElement => {
+export type DescriptionModalType = { description: string | undefined, handleClose: () => React.ComponentState };
+const DescriptionModalInner = ({ description, handleClose }: DescriptionModalType): React.ReactElement => {
   return (
     <StyledDescriptionModal data-augmented-ui="t-round-x b-round-x r-round-xy l-round-xy both">
       <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -68,5 +68,14 @@ const DescriptionModal = ({ description, handleClose }: { description: string | 
     </StyledDescriptionModal>
   )
 };
+
+const DescriptionModal = React.forwardRef((props: DescriptionModalType, ref) => {
+  const { description, handleClose } = props;
+  return (
+    <DescriptionModalInner description={description} handleClose={handleClose} />
+  )
+});
+
+DescriptionModal.displayName = "DescriptionModal";
 
 export default DescriptionModal;

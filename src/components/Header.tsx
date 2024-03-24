@@ -1,10 +1,5 @@
 /* eslint-disable react/jsx-no-bind */
-import { AppBar, Box, IconButton, MenuItem, Toolbar, Link as MLink } from '@mui/material';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import Menu from '@mui/material/Menu';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import { AppBar, Box, IconButton, MenuItem, Toolbar, Link as MLink, Button, Menu, Typography, Grid } from '@mui/material';
 import ContactIcon from '@mui/icons-material/ContactMail';
 import FolderIcon from '@mui/icons-material/Folder';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
@@ -13,6 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import * as React from 'react';
 import Link from 'next/link';
 import styled from '@emotion/styled';
+import { MediaQueries } from '@theme';
 import { isMobile } from 'react-device-detect';
 
 const Header = (): React.ReactElement => {
@@ -43,55 +39,78 @@ const Header = (): React.ReactElement => {
     display: flex;
     align-items: center;
     text-align: center;
+    width: 100%;
+  `;
+  const StyledToolbar = styled(Toolbar)`
+    width: 100%;
+    display: flex;
   `;
   const StyledButtonText = styled(Typography)`
     font-size: 8px;
+    margin-left: 4px;
+  `;
+  const StyledMobileButtonText = styled(Typography)`
+    font-size: 8px;
+  `;
+
+  const StyledNavItems = styled(Box)`
+    ${MediaQueries[1]},
+    ${MediaQueries[2]} {
+      float: right;
+    }
+    display: flex;
   `;
 
   return (
     <AppBar position="static">
       <StyledBox>
-        <Toolbar>
+        <StyledToolbar>
           <StyledLink href="/" passHref>
             <StyledButton>Marco Duran</StyledButton>
           </StyledLink>
           <StyledDiv />
-          <StyledLink href="/projects" passHref>
-            <StyledIconButton size="large">
-              <Grid container spacing={2}>
-                <Grid sx={{ marginLeft: '26px', marginTop: '6px', padding: '0' }}>
-                  <FolderIcon />
-                </Grid>
-                <Grid sx={{ paddingTop: '10px' }}>
-                  <StyledButtonText variant="button">Projects</StyledButtonText>
-                </Grid>
-              </Grid>
-            </StyledIconButton>
-          </StyledLink>
-          <div id="contacts" aria-label="contacts">
-            <Tooltip title="Contact">
-              <div>
-                <StyledIconButton
-                  id="contacts-button"
-                  onClick={handleClick}
-                  aria-haspopup="true"
-                  aria-controls={open ? 'contacts-menu' : undefined}
-                  aria-expanded={open ? 'true' : undefined}
-                  size="large"
-                >
-                  <Grid container spacing={2}>
-                    <Grid sx={{ marginLeft: '24px', marginTop: '6px', padding: '0' }}>
-                      <ContactIcon />
-                    </Grid>
-                    <Grid sx={{ paddingTop: '10px' }}>
-                      <StyledButtonText variant="button">Contact</StyledButtonText>
-                    </Grid>
+          <StyledNavItems>
+            <StyledLink href="/projects" passHref>
+              <StyledIconButton size="large">
+                <Grid container spacing={2}>
+                  <Grid sx={{ marginLeft: '26px', marginTop: '6px', padding: '0' }}>
+                    <FolderIcon />
                   </Grid>
-                </StyledIconButton>
-              </div>
-            </Tooltip>
-          </div>
-        </Toolbar>
+                  <Grid sx={{ paddingTop: '10px' }}>
+                    {isMobile ? (
+                      <StyledMobileButtonText variant="button">Projects</StyledMobileButtonText>
+                    ) : (
+                      <StyledButtonText variant="button">Projects</StyledButtonText>
+                    )}
+                  </Grid>
+                </Grid>
+              </StyledIconButton>
+            </StyledLink>
+            <div id="contacts" aria-label="contacts">
+              <StyledIconButton
+                id="contacts-button"
+                onClick={handleClick}
+                aria-haspopup="true"
+                aria-controls={open ? 'contacts-menu' : undefined}
+                aria-expanded={open ? 'true' : undefined}
+                size="large"
+              >
+                <Grid container spacing={2}>
+                  <Grid sx={{ marginLeft: '24px', marginTop: '6px', padding: '0' }}>
+                    <ContactIcon />
+                  </Grid>
+                  <Grid sx={{ paddingTop: '10px' }}>
+                    {isMobile ? (
+                      <StyledMobileButtonText variant="button">Contact</StyledMobileButtonText>
+                    ) : (
+                      <StyledButtonText variant="button">Contact</StyledButtonText>
+                    )}
+                  </Grid>
+                </Grid>
+              </StyledIconButton>
+            </div>
+          </StyledNavItems>
+        </StyledToolbar>
       </StyledBox>
       <Menu
         anchorEl={anchorEl}

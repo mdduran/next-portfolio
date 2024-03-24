@@ -1,14 +1,14 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { MenuList, MenuItem, ListItem, ListItemText, Tooltip, Collapse, List } from '@mui/material';
+import { MenuList, MenuItem, ListItem, ListItemText, Collapse, List } from '@mui/material';
 import theme from '@theme';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 const StyledWrapper = styled.div`
   background-color: ${theme.palette.secondary.main};
   overflow-x: none;
-  height: 100vh;
+  height: 100%;
 `;
 
 const StyledMenuList = styled(MenuList)`
@@ -84,11 +84,9 @@ const ProjectList = ({
             {gamesList.map((game: Project) => {
               const { title } = game;
               return (
-                <Tooltip key={title} title={title} enterDelay={500} leaveDelay={50}>
-                  <StyledSubMenuItem selected={selectedProject.title === title} onClick={() => setSelectedProject(game)}>
-                    <StyledMenuText>{title}</StyledMenuText>
-                  </StyledSubMenuItem>
-                </Tooltip>
+                <StyledSubMenuItem key={title} selected={selectedProject.title === title} onClick={() => setSelectedProject(game)}>
+                  <StyledMenuText>{title}</StyledMenuText>
+                </StyledSubMenuItem>
               );
             })}
           </List>
@@ -102,11 +100,9 @@ const ProjectList = ({
             {softwareList.map((software: Project) => {
               const { title } = software;
               return (
-                <Tooltip key={title} title={title} enterDelay={500} leaveDelay={50}>
-                  <StyledSubMenuItem selected={selectedProject.title === title} onClick={() => setSelectedProject(software)}>
-                    <StyledMenuText>{title}</StyledMenuText>
-                  </StyledSubMenuItem>
-                </Tooltip>
+                <StyledSubMenuItem key={title} selected={selectedProject.title === title} onClick={() => setSelectedProject(software)}>
+                  <StyledMenuText>{title}</StyledMenuText>
+                </StyledSubMenuItem>
               );
             })}
           </List>

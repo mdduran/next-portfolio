@@ -1,7 +1,7 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
 import styled from '@emotion/styled';
-import { Box, Card, CardContent, CardMedia, Modal, Typography, List, ListItem, ListItemText, Link, Button } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Modal, Typography, List, ListItem, ListItemText, Link, Button, Backdrop } from '@mui/material';
 import { isMobile } from 'react-device-detect';
 import { MediaQueries } from '@theme';
 import DescriptionModal from './DescriptionModal';
@@ -58,6 +58,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
   const { title, yearDeveloped, platform, genre, downloadLink, website, description, projectType, shortDescription, trailer } =
     selectedProject;
   const [openModal, setOpenModal] = React.useState(false);
+  const open = Boolean(openModal);
   const handleOpen = () => setOpenModal(true);
   const handleClose = () => setOpenModal(false);
 
@@ -110,12 +111,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
                 <Button onClick={handleOpen} variant="contained">
                   Read More
                 </Button>
-                <Modal
-                  open={openModal}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
+                <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                   <DescriptionModal description={description} handleClose={handleClose} />
                 </Modal>
               </ListItem>
