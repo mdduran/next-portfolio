@@ -29,9 +29,9 @@ const StyledInnerBox = styled(Box)`
   background-color: ${theme.palette.secondary.main};
   border: 2px solid;
   ${MediaQueries[0]} {
-    width: 300px;
-    height: 300px;
-    margin: 0 10%;
+    width: 240px;
+    height: 200px;
+    margin: 0 20px;
   }
   ${MediaQueries[1]} {
     width: 400px;
@@ -50,7 +50,7 @@ const StyledProjectCardBox = styled(Box)`
 `;
 const StyledCanvas = styled(Canvas)`
   ${MediaQueries[0]} {
-    width: 300px;
+    width: 200px;
     height: 200px;
   }
   ${MediaQueries[1]} {
