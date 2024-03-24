@@ -6,6 +6,7 @@ import { AppProps } from 'next/dist/shared/lib/router/router';
 import Header from '@components/Header';
 import theme from '@theme';
 import 'augmented-ui/augmented-ui.min.css';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function App({ Component, pageProps }: AppProps): React.ReactElement {
   React.useEffect(() => {
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps): React.ReactElem
         <div className="site">
           <Header />
           <Component {...pageProps} />
+          <SpeedInsights />
         </div>
       </ThemeProvider>
     </StyledEngineProvider>
