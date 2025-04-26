@@ -8,6 +8,13 @@ const themeBreakpoints = {
   lg: 1200,
   xl: 1536
 };
+export const MediaQueryIndex = {
+  xs: 0,
+  sm: 1,
+  md: 2,
+  lg: 3,
+  xl: 4
+};
 export const MediaQueries = Object.values(themeBreakpoints).map((breakpoint) => `@media (min-width: ${breakpoint}px)`);
 const theme = createTheme({
   typography: {
@@ -75,16 +82,16 @@ const theme = createTheme({
       styleOverrides: {
         media: {
           width: '100%',
-          [MediaQueries[0]]: {
+          [MediaQueries[MediaQueryIndex.xs]]: {
             height: '300px'
           },
-          [MediaQueries[1]]: {
+          [MediaQueries[MediaQueryIndex.sm]]: {
             height: '300px'
           },
-          [MediaQueries[2]]: {
+          [MediaQueries[MediaQueryIndex.md]]: {
             height: '400px'
           },
-          [MediaQueries[3]]: {
+          [MediaQueries[MediaQueryIndex.lg]]: {
             height: '600px',
             width: '90%'
           }
