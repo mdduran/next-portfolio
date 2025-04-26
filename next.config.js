@@ -10,7 +10,6 @@ module.exports = withTM({
   eslint: {
     dirs: ['pages', 'src/components']
   },
-  swcMinify: false,
   webpack(config) {
     config.module.rules.push({
       test: /\.(gltf)$/i,

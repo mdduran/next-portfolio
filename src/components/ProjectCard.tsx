@@ -3,23 +3,23 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 import { Box, Card, CardContent, CardMedia, Modal, Typography, List, ListItem, ListItemText, Link, Button, Backdrop } from '@mui/material';
 import { isMobile } from 'react-device-detect';
-import { MediaQueries } from '@theme';
+import { MediaQueries, MediaQueryIndex } from '@theme';
 import DescriptionModal from './DescriptionModal';
 
 const StyledCard = styled(Card)`
-  ${MediaQueries[0]} {
+  ${MediaQueries[MediaQueryIndex.xs]} {
     width: 270px;
     padding: 15px 10px;
     margin: 15px 5px;
   }
 
-  ${MediaQueries[1]} {
+  ${MediaQueries[MediaQueryIndex.sm]} {
     width: 600px;
     padding: 32px;
     margin: 32px;i
   }
 
-  ${MediaQueries[2]} {
+  ${MediaQueries[MediaQueryIndex.md]} {
     width: 800px;
     padding: 32px;
     margin: 32px;
@@ -35,7 +35,7 @@ const StyledCard = styled(Card)`
   }
 
   h2 {
-    ${MediaQueries[0]} {
+    ${MediaQueries[MediaQueryIndex.xs]} {
       font-size: 1.20rem;
       padding-top: 20px;
       display: flex;

@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import Box from '@mui/material/Box';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Html, useProgress, Preload } from '@react-three/drei';
-import theme, { MediaQueries } from '@theme';
+import theme, { MediaQueries, MediaQueryIndex } from '@theme';
 import dynamic from 'next/dynamic';
 import type { Vector3 } from '@react-three/fiber';
 import ProjectCard from './ProjectCard';
@@ -24,21 +24,26 @@ const CDRomModel = dynamic(() => import('./CDRomModel'), {
 const StyledOuterBox = styled(Box)`
   background-color: ${theme.palette.primary.main};
   margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
 `;
 const StyledInnerBox = styled(Box)`
   background-color: ${theme.palette.secondary.main};
   border: 2px solid;
-  ${MediaQueries[0]} {
+  ${MediaQueries[MediaQueryIndex.xs]} {
     width: 240px;
     height: 200px;
     margin: 0 20px;
   }
-  ${MediaQueries[1]} {
+  ${MediaQueries[MediaQueryIndex.sm]} {
     width: 400px;
     height: 300px;
     margin: 0 25%;
   }
-  ${MediaQueries[2]} {
+  ${MediaQueries[MediaQueryIndex.md]} {
     width: 800px;
     height: 600px;
     margin: 0 25%;
@@ -49,15 +54,15 @@ const StyledProjectCardBox = styled(Box)`
   background-color: ${theme.palette.primary.main};
 `;
 const StyledCanvas = styled(Canvas)`
-  ${MediaQueries[0]} {
+  ${MediaQueries[MediaQueryIndex.xs]} {
     width: 200px;
     height: 200px;
   }
-  ${MediaQueries[1]} {
+  ${MediaQueries[MediaQueryIndex.sm]} {
     width: 400px;
     height: 300px;
   }
-  ${MediaQueries[2]} {
+  ${MediaQueries[MediaQueryIndex.md]} {
     width: 800px;
     height: 600px;
   }
@@ -86,7 +91,7 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
                 hasEventListener={undefined}
                 removeEventListener={undefined}
                 dispatchEvent={undefined}
-                position={modelPosition}
+                position0={modelPosition}
               />
               {currentProjectType === 'game' ? (
                 <React.Suspense fallback={null}>

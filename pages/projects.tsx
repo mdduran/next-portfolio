@@ -20,11 +20,11 @@ function Projects(): React.ReactNode {
   return (
     <StyledGrid container>
       {!isMobile && (
-        <StyledGrid item xs={2} md={2}>
+        <StyledGrid size={{ xs: 2, md: 2 }}>
           <ProjectList projects={projects} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         </StyledGrid>
       )}
-      <StyledGrid container item xs={isMobile ? 12 : 10}>
+      <StyledGrid container size={{ xs: isMobile ? 12 : 10 }}>
         {isMobile && <MobileProjectList projects={projects} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />}
         <ProjectPanel selectedProject={selectedProject} />
       </StyledGrid>

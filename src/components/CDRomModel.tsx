@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useGLTF, useTexture, Stage } from '@react-three/drei';
 import { MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry, Group, Object3D } from 'three';
-import { BufferGeometryNode, extend, ThreeElements } from '@react-three/fiber';
+import { extend, ThreeElements } from '@react-three/fiber';
 
-extend({ MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry, Group, Object3D });
+extend({ Texture, Material, BufferGeometry, Group, Object3D });
 
 const modelPath = './gltf/lowpoly_cd/lowpolycd.gltf';
 const texturePath = './gltf/lowpoly_cd/textures/lambert2SG_baseColor.png';
@@ -18,7 +18,7 @@ export default function CDRomModel(props: ThreeElements['group']): React.ReactEl
   const meshMaterial: Material = materials.lambert2SG;
   // TODO: Wtf is this type?!
   const objectNode: any = nodes.Object_2;
-  const outerMeshGeometry: BufferGeometryNode<BufferGeometry, typeof BufferGeometry> = objectNode.geometry;
+  const outerMeshGeometry: any = objectNode.geometry;
 
   return (
     <Stage intensity={1}>

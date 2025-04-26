@@ -8,7 +8,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import * as React from 'react';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { MediaQueries } from '@theme';
+import { MediaQueries, MediaQueryIndex } from '@theme';
 import { isMobile } from 'react-device-detect';
 
 const Header = (): React.ReactElement => {
@@ -54,8 +54,8 @@ const Header = (): React.ReactElement => {
   `;
 
   const StyledNavItems = styled(Box)`
-    ${MediaQueries[1]},
-    ${MediaQueries[2]} {
+    ${MediaQueries[MediaQueryIndex.sm]},
+    ${MediaQueries[MediaQueryIndex.md]} {
       float: right;
     }
     display: flex;

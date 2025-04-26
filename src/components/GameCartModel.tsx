@@ -6,7 +6,7 @@ import { Project } from '@type';
 import { extend, Vector3 } from '@react-three/fiber';
 import '../../public/gltf/gamecart/gamecart.gltf';
 
-extend({ MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry, Group });
+extend({ Texture, Material, BufferGeometry, Group });
 
 const modelPath = './gltf/gamecart/gamecart.gltf';
 const baseTexturePath = './gltf/snesCartLabel.png';

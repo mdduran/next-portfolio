@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import * as React from 'react';
 import { Box, Button, Typography } from '@mui/material';
-import theme, { MediaQueries } from '@theme';
+import theme, { MediaQueries, MediaQueryIndex } from '@theme';
 
 const StyledDescriptionModal = styled(Box)`
   position: absolute;
@@ -9,14 +9,14 @@ const StyledDescriptionModal = styled(Box)`
   left: 50%;
   transform: translate(-50%, -50%);
 
-  ${MediaQueries[0]} {
+  ${MediaQueries[MediaQueryIndex.xs]} {
     width: 200px;
     height: 400px;
   }
-  ${MediaQueries[1]} {
+  ${MediaQueries[MediaQueryIndex.sm]} {
     width: 400px;
   }
-  ${MediaQueries[2]} {
+  ${MediaQueries[MediaQueryIndex.md]} {
     width: 600px;
   }
   border: 2px solid #000;
