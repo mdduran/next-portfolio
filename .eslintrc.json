@@ -6,7 +6,6 @@
   "parser": "@typescript-eslint/parser",
   "extends": [
     "next",
-    "airbnb",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "prettier",
@@ -32,7 +31,7 @@
     "react/forbid-prop-types": "off",
     "react/jsx-filename-extension": "off",
     "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-use-before-define": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "react/function-component-definition": [
