@@ -19,7 +19,7 @@
     "@react-three/drei": "^10.0.7",
     "@react-three/fiber": "^9.1.2",
     "@typescript-eslint/eslint-plugin": "^8.31.0",
-    "@typescript-eslint/parser": "^8.31.0",
+    "@typescript-eslint/parser": "^8.31.1",
     "@vercel/speed-insights": "^1.2.0",
     "augmented-ui": "^2.0.0",
     "next": "^15.3.1",
