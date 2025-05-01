@@ -18,7 +18,7 @@
     "@mui/system": "^7.0.2",
     "@react-three/drei": "^10.0.7",
     "@react-three/fiber": "^9.1.2",
-    "@typescript-eslint/eslint-plugin": "^8.31.0",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.0",
     "@vercel/speed-insights": "^1.2.0",
     "augmented-ui": "^2.0.0",
