@@ -12,6 +12,12 @@ const StyledDescriptionModal = styled(Box)`
   ${MediaQueries[MediaQueryIndex.xs]} {
     width: 200px;
     height: 400px;
+    & > #modal-title {
+      transform: scale(0.5) translateX(calc(50% - 105px));
+    }
+    & > #modal-description {
+      transform: scale(0.25) translateX(calc(50% - 105px));
+    }
   }
   ${MediaQueries[MediaQueryIndex.sm]} {
     width: 400px;
@@ -30,12 +36,12 @@ const StyledDescriptionModal = styled(Box)`
   --aug-delegated-inlay: initial;
   --aug-border-all: 4px;
 
-  & > #modal-modal-title {
+  & > #modal-title {
     text-align: center;
     margin-top: 5px;
   }
 
-  & > #modal-modal-description {
+  & > #modal-description {
     margin: 15px 25px 0 25px;
     text-align: center;
   }
@@ -50,15 +56,18 @@ const StyledDescriptionModal = styled(Box)`
     overflow-x: auto;
   }
 `;
-export type DescriptionModalType = { description: string | undefined, handleClose: () => React.ComponentState };
+export type DescriptionModalType = {
+  description: string | undefined;
+  handleClose: () => React.ComponentState;
+};
 const DescriptionModalInner = ({ description, handleClose }: DescriptionModalType): React.ReactElement => {
   return (
     <StyledDescriptionModal data-augmented-ui="t-round-x b-round-x r-round-xy l-round-xy both">
-      <Typography id="modal-modal-title" variant="h6" component="h2">
+      <Typography id="modal-title" variant="h6" component="h2">
         Description
       </Typography>
       <div className="description-container">
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+        <Typography id="modal-description" sx={{ mt: 2 }}>
           {description}
         </Typography>
       </div>
@@ -66,16 +75,14 @@ const DescriptionModalInner = ({ description, handleClose }: DescriptionModalTyp
         Close
       </Button>
     </StyledDescriptionModal>
-  )
+  );
 };
 
 const DescriptionModal = React.forwardRef((props: DescriptionModalType, ref) => {
   const { description, handleClose } = props;
-  return (
-    <DescriptionModalInner description={description} handleClose={handleClose} />
-  )
+  return <DescriptionModalInner description={description} handleClose={handleClose} />;
 });
 
-DescriptionModal.displayName = "DescriptionModal";
+DescriptionModal.displayName = 'DescriptionModal';
 
 export default DescriptionModal;
