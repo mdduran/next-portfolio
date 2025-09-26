@@ -1,6 +1,7 @@
 /* AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY. */
 /* Source: src/styles/breakpoints.json */
 
+@use "sass:map";
 $bp-xxs: 0px;
 $bp-xs: 350px;
 $bp-sm: 700px;
@@ -18,7 +19,7 @@ $breakpoints: (
 );
 
 @function bp($key) {
-  @return map-get($breakpoints, $key);
+  @return map.get($breakpoints, $key);
 }
 
 @mixin up($key) {

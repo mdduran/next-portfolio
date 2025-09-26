@@ -17,6 +17,7 @@ function run() {
   lines.push('/* AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY. */');
   lines.push('/* Source: src/styles/breakpoints.json */');
   lines.push('');
+  lines.push('@use "sass:map";');
   // Variables
   order.forEach((k) => {
     const val = bps[k];
@@ -36,7 +37,7 @@ function run() {
   lines.push('');
   // Helper function
   lines.push('@function bp($key) {');
-  lines.push('  @return map-get($breakpoints, $key);');
+  lines.push('  @return map.get($breakpoints, $key);');
   lines.push('}');
   lines.push('');
   // Mixins similar to MUI up/down/between
