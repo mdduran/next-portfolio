@@ -1,42 +1,16 @@
 import * as React from 'react';
-import { Container, Card, CardContent, Divider, Link, Typography, styled, useTheme } from '@mui/material';
+import { Container, Card, CardContent, Divider, Link, Typography } from '@mui/material';
+import styles from './Index.module.scss';
 
 export default function Home(): React.ReactNode {
-  const theme = useTheme();
-  const StyledContainer = styled(Container)({
-    width: '100vw',
-    paddingTop: theme.spacing(4),
-    display: 'flex',
-    '& h1': {
-      textAlign: 'center',
-      padding: `${theme.spacing(2)} 0 0 ${theme.spacing(2)}`
-    },
-    '& p': {
-      padding: `${theme.spacing(2)} 0 ${theme.spacing(2)} 0`
-    }
-  });
-
-  const StyledCard = styled(Card)({
-    marginTop: theme.spacing(4),
-    minHeight: '80%',
-    '--aug-inlay': 'initial',
-    '--aug-delegated-inlay': 'initial',
-    '--aug-border-all': '8px'
-  });
-
-  const StyledCardContent = styled(CardContent)({
-    flex: '1 0 auto',
-    margin: `0 ${theme.spacing(4)} ${theme.spacing(2)} ${theme.spacing(4)}`
-  });
-
   return (
-    <StyledContainer>
-      <StyledCard data-augmented-ui="tl-2-scoop r-round-xy br-2-round-xy b-clip l-rect-x both">
+    <Container className={styles.container}>
+      <Card className={styles.card} data-augmented-ui="tl-2-scoop r-round-xy br-2-round-xy b-clip l-rect-x both">
         <Typography component="h1" variant="h3">
           About me
         </Typography>
         <Divider variant="middle" />
-        <StyledCardContent>
+        <CardContent className={styles.cardContent}>
           <Typography component="p">I&apos;m Marco, and I am a software engineer, game developer and musician.</Typography>
 
           <Typography component="p">
@@ -48,8 +22,8 @@ export default function Home(): React.ReactNode {
             Currently enjoying mastering front end web development but excited to further my development skills using game engines such as{' '}
             <Link href="https://www.unrealengine.com/en-US/">Unreal Engine</Link> and <Link href="https://unity.com/">Unity</Link>.
           </Typography>
-        </StyledCardContent>
-      </StyledCard>
-    </StyledContainer>
+        </CardContent>
+      </Card>
+    </Container>
   );
 }

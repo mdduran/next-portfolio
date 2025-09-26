@@ -1,0 +1,28 @@
+.wrapper {
+  background-color: var(--color-secondary-main);
+  height: 100%;
+}
+
+.menuList {
+  width: 100%;
+  max-width: 36ch;
+}
+
+.menuItem {
+  color: #fff;
+  display: flex;
+}
+
+.subMenuItem {
+  color: #fff;
+  display: flex;
+  width: 100%;
+}
+
+.menuText {
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  font-size: xx-small;
+  margin: 15px 15px;
+}

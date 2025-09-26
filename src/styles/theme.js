@@ -1,21 +1,17 @@
 import { createTheme } from '@mui/material/styles';
-import colors from './colors';
+import colors from './colors.json';
+import themeBreakpoints from './breakpoints.json';
 
-const themeBreakpoints = {
-  xs: 0,
-  sm: 700,
-  md: 900,
-  lg: 1200,
-  xl: 1536
-};
-export const MediaQueryIndex = {
-  xs: 0,
-  sm: 1,
-  md: 2,
-  lg: 3,
-  xl: 4
+export const { lg, md, sm, xs, xxs } = {
+  xxs: 0,
+  xs: 1,
+  sm: 2,
+  md: 3,
+  lg: 4,
+  xl: 5
 };
 export const MediaQueries = Object.values(themeBreakpoints).map((breakpoint) => `@media (min-width: ${breakpoint}px)`);
+const applyMedias = (queries, styles) => queries.reduce((acc, q) => ({ ...acc, [q]: styles }), {});
 const theme = createTheme({
   typography: {
     fontFamily: "'Press Start 2P', cursive"
@@ -78,20 +74,20 @@ const theme = createTheme({
     }
   },
   components: {
+    MuiModal: {
+      defaultProps: {
+        disableScrollLock: true
+      }
+    },
     MuiCardMedia: {
       styleOverrides: {
         media: {
           width: '100%',
-          [MediaQueries[MediaQueryIndex.xs]]: {
-            height: '300px'
-          },
-          [MediaQueries[MediaQueryIndex.sm]]: {
-            height: '300px'
-          },
-          [MediaQueries[MediaQueryIndex.md]]: {
+          ...applyMedias([MediaQueries[xxs], MediaQueries[xs], MediaQueries[sm]], { height: '300px' }),
+          [MediaQueries[md]]: {
             height: '400px'
           },
-          [MediaQueries[MediaQueryIndex.lg]]: {
+          [MediaQueries[lg]]: {
             height: '600px',
             width: '90%'
           }

@@ -1,68 +1,14 @@
-import styled from '@emotion/styled';
 import * as React from 'react';
 import { Box, Button, Typography } from '@mui/material';
-import theme, { MediaQueries, MediaQueryIndex } from '@theme';
+import styles from './DescriptionModal.module.scss';
 
-const StyledDescriptionModal = styled(Box)`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  ${MediaQueries[MediaQueryIndex.xs]} {
-    width: 200px;
-    height: 400px;
-    & > #modal-title {
-      transform: scale(0.5) translateX(calc(50% - 105px));
-    }
-    & > #modal-description {
-      transform: scale(0.25) translateX(calc(50% - 105px));
-    }
-  }
-  ${MediaQueries[MediaQueryIndex.sm]} {
-    width: 400px;
-  }
-  ${MediaQueries[MediaQueryIndex.md]} {
-    width: 600px;
-  }
-  border: 2px solid #000;
-  background-color: ${theme.palette.primary.main};
-  padding: 20px;
-  box-shadow: 10px 5px 5px black;
-  display: flex;
-  flex-direction: column;
-
-  --aug-inlay: initial;
-  --aug-delegated-inlay: initial;
-  --aug-border-all: 4px;
-
-  & > #modal-title {
-    text-align: center;
-    margin-top: 5px;
-  }
-
-  & > #modal-description {
-    margin: 15px 25px 0 25px;
-    text-align: center;
-  }
-
-  & > #modal-modal-close {
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  & > .description-container {
-    overflow-y: auto;
-    overflow-x: auto;
-  }
-`;
 export type DescriptionModalType = {
   description: string | undefined;
   handleClose: () => React.ComponentState;
 };
 const DescriptionModalInner = ({ description, handleClose }: DescriptionModalType): React.ReactElement => {
   return (
-    <StyledDescriptionModal data-augmented-ui="t-round-x b-round-x r-round-xy l-round-xy both">
+    <Box className={styles.descriptionModal} data-augmented-ui="t-round-x b-round-x r-round-xy l-round-xy both">
       <Typography id="modal-title" variant="h6" component="h2">
         Description
       </Typography>
@@ -74,7 +20,7 @@ const DescriptionModalInner = ({ description, handleClose }: DescriptionModalTyp
       <Button id="modal-modal-close" onClick={handleClose} variant="contained">
         Close
       </Button>
-    </StyledDescriptionModal>
+    </Box>
   );
 };
 

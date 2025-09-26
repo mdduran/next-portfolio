@@ -1,0 +1,41 @@
+/* AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY. */
+/* Source: src/styles/breakpoints.json */
+
+$bp-xxs: 0px;
+$bp-xs: 350px;
+$bp-sm: 700px;
+$bp-md: 900px;
+$bp-lg: 1200px;
+$bp-xl: 1536px;
+
+$breakpoints: (
+  xxs: $bp-xxs,
+  xs: $bp-xs,
+  sm: $bp-sm,
+  md: $bp-md,
+  lg: $bp-lg,
+  xl: $bp-xl
+);
+
+@function bp($key) {
+  @return map-get($breakpoints, $key);
+}
+
+@mixin up($key) {
+  $min: bp($key);
+  @if $min == null { @error "Unknown breakpoint `#{$key}`"; }
+  @media (min-width: $min) { @content; }
+}
+
+@mixin down($key) {
+  $max: bp($key);
+  @if $max == null { @error "Unknown breakpoint `#{$key}`"; }
+  @media (max-width: calc(#{$max} - 0.02px)) { @content; }
+}
+
+@mixin between($lower, $upper) {
+  $min: bp($lower);
+  $max: bp($upper);
+  @if $min == null or $max == null { @error "Unknown breakpoint(s) `#{$lower}`, `#{$upper}`"; }
+  @media (min-width: $min) and (max-width: calc(#{$max} - 0.02px)) { @content; }
+}

@@ -1,0 +1,134 @@
+/* AUTO-GENERATED FILE. DO NOT EDIT DIRECTLY. */
+/* Source: src/styles/colors.json */
+
+$castletonGreen: #2B6153;
+$zomp: #449C85;
+$phthaloGreen: #132B24;
+$feldgrau: #46615a;
+$cadetBlue: #71988e;
+$outerSpaceCrayola: #2b3b37;
+$popstar: #b84d68;
+$puce: #d08a9c;
+$solidPink: #833448;
+$spanishViridian: #047d5f;
+$caribbeanGreen: #07daa5;
+$tropicalRainforest: #04765a;
+$tuscany: #c4a3ab;
+$queenPink: #dfcdd2;
+$roseDust: #a06a7a;
+$deepTaupe: #6b5b5f;
+$rocketMetallic: #98868a;
+$blackCoffee: #42383a;
+$white: #fff;
+$black: #000;
+
+$colors: (
+  castletonGreen: $castletonGreen,
+  zomp: $zomp,
+  phthaloGreen: $phthaloGreen,
+  feldgrau: $feldgrau,
+  cadetBlue: $cadetBlue,
+  outerSpaceCrayola: $outerSpaceCrayola,
+  popstar: $popstar,
+  puce: $puce,
+  solidPink: $solidPink,
+  spanishViridian: $spanishViridian,
+  caribbeanGreen: $caribbeanGreen,
+  tropicalRainforest: $tropicalRainforest,
+  tuscany: $tuscany,
+  queenPink: $queenPink,
+  roseDust: $roseDust,
+  deepTaupe: $deepTaupe,
+  rocketMetallic: $rocketMetallic,
+  blackCoffee: $blackCoffee,
+  white: $white,
+  black: $black
+);
+
+$color-primary-light: $zomp;
+$color-primary-main: $castletonGreen;
+$color-primary-dark: $phthaloGreen;
+$color-secondary-light: $cadetBlue;
+$color-secondary-main: $feldgrau;
+$color-secondary-dark: $outerSpaceCrayola;
+$color-error-light: $puce;
+$color-error-main: $popstar;
+$color-error-dark: $solidPink;
+$color-success-light: $caribbeanGreen;
+$color-success-main: $spanishViridian;
+$color-success-dark: $tropicalRainforest;
+$color-warning-light: $queenPink;
+$color-warning-main: $tuscany;
+$color-warning-dark: $roseDust;
+$color-info-light: $rocketMetallic;
+$color-info-main: $deepTaupe;
+$color-info-dark: $blackCoffee;
+$color-header-light: $zomp;
+$color-header-main: $white;
+$color-header-dark: $black;
+
+$palette: (
+  primary: (
+    light: $zomp,
+    main: $castletonGreen,
+    dark: $phthaloGreen
+  ),
+  secondary: (
+    light: $cadetBlue,
+    main: $feldgrau,
+    dark: $outerSpaceCrayola
+  ),
+  error: (
+    light: $puce,
+    main: $popstar,
+    dark: $solidPink
+  ),
+  success: (
+    light: $caribbeanGreen,
+    main: $spanishViridian,
+    dark: $tropicalRainforest
+  ),
+  warning: (
+    light: $queenPink,
+    main: $tuscany,
+    dark: $roseDust
+  ),
+  info: (
+    light: $rocketMetallic,
+    main: $deepTaupe,
+    dark: $blackCoffee
+  ),
+  header: (
+    light: $zomp,
+    main: $white,
+    dark: $black
+  )
+);
+
+:root {
+  --color-primary-light: #{$zomp};
+  --color-primary-main: #{$castletonGreen};
+  --color-primary-dark: #{$phthaloGreen};
+  --color-secondary-light: #{$cadetBlue};
+  --color-secondary-main: #{$feldgrau};
+  --color-secondary-dark: #{$outerSpaceCrayola};
+  --color-error-light: #{$puce};
+  --color-error-main: #{$popstar};
+  --color-error-dark: #{$solidPink};
+  --color-success-light: #{$caribbeanGreen};
+  --color-success-main: #{$spanishViridian};
+  --color-success-dark: #{$tropicalRainforest};
+  --color-warning-light: #{$queenPink};
+  --color-warning-main: #{$tuscany};
+  --color-warning-dark: #{$roseDust};
+  --color-info-light: #{$rocketMetallic};
+  --color-info-main: #{$deepTaupe};
+  --color-info-dark: #{$blackCoffee};
+  --color-header-light: #{$zomp};
+  --color-header-main: #{$white};
+  --color-header-dark: #{$black};
+}
+
+@function color($key) {
+  @return map-get($colors, $key);
+}

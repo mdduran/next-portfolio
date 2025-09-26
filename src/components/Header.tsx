@@ -7,9 +7,8 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import * as React from 'react';
 import Link from 'next/link';
-import styled from '@emotion/styled';
-import { MediaQueries, MediaQueryIndex } from '@theme';
 import { isMobile } from 'react-device-detect';
+import styles from './Header.module.scss';
 
 const Header = (): React.ReactElement => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -20,98 +19,52 @@ const Header = (): React.ReactElement => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const StyledDiv = styled.div`
-    flex-grow: 1;
-  `;
-  const StyledIconButton = styled(IconButton)`
-    font-family: 'Press Start 2P', cursive;
-    font-size: small;
-  `;
-  const StyledButton = styled(Button)`
-    font-family: 'Press Start 2P', cursive;
-    font-size: medium;
-    color: black;
-  `;
-  const StyledLink = styled(Link)`
-    text-decoration: none;
-  `;
-  const StyledBox = styled(Box)`
-    display: flex;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  `;
-  const StyledToolbar = styled(Toolbar)`
-    width: 100%;
-    display: flex;
-  `;
-  const StyledButtonText = styled(Typography)`
-    font-size: 8px;
-    margin-left: 4px;
-  `;
-  const StyledMobileButtonText = styled(Typography)`
-    font-size: 8px;
-  `;
-
-  const StyledNavItems = styled(Box)`
-    ${MediaQueries[MediaQueryIndex.sm]},
-    ${MediaQueries[MediaQueryIndex.md]} {
-      float: right;
-    }
-    display: flex;
-  `;
 
   return (
-    <AppBar position="static">
-      <StyledBox>
-        <StyledToolbar>
-          <StyledLink href="/" passHref>
-            <StyledButton>Marco Duran</StyledButton>
-          </StyledLink>
-          <StyledDiv />
-          <StyledNavItems>
-            <StyledLink href="/projects" passHref>
-              <StyledIconButton size="large">
-                <Grid container spacing={2}>
-                  <Grid sx={{ marginLeft: '26px', marginTop: '6px', padding: '0' }}>
-                    <FolderIcon />
+    <AppBar className={styles.appbar} position="static">
+      <Box className={styles.box}>
+        <Toolbar className={styles.toolbar}>
+          <Link className={styles.link} href="/" passHref>
+            <Button className={styles.button} aria-label="Home">Marco Duran</Button>
+          </Link>
+          <div className={styles.divGrow} />
+          <Box className={styles.navItems}>
+            <Link className={styles.link} href="/projects" passHref>
+              <IconButton className={styles.iconButton} size="small" aria-label="Projects">
+                <Grid container spacing={0} alignItems="center" wrap="nowrap">
+                  <Grid>
+                    <FolderIcon className={styles.icon} />
                   </Grid>
-                  <Grid sx={{ paddingTop: '10px' }}>
-                    {isMobile ? (
-                      <StyledMobileButtonText variant="button">Projects</StyledMobileButtonText>
-                    ) : (
-                      <StyledButtonText variant="button">Projects</StyledButtonText>
-                    )}
+                  <Grid>
+                    <Typography className={styles.buttonText} variant="button">Projects</Typography>
                   </Grid>
                 </Grid>
-              </StyledIconButton>
-            </StyledLink>
+              </IconButton>
+            </Link>
             <div id="contacts" aria-label="contacts">
-              <StyledIconButton
+              <IconButton
+                className={styles.iconButton}
                 id="contacts-button"
                 onClick={handleClick}
                 aria-haspopup="true"
-                aria-controls={open ? 'contacts-menu' : undefined}
+                aria-controls={open ? 'contact-menu' : undefined}
                 aria-expanded={open ? 'true' : undefined}
-                size="large"
+                size="small"
+                aria-label="Contact"
               >
-                <Grid container spacing={2}>
-                  <Grid sx={{ marginLeft: '24px', marginTop: '6px', padding: '0' }}>
-                    <ContactIcon />
+                <Grid container spacing={0} alignItems="center" wrap="nowrap">
+                  <Grid>
+                    <ContactIcon className={styles.icon} />
                   </Grid>
-                  <Grid sx={{ paddingTop: '10px' }}>
-                    {isMobile ? (
-                      <StyledMobileButtonText variant="button">Contact</StyledMobileButtonText>
-                    ) : (
-                      <StyledButtonText variant="button">Contact</StyledButtonText>
-                    )}
+                  <Grid>
+                    <Typography className={styles.buttonText} variant="button">Contact</Typography>
                   </Grid>
                 </Grid>
-              </StyledIconButton>
+              </IconButton>
             </div>
-          </StyledNavItems>
-        </StyledToolbar>
-      </StyledBox>
+          </Box>
+        </Toolbar>
+      </Box>
       <Menu
         anchorEl={anchorEl}
         id="contact-menu"
@@ -119,13 +72,13 @@ const Header = (): React.ReactElement => {
         onClose={handleClose}
         onClick={handleClose}
         slotProps={{
+          root: { disableScrollLock: true },
           paper: {
             elevation: 0,
             sx: {
               overflow: 'visible',
               filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-              mt: 8,
-              right: 25,
+              mt: { xs: 1, sm: 8 },
               '&::before': {
                 content: '""',
                 display: 'block',

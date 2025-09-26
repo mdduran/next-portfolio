@@ -1,0 +1,27 @@
+.container {
+  width: 100%;
+  padding-top: 32px; /* theme.spacing(4) */
+  display: flex;
+
+  & h1 {
+    text-align: center;
+    padding: 16px 0 0 16px; /* theme.spacing(2) */
+  }
+  & p {
+    padding: 16px 0 16px 0; /* theme.spacing(2) */
+  }
+}
+
+.card {
+  margin-top: 32px; /* theme.spacing(4) */
+  min-height: 80%;
+  --aug-inlay: initial;
+  --aug-delegated-inlay: initial;
+  --aug-border-all: 8px;
+}
+
+.cardContent {
+  flex: 1 0 auto;
+  margin: 0 32px 16px 32px; /* 0 theme.spacing(4) theme.spacing(2) theme.spacing(4) */
+
+}

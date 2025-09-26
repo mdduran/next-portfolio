@@ -1,0 +1,58 @@
+.outerBox {
+  background-color: var(--color-primary-main);
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.innerBox {
+  background-color: var(--color-secondary-main);
+  border: 2px solid;
+}
+
+.projectCardBox {
+  background-color: var(--color-primary-main);
+}
+
+.canvas {
+}
+
+/* Breakpoints: xs:0, sm:700, md:900 */
+@media (min-width: 0px) {
+  .innerBox {
+    width: 240px;
+    height: 200px;
+    margin: 0 20px;
+  }
+  .canvas {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (min-width: 700px) {
+  .innerBox {
+    width: 400px;
+    height: 300px;
+    margin: 0 25%;
+  }
+  .canvas {
+    width: 400px;
+    height: 300px;
+  }
+}
+
+@media (min-width: 900px) {
+  .innerBox {
+    width: 800px;
+    height: 600px;
+    margin: 0 25%;
+  }
+  .canvas {
+    width: 800px;
+    height: 600px;
+  }
+}
