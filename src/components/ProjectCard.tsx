@@ -1,58 +1,9 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import styled from '@emotion/styled';
-import { Box, Card, CardContent, CardMedia, Modal, Typography, List, ListItem, ListItemText, Link, Button, Backdrop } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Modal, Typography, List, ListItem, ListItemText, Link, Button } from '@mui/material';
 import { isMobile } from 'react-device-detect';
-import { MediaQueries, MediaQueryIndex } from '@theme';
 import DescriptionModal from './DescriptionModal';
-
-const StyledCard = styled(Card)`
-  ${MediaQueries[MediaQueryIndex.xs]} {
-    width: 270px;
-    padding: 15px 10px;
-    margin: 15px 5px;
-  }
-
-  ${MediaQueries[MediaQueryIndex.sm]} {
-    width: 600px;
-    padding: 32px;
-    margin: 32px;i
-  }
-
-  ${MediaQueries[MediaQueryIndex.md]} {
-    width: 800px;
-    padding: 32px;
-    margin: 32px;
-  }
-
-  '--aug-inlay':initial;
-  '--aug-delegated-inlay':initial;
-  '--aug-border-all':8px;
-
-  & .MuiListItem-root {
-    display: flex;
-    justify-content: center;
-  }
-
-  h2 {
-    ${MediaQueries[MediaQueryIndex.xs]} {
-      font-size: 1.20rem;
-      padding-top: 20px;
-      display: flex;
-      justify-content: center;
-    }
-  }
-`;
-
-const StyledDescription = styled(ListItem)`
-  margin-bottom: ${isMobile ? '25px' : '200px'},
-  padding-bottom: '32px'
-`;
-
-const StyledShortDescription = styled(ListItem)`
-  margin-bottom: ${isMobile ? '0' : '48px'};
-  padding-bottom: '48px';
-`;
+import styles from './ProjectCard.module.scss';
 
 const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
   const { title, yearDeveloped, platform, genre, downloadLink, website, description, projectType, shortDescription, trailer } =
@@ -63,7 +14,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
   const handleClose = () => setOpenModal(false);
 
   return (
-    <StyledCard data-augmented-ui="tl-2-scoop-x tr-2-scoop-x br-round bl-round both">
+    <Card className={styles.card} data-augmented-ui="tl-2-scoop-x tr-2-scoop-x br-round bl-round both">
       {trailer && (
         <Box component="div" display="flex" justifyContent="center" alignItems="center" mt={4}>
           <CardMedia component="iframe" title={title} src={trailer} />
@@ -104,9 +55,9 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
           )}
           {shortDescription && (
             <>
-              <StyledShortDescription>
+              <ListItem sx={{ marginBottom: isMobile ? 0 : '48px', paddingBottom: '48px' }}>
                 <ListItemText>Short Description: {shortDescription}</ListItemText>
-              </StyledShortDescription>
+              </ListItem>
               <ListItem>
                 <Button onClick={handleOpen} variant="contained">
                   Read More
@@ -118,13 +69,13 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
             </>
           )}
           {!shortDescription && (
-            <StyledDescription>
+            <ListItem sx={{ marginBottom: isMobile ? '25px' : '200px', paddingBottom: '32px' }}>
               <ListItemText>Description: {description}</ListItemText>
-            </StyledDescription>
+            </ListItem>
           )}
         </List>
       </CardContent>
-    </StyledCard>
+    </Card>
   );
 };
 

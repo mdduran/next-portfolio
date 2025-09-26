@@ -1,8 +1,21 @@
 import { Select, InputLabel, SelectChangeEvent } from '@mui/material';
-import styled from '@emotion/styled';
 import type { Project } from 'types/types';
 import * as React from 'react';
+import './MobileProjectList.module.scss';
+const PROJECT_TYPE = {
+  GAME: 'game',
+  SOFTWARE: 'software',
+} as const;
 
+const GROUP_LABEL = {
+  GAMES: 'Games',
+  SOFTWARE: 'Software',
+} as const;
+
+const byTypeExcludingLabel = (type: Project['projectType'], excludeTitle: string) => (p: Project) =>
+  p.projectType === type && p.title !== excludeTitle;
+
+const findByTitle = (items: Project[], title: string) => items.find((p) => p.title === title);
 const MobileProjectList = ({
   projects,
   selectedProject,
@@ -12,45 +25,32 @@ const MobileProjectList = ({
   selectedProject: Project;
   setSelectedProject: React.Dispatch<React.SetStateAction<Project>>;
 }): React.ReactElement => {
-  const [gamesList, setGamesList] = React.useState<Project[]>([]);
-  const [softwareList, setSoftwareList] = React.useState<Project[]>([]);
+  const gamesList = React.useMemo(
+    () => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.GAME, GROUP_LABEL.GAMES)),
+    [projects]
+  );
+  const softwareList = React.useMemo(
+    () => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.SOFTWARE, GROUP_LABEL.SOFTWARE)),
+    [projects]
+  );
 
-  React.useEffect(() => {
-    for (let i = 0; i < projects.length; i += 1) {
-      if (projects[i].projectType === 'game' && projects[i].title !== 'Games') {
-        gamesList.push(projects[i]);
-      } else if (projects[i].projectType === 'software' && projects[i].title !== 'Software') {
-        softwareList.push(projects[i]);
-      }
-    }
-    setGamesList(gamesList);
-    setSoftwareList(softwareList);
-    setSelectedProject(projects[1]);
-    // only want to run this once for initialization
-  }, []);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    const { value } = event.target;
-    const filteredProjects = projects.filter((project) => project.title === value);
-    setSelectedProject(filteredProjects[0]);
+  const handleProjectChange = (event: SelectChangeEvent<string>) => {
+    const nextTitle = event.target.value as string;
+    const next = findByTitle(projects, nextTitle);
+    if (next) setSelectedProject(next);
   };
 
-  const StyledMobileProjectList = styled.div`
-    padding-top: 20px;
-    margin: 0 15px;
-  `;
-
   return (
-    <StyledMobileProjectList id="mobile-project-list">
+    <div id="mobile-project-list">
       <InputLabel id="selected-project">Selected Project</InputLabel>
       <Select
         labelId="selected-project"
         native
         defaultValue={selectedProject.title}
         value={selectedProject.title}
-        onChange={handleChange}
+        onChange={handleProjectChange}
       >
-        <optgroup label="Games">
+        <optgroup label={GROUP_LABEL.GAMES}>
           {gamesList.map((game) => {
             return (
               <option key={`${game.title}-gameoption`} value={game.title}>
@@ -59,7 +59,7 @@ const MobileProjectList = ({
             );
           })}
         </optgroup>
-        <optgroup label="Software">
+        <optgroup label={GROUP_LABEL.SOFTWARE}>
           {softwareList.map((software) => {
             return (
               <option key={`${software.title}-softwareoption`} value={software.title}>
@@ -69,7 +69,7 @@ const MobileProjectList = ({
           })}
         </optgroup>
       </Select>
-    </StyledMobileProjectList>
+    </div>
   );
 };
 

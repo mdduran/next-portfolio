@@ -1,39 +1,8 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import styled from '@emotion/styled';
 import { MenuList, MenuItem, ListItem, ListItemText, Collapse, List } from '@mui/material';
-import theme from '@theme';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-
-const StyledWrapper = styled.div`
-  background-color: ${theme.palette.secondary.main};
-  overflow-x: none;
-  height: 100%;
-`;
-
-const StyledMenuList = styled(MenuList)`
-  width: '100%';
-  max-width: '36ch';
-`;
-
-const StyledMenuItem = styled(ListItem)`
-  color: #fff;
-  display: flex;
-`;
-
-const StyledSubMenuItem = styled(MenuItem)`
-  color: #fff;
-  display: flex;
-  width: 100%;
-`;
-
-const StyledMenuText = styled.p`
-  white-space: nowrap;
-  overflow-x: hidden;
-  text-overflow: ellipsis;
-  font-size: xx-small;
-  margin: 15px 15px;
-`;
+import styles from './ProjectList.module.scss';
 
 const ProjectList = ({
   projects,
@@ -73,42 +42,42 @@ const ProjectList = ({
   }, []);
 
   return (
-    <StyledWrapper>
-      <StyledMenuList>
-        <StyledMenuItem key="Games" onClick={handleGamesClick}>
+    <div className={styles.wrapper}>
+      <MenuList className={styles.menuList}>
+        <ListItem className={styles.menuItem} key="Games" onClick={handleGamesClick}>
           <ListItemText>Games</ListItemText>
           {gamesOpen ? <ExpandLess /> : <ExpandMore />}
-        </StyledMenuItem>
+        </ListItem>
         <Collapse in={gamesOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {gamesList.map((game: Project) => {
               const { title } = game;
               return (
-                <StyledSubMenuItem key={title} selected={selectedProject.title === title} onClick={() => setSelectedProject(game)}>
-                  <StyledMenuText>{title}</StyledMenuText>
-                </StyledSubMenuItem>
+                <MenuItem className={styles.subMenuItem} key={title} selected={selectedProject.title === title} onClick={() => setSelectedProject(game)}>
+                  <p className={styles.menuText}>{title}</p>
+                </MenuItem>
               );
             })}
           </List>
         </Collapse>
-        <StyledMenuItem key="Software" onClick={handleSoftwareClick}>
+        <ListItem className={styles.menuItem} key="Software" onClick={handleSoftwareClick}>
           <ListItemText>Software</ListItemText>
           {softwareOpen ? <ExpandLess /> : <ExpandMore />}
-        </StyledMenuItem>
+        </ListItem>
         <Collapse in={softwareOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             {softwareList.map((software: Project) => {
               const { title } = software;
               return (
-                <StyledSubMenuItem key={title} selected={selectedProject.title === title} onClick={() => setSelectedProject(software)}>
-                  <StyledMenuText>{title}</StyledMenuText>
-                </StyledSubMenuItem>
+                <MenuItem className={styles.subMenuItem} key={title} selected={selectedProject.title === title} onClick={() => setSelectedProject(software)}>
+                  <p className={styles.menuText}>{title}</p>
+                </MenuItem>
               );
             })}
           </List>
         </Collapse>
-      </StyledMenuList>
-    </StyledWrapper>
+      </MenuList>
+    </div>
   );
 };
 

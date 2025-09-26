@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node scripts/generate-scss-breakpoints.js && node scripts/generate-scss-colors.js",
+    "prebuild": "node scripts/generate-scss-breakpoints.js && node scripts/generate-scss-colors.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -43,6 +45,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "file-loader": "^6.2.0",
     "next-transpile-modules": "^10.0.1",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "sass": "^1.80.0"
   }
 }

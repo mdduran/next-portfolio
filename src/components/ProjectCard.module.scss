@@ -1,0 +1,41 @@
+.card {
+  /* Augmented UI CSS vars */
+  --aug-inlay: initial;
+  --aug-delegated-inlay: initial;
+  --aug-border-all: 8px;
+
+  /* default (md) */
+  width: 800px;
+  padding: 32px;
+  margin: 32px;
+
+  .MuiListItem-root {
+    display: flex;
+    justify-content: center;
+  }
+
+  h2 {
+    @media (min-width: 0px) {
+      font-size: 1.20rem;
+      padding-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+@media (min-width: 0px) {
+  .card {
+    width: 270px;
+    padding: 15px 10px;
+    margin: 15px 5px;
+  }
+}
+
+@media (min-width: 700px) {
+  .card {
+    width: 600px;
+    padding: 32px;
+    margin: 32px;
+  }
+}
