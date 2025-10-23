@@ -4,16 +4,8 @@
       "name": "Cartridge-Mesh_0_positions",
       "componentType": 5126,
       "count": 3114,
-      "min": [
-        -2.51607608795166,
-        -1.620864987373352,
-        -0.4173809885978699
-      ],
-      "max": [
-        2.51607608795166,
-        1.6247340440750122,
-        0.411734014749527
-      ],
+      "min": [-2.51607608795166, -1.620864987373352, -0.4173809885978699],
+      "max": [2.51607608795166, 1.6247340440750122, 0.411734014749527],
       "type": "VEC3",
       "bufferView": 0,
       "byteOffset": 0
@@ -22,16 +14,8 @@
       "name": "Cartridge-Mesh_0_normals",
       "componentType": 5126,
       "count": 3114,
-      "min": [
-        -1,
-        -1,
-        -1
-      ],
-      "max": [
-        1,
-        1,
-        1
-      ],
+      "min": [-1, -1, -1],
+      "max": [1, 1, 1],
       "type": "VEC3",
       "bufferView": 1,
       "byteOffset": 0
@@ -40,14 +24,8 @@
       "name": "Cartridge-Mesh_0_texcoords",
       "componentType": 5126,
       "count": 3114,
-      "min": [
-        0,
-        0
-      ],
-      "max": [
-        1,
-        1
-      ],
+      "min": [0, 0],
+      "max": [1, 1],
       "type": "VEC2",
       "bufferView": 2,
       "byteOffset": 0
@@ -56,12 +34,8 @@
       "name": "Cartridge-Mesh_0_indices",
       "componentType": 5123,
       "count": 4368,
-      "min": [
-        0
-      ],
-      "max": [
-        3113
-      ],
+      "min": [0],
+      "max": [3113],
       "type": "SCALAR",
       "bufferView": 3,
       "byteOffset": 0
@@ -70,16 +44,8 @@
       "name": "Cartridge-Mesh_1_positions",
       "componentType": 5126,
       "count": 74,
-      "min": [
-        -1.6865019798278809,
-        -0.5383359789848328,
-        -0.42229899764060974
-      ],
-      "max": [
-        1.6865019798278809,
-        1.615746021270752,
-        0.4138390123844147
-      ],
+      "min": [-1.6865019798278809, -0.5383359789848328, -0.42229899764060974],
+      "max": [1.6865019798278809, 1.615746021270752, 0.4138390123844147],
       "type": "VEC3",
       "bufferView": 0,
       "byteOffset": 37368
@@ -88,16 +54,8 @@
       "name": "Cartridge-Mesh_1_normals",
       "componentType": 5126,
       "count": 74,
-      "min": [
-        -0.00009999943722505122,
-        0,
-        -1
-      ],
-      "max": [
-        0.00009999943722505122,
-        0.9779149293899536,
-        1
-      ],
+      "min": [-0.00009999943722505122, 0, -1],
+      "max": [0.00009999943722505122, 0.9779149293899536, 1],
       "type": "VEC3",
       "bufferView": 1,
       "byteOffset": 37368
@@ -106,14 +64,8 @@
       "name": "Cartridge-Mesh_1_texcoords",
       "componentType": 5126,
       "count": 74,
-      "min": [
-        0.058501001447439194,
-        0.0013549999566748738
-      ],
-      "max": [
-        0.9414989948272705,
-        0.9999110102653503
-      ],
+      "min": [0.058501001447439194, 0.0013549999566748738],
+      "max": [0.9414989948272705, 0.9999110102653503],
       "type": "VEC2",
       "bufferView": 2,
       "byteOffset": 24912
@@ -122,12 +74,8 @@
       "name": "Cartridge-Mesh_1_indices",
       "componentType": 5123,
       "count": 132,
-      "min": [
-        0
-      ],
-      "max": [
-        73
-      ],
+      "min": [0],
+      "max": [73],
       "type": "SCALAR",
       "bufferView": 3,
       "byteOffset": 8736
@@ -181,40 +129,22 @@
     {
       "name": "Plastic",
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.15,
-          0.15,
-          0.15,
-          1
-        ],
+        "baseColorFactor": [0.15, 0.15, 0.15, 1],
         "metallicFactor": 0,
         "roughnessFactor": 1
       },
-      "emissiveFactor": [
-        0,
-        0,
-        0
-      ],
+      "emissiveFactor": [0, 0, 0],
       "alphaMode": "OPAQUE",
       "doubleSided": false
     },
     {
       "name": "Label",
       "pbrMetallicRoughness": {
-        "baseColorFactor": [
-          0.5,
-          0.5,
-          0.5,
-          1
-        ],
+        "baseColorFactor": [0.5, 0.5, 0.5, 1],
         "metallicFactor": 0,
         "roughnessFactor": 1
       },
-      "emissiveFactor": [
-        0,
-        0,
-        0
-      ],
+      "emissiveFactor": [0, 0, 0],
       "alphaMode": "OPAQUE",
       "doubleSided": false
     }
@@ -255,9 +185,7 @@
   "scene": 0,
   "scenes": [
     {
-      "nodes": [
-        0
-      ]
+      "nodes": [0]
     }
   ]
 }

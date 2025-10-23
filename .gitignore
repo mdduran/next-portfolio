@@ -31,3 +31,7 @@ yarn-error.log*
 
 # IDE config
 .vscode/
+.idea/
+.junie
+
+*.xcf

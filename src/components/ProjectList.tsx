@@ -53,7 +53,12 @@ const ProjectList = ({
             {gamesList.map((game: Project) => {
               const { title } = game;
               return (
-                <MenuItem className={styles.subMenuItem} key={title} selected={selectedProject.title === title} onClick={() => setSelectedProject(game)}>
+                <MenuItem
+                  className={styles.subMenuItem}
+                  key={title}
+                  selected={selectedProject.title === title}
+                  onClick={() => setSelectedProject(game)}
+                >
                   <p className={styles.menuText}>{title}</p>
                 </MenuItem>
               );
@@ -69,7 +74,12 @@ const ProjectList = ({
             {softwareList.map((software: Project) => {
               const { title } = software;
               return (
-                <MenuItem className={styles.subMenuItem} key={title} selected={selectedProject.title === title} onClick={() => setSelectedProject(software)}>
+                <MenuItem
+                  className={styles.subMenuItem}
+                  key={title}
+                  selected={selectedProject.title === title}
+                  onClick={() => setSelectedProject(software)}
+                >
                   <p className={styles.menuText}>{title}</p>
                 </MenuItem>
               );

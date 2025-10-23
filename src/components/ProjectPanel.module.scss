@@ -17,12 +17,9 @@
   background-color: var(--color-primary-main);
 }
 
-.canvas {
-}
-
 /* Breakpoints: xs:0, sm:700, md:900 */
 @media (min-width: 0px) {
-  .innerBox {
+  .innerBox.modelWrapper {
     width: 240px;
     height: 200px;
     margin: 0 20px;
@@ -34,7 +31,7 @@
 }
 
 @media (min-width: 700px) {
-  .innerBox {
+  .innerBox.modelWrapper {
     width: 400px;
     height: 300px;
     margin: 0 25%;
@@ -46,7 +43,7 @@
 }
 
 @media (min-width: 900px) {
-  .innerBox {
+  .innerBox.modelWrapper {
     width: 800px;
     height: 600px;
     margin: 0 25%;

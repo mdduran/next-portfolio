@@ -9,7 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prod": "next build && next start"
+    "prod": "next build && next start",
+    "pretty": "prettier . --write"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -20,32 +21,33 @@
     "@mui/system": "^7.3.2",
     "@react-three/drei": "^10.7.4",
     "@react-three/fiber": "^9.3.0",
-    "@typescript-eslint/eslint-plugin": "^8.42.0",
-    "@typescript-eslint/parser": "^8.42.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
     "@vercel/speed-insights": "^1.2.0",
     "augmented-ui": "^2.0.0",
-    "next": "^15.5.2",
-    "react": "^19.1.1",
+    "next": "^15.5.4",
+    "react": "^19.2.0",
     "react-device-detect": "^2.2.3",
-    "react-dom": "^19.1.1",
+    "react-dom": "^19.2.0",
     "three": "^0.180.0"
   },
   "devDependencies": {
     "@types/node": "^20.8.7",
-    "@types/react": "^19.1.12",
-    "@types/react-dom": "^19.1.9",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
     "@types/three": "^0.180.0",
-    "eslint": "^9.34.0",
-    "eslint-config-next": "^15.5.2",
+    "eslint": "^9.37.0",
+    "eslint-config-next": "^15.5.4",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^7.0.0",
     "file-loader": "^6.2.0",
     "next-transpile-modules": "^10.0.1",
-    "typescript": "^5.9.2",
-    "sass": "^1.80.0"
+    "prettier": "3.6.2",
+    "sass": "^1.93.2",
+    "typescript": "^5.9.3"
   }
 }

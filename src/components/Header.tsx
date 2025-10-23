@@ -25,7 +25,9 @@ const Header = (): React.ReactElement => {
       <Box className={styles.box}>
         <Toolbar className={styles.toolbar}>
           <Link className={styles.link} href="/" passHref>
-            <Button className={styles.button} aria-label="Home">Marco Duran</Button>
+            <Button className={styles.button} aria-label="Home">
+              Marco Duran
+            </Button>
           </Link>
           <div className={styles.divGrow} />
           <Box className={styles.navItems}>
@@ -36,7 +38,9 @@ const Header = (): React.ReactElement => {
                     <FolderIcon className={styles.icon} />
                   </Grid>
                   <Grid>
-                    <Typography className={styles.buttonText} variant="button">Projects</Typography>
+                    <Typography className={styles.buttonText} variant="button">
+                      Projects
+                    </Typography>
                   </Grid>
                 </Grid>
               </IconButton>
@@ -57,7 +61,9 @@ const Header = (): React.ReactElement => {
                     <ContactIcon className={styles.icon} />
                   </Grid>
                   <Grid>
-                    <Typography className={styles.buttonText} variant="button">Contact</Typography>
+                    <Typography className={styles.buttonText} variant="button">
+                      Contact
+                    </Typography>
                   </Grid>
                 </Grid>
               </IconButton>

@@ -4,13 +4,7 @@
     "es2021": true
   },
   "parser": "@typescript-eslint/parser",
-  "extends": [
-    "next",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "prettier",
-    "plugin:@typescript-eslint/recommended"
-  ],
+  "extends": ["next", "plugin:react/recommended", "plugin:react-hooks/recommended", "prettier", "plugin:@typescript-eslint/recommended"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true

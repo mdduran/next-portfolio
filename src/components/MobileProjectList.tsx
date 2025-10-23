@@ -4,12 +4,12 @@ import * as React from 'react';
 import './MobileProjectList.module.scss';
 const PROJECT_TYPE = {
   GAME: 'game',
-  SOFTWARE: 'software',
+  SOFTWARE: 'software'
 } as const;
 
 const GROUP_LABEL = {
   GAMES: 'Games',
-  SOFTWARE: 'Software',
+  SOFTWARE: 'Software'
 } as const;
 
 const byTypeExcludingLabel = (type: Project['projectType'], excludeTitle: string) => (p: Project) =>
@@ -25,14 +25,8 @@ const MobileProjectList = ({
   selectedProject: Project;
   setSelectedProject: React.Dispatch<React.SetStateAction<Project>>;
 }): React.ReactElement => {
-  const gamesList = React.useMemo(
-    () => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.GAME, GROUP_LABEL.GAMES)),
-    [projects]
-  );
-  const softwareList = React.useMemo(
-    () => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.SOFTWARE, GROUP_LABEL.SOFTWARE)),
-    [projects]
-  );
+  const gamesList = React.useMemo(() => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.GAME, GROUP_LABEL.GAMES)), [projects]);
+  const softwareList = React.useMemo(() => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.SOFTWARE, GROUP_LABEL.SOFTWARE)), [projects]);
 
   const handleProjectChange = (event: SelectChangeEvent<string>) => {
     const nextTitle = event.target.value as string;

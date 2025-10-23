@@ -43,12 +43,16 @@ body {
   margin: 0 auto;
 }
 
-#__next, #__next > div, main {
+#__next,
+#__next > div,
+main {
   height: 100%;
 }
 
 /* Utility classes */
-.fullWidth { width: 100%; }
+.fullWidth {
+  width: 100%;
+}
 .centeredRow {
   display: flex;
   justify-content: center;

@@ -9,32 +9,40 @@ import '../../public/gltf/gamecart/gamecart.gltf';
 extend({ Texture, Material, BufferGeometry, Group });
 
 const modelPath = './gltf/gamecart/gamecart.gltf';
-const baseTexturePath = './gltf/snesCartLabel.png';
+const baseTexturePath = './webp/cartLabelBlank.webp';
 const laikaTexturePath = './gltf/LaikasJourneyLabel.png';
+
+useTexture.preload(laikaTexturePath);
+useTexture.preload(baseTexturePath);
+useGLTF.preload(modelPath);
 
 type GameCartModelProps = {
   selectedProject: Project;
   position: Vector3;
 };
 
-export default function GameCartModel({ selectedProject, position }: GameCartModelProps): React.ReactElement {
-  const laikaTexture: Texture = useTexture(laikaTexturePath);
-  laikaTexture.rotation = MathUtils.degToRad(180);
-  laikaTexture.wrapS = MirroredRepeatWrapping;
-  laikaTexture.wrapT = RepeatWrapping;
-  const baseTexture: Texture = useTexture(baseTexturePath);
-  baseTexture.rotation = MathUtils.degToRad(180);
-  baseTexture.wrapS = MirroredRepeatWrapping;
-  baseTexture.wrapT = RepeatWrapping;
-  const [currentTexture, setCurrentTexture] = React.useState<Texture>(baseTexture);
-  // Load the texture
-  React.useEffect(() => {
-    if (selectedProject.title === `Laika's Journey`) {
-      setCurrentTexture(laikaTexture);
-    } else {
-      setCurrentTexture(baseTexture);
-    }
-  }, [selectedProject.title, baseTexture, laikaTexture]);
+export function GameCartModelInner({ selectedProject, position }: GameCartModelProps): React.ReactElement {
+  const [laikaTextureRaw, baseTextureRaw] = useTexture([laikaTexturePath, baseTexturePath]) as Texture[];
+  const laikaTexture = React.useMemo(() => {
+    const laikaTexture = laikaTextureRaw.clone();
+    laikaTexture.rotation = MathUtils.degToRad(180);
+    laikaTexture.wrapS = MirroredRepeatWrapping;
+    laikaTexture.wrapT = RepeatWrapping;
+    laikaTexture.needsUpdate = true;
+    return laikaTexture;
+  }, [laikaTextureRaw]);
+  const baseTexture = React.useMemo(() => {
+    const baseTexture = baseTextureRaw.clone();
+    baseTexture.rotation = MathUtils.degToRad(180);
+    baseTexture.wrapS = MirroredRepeatWrapping;
+    baseTexture.wrapT = RepeatWrapping;
+    baseTexture.needsUpdate = true;
+    return baseTexture;
+  }, [baseTextureRaw]);
+
+  const currentTexture = React.useMemo(() => {
+    return selectedProject.title === `Laika's Journey` ? laikaTexture : baseTexture;
+  }, [selectedProject.title, laikaTexture, baseTexture]);
 
   const group = React.useRef<Group>(null);
   const { nodes, materials } = useGLTF(modelPath);
@@ -53,5 +61,22 @@ export default function GameCartModel({ selectedProject, position }: GameCartMod
         </mesh>
       </group>
     </Stage>
+  );
+}
+
+function LoadingModel(): React.ReactElement {
+  return (
+    <mesh>
+      <boxGeometry />
+      <meshBasicMaterial wireframe />
+    </mesh>
+  );
+}
+
+export default function GameCartModel(props: GameCartModelProps): React.ReactElement {
+  return (
+    <React.Suspense fallback={LoadingModel()}>
+      <GameCartModelInner {...props} />
+    </React.Suspense>
   );
 }
