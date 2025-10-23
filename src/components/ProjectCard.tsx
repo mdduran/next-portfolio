@@ -15,6 +15,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
 
   return (
     <Card className={styles.card} data-augmented-ui="tl-2-scoop-x tr-2-scoop-x br-round bl-round both">
+      <div className={styles.scrollArea}>
       {trailer && (
         <Box component="div" display="flex" justifyContent="center" alignItems="center" mt={4}>
           <CardMedia component="iframe" title={title} src={trailer} />
@@ -75,6 +76,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
           )}
         </List>
       </CardContent>
+      </div>
     </Card>
   );
 };

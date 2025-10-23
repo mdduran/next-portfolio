@@ -1,6 +1,9 @@
 .wrapper {
   background-color: var(--color-secondary-main);
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden; /* keep sidebar static; only main content scrolls */
 }
 
 .menuList {

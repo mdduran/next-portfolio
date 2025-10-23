@@ -16,9 +16,10 @@ html,
 body {
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
   width: 100%;
   max-width: 100vw;
+  height: 100%;
+  overflow: hidden; /* prevent page-level scrolling */
 }
 
 * {
@@ -28,19 +29,18 @@ body {
 .site {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   width: 100%;
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: var(--color-primary-main);
 }
 
 .content-container {
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
-  padding: 0 16px;
-  margin: 0 auto;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  min-height: 0; /* allow children to manage their own height/scroll without forcing page overflow */
 }
 
 #__next,

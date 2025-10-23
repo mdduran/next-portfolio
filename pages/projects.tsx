@@ -14,11 +14,11 @@ function Projects(): React.ReactNode {
   return (
     <Grid className={styles.grid} container>
       {!isMobile && (
-        <Grid className={styles.grid} size={{ xs: 2, md: 2 }}>
+        <Grid className={`${styles.grid} ${styles.sidebar}`} size={{ xs: 2, md: 2 }}>
           <ProjectList projects={projects} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         </Grid>
       )}
-      <Grid className={styles.grid} container size={{ xs: isMobile ? 12 : 10 }}>
+      <Grid className={`${styles.grid} ${styles.main}`} container size={{ xs: isMobile ? 12 : 10 }}>
         {isMobile && <MobileProjectList projects={projects} selectedProject={selectedProject} setSelectedProject={setSelectedProject} />}
         <ProjectPanel selectedProject={selectedProject} />
       </Grid>

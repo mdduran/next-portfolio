@@ -21,7 +21,7 @@ const Header = (): React.ReactElement => {
   };
 
   return (
-    <AppBar className={styles.appbar} position="static">
+    <AppBar className={styles.appbar} position="sticky">
       <Box className={styles.box}>
         <Toolbar className={styles.toolbar}>
           <Link className={styles.link} href="/" passHref>

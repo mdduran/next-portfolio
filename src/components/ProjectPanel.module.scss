@@ -6,6 +6,7 @@
   align-items: center;
   flex-direction: column;
   width: 100%;
+  min-height: min-content;
 }
 
 .innerBox {
@@ -15,6 +16,8 @@
 
 .projectCardBox {
   background-color: var(--color-primary-main);
+  /* Let the inner card manage its own scrolling */
+  overflow: visible;
 }
 
 /* Breakpoints: xs:0, sm:700, md:900 */

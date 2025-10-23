@@ -1,5 +1,25 @@
 .grid {
   background-color: var(--color-primary-main);
   height: 100%;
-  padding-top: 8px;
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Sticky sidebar for desktop */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;           /* full viewport height */
+  overflow: hidden;        /* prevent it from scrolling with its own content */
+  flex-shrink: 0;
+  background-color: var(--color-secondary-main); /* ensure any exposed area matches sidebar background */
+}
+
+/* Main content scroll container */
+.main {
+  height: 100%; /* fill available height so only this area scrolls */
+  overflow-y: auto; /* enable scrolling for main content only */
+  flex: 1;
+  min-width: 0;
 }
