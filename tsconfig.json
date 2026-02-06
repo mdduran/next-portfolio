@@ -2,13 +2,27 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@components/*": ["components/*"],
-      "@data/*": ["data/*"],
-      "@type": ["types/types.ts"],
-      "@theme": ["styles/theme"]
+      "@components/*": [
+        "components/*"
+      ],
+      "@data/*": [
+        "data/*"
+      ],
+      "@type": [
+        "types/types.ts"
+      ],
+      "@theme": [
+        "styles/theme"
+      ]
     },
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext", "es2015", "es2016"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "es2015",
+      "es2016"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,9 +33,16 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types/**/index.d.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "types/**/index.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,6 +1,6 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import { Box, Card, CardContent, CardMedia, Modal, Typography, List, ListItem, ListItemText, Link, Button } from '@mui/material';
+import { Box, Card, CardContent, Modal, Typography, List, ListItem, ListItemText, Link, Button } from '@mui/material';
 import { isMobile } from 'react-device-detect';
 import DescriptionModal from './DescriptionModal';
 import styles from './ProjectCard.module.scss';
@@ -16,11 +16,6 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
   return (
     <Card className={styles.card} data-augmented-ui="tl-2-scoop-x tr-2-scoop-x br-round bl-round both">
       <div className={styles.scrollArea}>
-      {trailer && (
-        <Box component="div" display="flex" justifyContent="center" alignItems="center" mt={4}>
-          <CardMedia component="iframe" title={title} src={trailer} />
-        </Box>
-      )}
       <CardContent>
         <Typography variant="h4" component="h2">
           {title ?? 'Project title'}
