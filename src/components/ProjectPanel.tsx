@@ -1,10 +1,6 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import Slider from '@mui/material/Slider';
-import Stack from '@mui/material/Stack';
+import { Box, Button, ButtonGroup, Slider, Stack, CardMedia } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Html, useProgress, Preload } from '@react-three/drei';
 import dynamic from 'next/dynamic';
@@ -51,89 +47,98 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
 
   const fallbackSrc = React.useMemo(() => {
     if (currentProjectType === 'game') {
-      return selectedProject.title === "Laika's Journey" ? '/gltf/LaikasJourneyLabel.png' : '/webp/cartLabelBlank.webp';
+      return '/webp/game-placeholder.webp';
     }
-    return '/gltf/lowpoly_cd/textures/lambert2SG_baseColor.png';
-  }, [currentProjectType, selectedProject.title]);
+    return '/webp/software-placeholder.webp';
+  }, [currentProjectType]);
 
   return (
     selectedProject && (
       <Box className={styles.outerBox}>
-        {hasVideo === false && (
-          <Box className={styles.innerBox} sx={{ justifyContent: 'center' }}>
+        <Box className={styles.contentLayout}>
+          <Box className={styles.visualsColumn}>
             {webglSupported === false ? (
-              <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                <img
-                  src={fallbackSrc}
-                  alt={currentProjectType === 'game' ? 'Game cartridge preview' : 'CD-ROM preview'}
-                  style={{ maxWidth: '100%', height: 'auto' }}
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                  <img
+                    src={fallbackSrc}
+                    alt={currentProjectType === 'game' ? 'Game cartridge preview' : 'CD-ROM preview'}
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
+                </Box>
+              ):(
+                <>
+                  <Box className={styles.innerBox}>
+                    <div className={styles.modelWrapper}>
+                      <Canvas className={styles.canvas}>
+                        <OrbitControls
+                          ref={controlsRef}
+                          autoRotate={autoRotate}
+                          autoRotateSpeed={autoRotateSpeed}
+                          addEventListener={undefined}
+                          hasEventListener={undefined}
+                          removeEventListener={undefined}
+                          dispatchEvent={undefined}
+                          position0={modelPosition}
+                        />
+                        {currentProjectType === 'game' ? (
+                          <React.Suspense fallback={null}>
+                            <GameCartModel selectedProject={selectedProject} position={modelPosition} />
+                          </React.Suspense>
+                        ) : (
+                          <React.Suspense fallback={null}>
+                            <CDRomModel position={modelPosition} />
+                          </React.Suspense>
+                        )}
+                        <Preload all />
+                      </Canvas>
+                    </div>
+                  </Box>
+                  <Box className={styles.modelControls}>
+                    <Stack spacing={1} alignItems="center">
+                      <ButtonGroup size="small" variant="contained">
+                        <Button onClick={() => setAutoRotate(true)} disabled={autoRotate}>
+                          Start
+                        </Button>
+                        <Button onClick={() => setAutoRotate(false)} disabled={!autoRotate}>
+                          Stop
+                        </Button>
+                      </ButtonGroup>
+                    </Stack>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <Box sx={{ color: '#fff', fontSize: 12, minWidth: 36 }}>Speed</Box>
+                      <Slider
+                        size="medium"
+                        min={0}
+                        max={10}
+                        step={0.5}
+                        value={autoRotateSpeed}
+                        onChange={(_, v) => setAutoRotateSpeed(v as number)}
+                        sx={{ width: '90%', color: '#fff' }}
+                      />
+                    </Stack>
+                  </Box>
+                </>
+              )}
+            {hasVideo && (
+              <Box className={styles.videoBox}>
+                <CardMedia
+                  component="iframe"
+                  title={selectedProject.title}
+                  src={selectedProject.trailer}
+                  sx={{
+                    width: '100%',
+                    aspectRatio: '16/9',
+                    border: 'none',
+                    borderRadius: '4px'
+                  }}
                 />
               </Box>
-            ) : (
-              <div className={styles.modelWrapper}>
-                <Canvas className={styles.canvas}>
-                  <OrbitControls
-                    ref={controlsRef}
-                    autoRotate={autoRotate}
-                    autoRotateSpeed={autoRotateSpeed}
-                    addEventListener={undefined}
-                    hasEventListener={undefined}
-                    removeEventListener={undefined}
-                    dispatchEvent={undefined}
-                    position0={modelPosition}
-                  />
-                  {currentProjectType === 'game' ? (
-                    <React.Suspense fallback={null}>
-                      <GameCartModel selectedProject={selectedProject} position={modelPosition} />
-                    </React.Suspense>
-                  ) : (
-                    <React.Suspense fallback={null}>
-                      <CDRomModel position={modelPosition} />
-                    </React.Suspense>
-                  )}
-                  <Preload all />
-                </Canvas>
-                <Box
-                  sx={{
-                    // position: 'absolute',
-                    // right: 12,
-                    // bottom: 12,
-                    zIndex: 2,
-                    bgcolor: 'rgba(0,0,0,0.35)',
-                    p: 1,
-                    borderRadius: 1,
-                    backdropFilter: 'blur(2px)'
-                  }}
-                >
-                  <Stack spacing={1} alignItems="center">
-                    <ButtonGroup size="small" variant="contained">
-                      <Button onClick={() => setAutoRotate(true)} disabled={autoRotate}>
-                        Start
-                      </Button>
-                      <Button onClick={() => setAutoRotate(false)} disabled={!autoRotate}>
-                        Stop
-                      </Button>
-                    </ButtonGroup>
-                  </Stack>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <Box sx={{ color: '#fff', fontSize: 12, minWidth: 36 }}>Speed</Box>
-                    <Slider
-                      size="medium"
-                      min={0}
-                      max={10}
-                      step={0.5}
-                      value={autoRotateSpeed}
-                      onChange={(_, v) => setAutoRotateSpeed(v as number)}
-                      sx={{ width: 200, color: '#fff' }}
-                    />
-                  </Stack>
-                </Box>
-              </div>
             )}
           </Box>
-        )}
-        <Box className={styles.projectCardBox} sx={{ justifyContent: 'center' }}>
-          <ProjectCard selectedProject={selectedProject} />
+
+          <Box className={styles.projectCardBox} sx={{ justifyContent: 'center' }}>
+            <ProjectCard selectedProject={selectedProject} />
+          </Box>
         </Box>
       </Box>
     )

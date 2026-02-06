@@ -1,3 +1,4 @@
+@use '../styles/breakpoints' as bp;
 .outerBox {
   background-color: var(--color-primary-main);
   margin-top: 1rem;
@@ -12,17 +13,65 @@
 .innerBox {
   background-color: var(--color-secondary-main);
   border: 2px solid;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modelWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modelControls {
+  z-index: 2;
+  background-color: rgba(0,0,0,0.35);
+  padding: 1rem;
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
+  width: 100%;
+  @include bp.down(md) {
+    max-width: 400px;
+  }
+  @include bp.down(sm) {
+    max-width: 300px;
+  }
+  margin-top: 1rem;
+}
+
+.contentLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.visualsColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.videoBox {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0 20px;
 }
 
 .projectCardBox {
+  padding-top: 3rem;
   background-color: var(--color-primary-main);
   /* Let the inner card manage its own scrolling */
   overflow: visible;
 }
 
-/* Breakpoints: xs:0, sm:700, md:900 */
-@media (min-width: 0px) {
-  .innerBox.modelWrapper {
+/* Breakpoints: xxs:0, sm:700, md:900 */
+@include bp.up(xxs) {
+  .innerBox,
+  .modelWrapper {
     width: 240px;
     height: 200px;
     margin: 0 20px;
@@ -33,26 +82,44 @@
   }
 }
 
-@media (min-width: 700px) {
-  .innerBox.modelWrapper {
+@include bp.up(sm) {
+  .innerBox,
+  .modelWrapper {
     width: 400px;
     height: 300px;
-    margin: 0 25%;
   }
   .canvas {
     width: 400px;
     height: 300px;
+  }
+  .videoBox {
+    padding: 0;
+    width: 400px;
   }
 }
 
-@media (min-width: 900px) {
-  .innerBox.modelWrapper {
-    width: 800px;
-    height: 600px;
-    margin: 0 25%;
+@include bp.up(md) {
+  .contentLayout {
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .visualsColumn {
+    width: 600px;
+  }
+
+  .innerBox,
+  .modelWrapper {
+    width: 600px;
+    height: 450px;
+    margin: 0;
   }
   .canvas {
-    width: 800px;
-    height: 600px;
+    width: 600px;
+    height: 450px;
+  }
+  .videoBox {
+    width: 600px;
   }
 }

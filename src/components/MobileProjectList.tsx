@@ -1,7 +1,7 @@
 import { Select, InputLabel, SelectChangeEvent } from '@mui/material';
 import type { Project } from 'types/types';
 import * as React from 'react';
-import './MobileProjectList.module.scss';
+import styles from './MobileProjectList.module.scss';
 const PROJECT_TYPE = {
   GAME: 'game',
   SOFTWARE: 'software'
@@ -27,15 +27,19 @@ const MobileProjectList = ({
 }): React.ReactElement => {
   const gamesList = React.useMemo(() => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.GAME, GROUP_LABEL.GAMES)), [projects]);
   const softwareList = React.useMemo(() => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.SOFTWARE, GROUP_LABEL.SOFTWARE)), [projects]);
+  const [userHasSelected, setUserHasSelected] = React.useState(false);
 
   const handleProjectChange = (event: SelectChangeEvent<string>) => {
     const nextTitle = event.target.value as string;
     const next = findByTitle(projects, nextTitle);
-    if (next) setSelectedProject(next);
+    if (next) {
+      setSelectedProject(next);
+      setUserHasSelected(true);
+    }
   };
 
   return (
-    <div id="mobile-project-list">
+    <div id={styles['mobile-project-list']}>
       <InputLabel id="selected-project">Selected Project</InputLabel>
       <Select
         labelId="selected-project"
@@ -44,6 +48,17 @@ const MobileProjectList = ({
         value={selectedProject.title}
         onChange={handleProjectChange}
       >
+        <optgroup label="-" aria-hidden={userHasSelected} hidden={userHasSelected}>
+          <option
+            key="select"
+            value=""
+            hidden={userHasSelected}
+            aria-hidden={userHasSelected}
+            disabled={userHasSelected}
+          >
+            Select a project
+          </option>
+        </optgroup>
         <optgroup label={GROUP_LABEL.GAMES}>
           {gamesList.map((game) => {
             return (

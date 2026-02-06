@@ -4,7 +4,6 @@ import { useGLTF, useTexture, Stage } from '@react-three/drei';
 import { MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry, Group } from 'three';
 import { Project } from '@type';
 import { extend, Vector3 } from '@react-three/fiber';
-import '../../public/gltf/gamecart/gamecart.gltf';
 
 extend({ Texture, Material, BufferGeometry, Group });
 
@@ -57,7 +56,7 @@ export function GameCartModelInner({ selectedProject, position }: GameCartModelP
       <group ref={group} dispose={null} position={position}>
         <mesh castShadow receiveShadow geometry={outerMeshGeometry} material={plasticMaterial} />
         <mesh castShadow receiveShadow geometry={innerMeshGeometry}>
-          <meshStandardMaterial map={currentTexture} />
+          {/*<meshStandardMaterial map={currentTexture} />*/}
         </mesh>
       </group>
     </Stage>
