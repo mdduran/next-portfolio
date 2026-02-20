@@ -1,6 +1,6 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import { Box, Button, ButtonGroup, Slider, Stack, CardMedia } from '@mui/material';
+import { Box, Button, ButtonGroup, Slider, Stack } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Html, useProgress, Preload } from '@react-three/drei';
 import dynamic from 'next/dynamic';
@@ -29,7 +29,6 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
     setCurrentProjectType(selectedProject.projectType);
   }, [selectedProject]);
   const modelPosition: Vector3 = currentProjectType === 'game' ? [0, 0, 0] : [0, -5, 0];
-  const hasVideo = !!selectedProject.trailer;
 
   // Detect WebGL support on client
   const [webglSupported, setWebglSupported] = React.useState<boolean | null>(null);
@@ -119,21 +118,6 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
                   </Box>
                 </>
               )}
-            {hasVideo && (
-              <Box className={styles.videoBox}>
-                <CardMedia
-                  component="iframe"
-                  title={selectedProject.title}
-                  src={selectedProject.trailer}
-                  sx={{
-                    width: '100%',
-                    aspectRatio: '16/9',
-                    border: 'none',
-                    borderRadius: '4px'
-                  }}
-                />
-              </Box>
-            )}
           </Box>
 
           <Box className={styles.projectCardBox} sx={{ justifyContent: 'center' }}>

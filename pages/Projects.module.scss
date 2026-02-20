@@ -1,7 +1,6 @@
 .grid {
   background-color: var(--color-primary-main);
   height: 100%;
-  flex: 1;
   display: flex;
   min-height: 0;
 }
@@ -10,9 +9,12 @@
 .sidebar {
   position: sticky;
   top: 0;
+  width: fit-content;
+  max-width: 250px;
   height: 100vh;           /* full viewport height */
   overflow: hidden;        /* prevent it from scrolling with its own content */
   flex-shrink: 0;
+  flex-grow: 0;
   background-color: var(--color-secondary-main); /* ensure any exposed area matches sidebar background */
 }
 
