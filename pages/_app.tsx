@@ -7,7 +7,6 @@ import Header from '@components/Header';
 import theme from '@theme';
 import 'augmented-ui/augmented-ui.min.css';
 import 'styles/globals.scss';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export default function App({ Component, pageProps }: AppProps): React.ReactElement {
   return (
@@ -22,7 +21,6 @@ export default function App({ Component, pageProps }: AppProps): React.ReactElem
         <div className="content-container">
           <Component {...pageProps} />
         </div>
-        <SpeedInsights />
       </div>
     </ThemeProvider>
   );
