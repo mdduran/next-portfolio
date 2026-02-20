@@ -1,6 +1,6 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
-import { Box, Card, CardContent, Modal, Typography, List, ListItem, ListItemText, Link, Button } from '@mui/material';
+import { Box, Card, CardContent, Modal, Typography, List, ListItem, ListItemText, Link, Button, CardMedia } from '@mui/material';
 import { isMobile } from 'react-device-detect';
 import DescriptionModal from './DescriptionModal';
 import styles from './ProjectCard.module.scss';
@@ -70,6 +70,16 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
             </ListItem>
           )}
         </List>
+        {trailer && (
+          <Box className={styles.trailerWrapper}>
+            <CardMedia
+              component="iframe"
+              title={title}
+              src={trailer}
+              className={styles.trailer}
+            />
+          </Box>
+        )}
       </CardContent>
       </div>
     </Card>

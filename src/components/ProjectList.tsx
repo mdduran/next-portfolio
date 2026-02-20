@@ -27,17 +27,12 @@ const ProjectList = ({
   };
 
   React.useEffect(() => {
-    for (let i = 0; i < projects.length; i += 1) {
-      if (projects[i].projectType === 'game' && projects[i].title !== 'Games') {
-        gamesList.push(projects[i]);
-      } else if (projects[i].projectType === 'software' && projects[i].title !== 'Software') {
-        softwareList.push(projects[i]);
-      }
-    }
-    setGamesList(gamesList);
-    setSoftwareList(softwareList);
+    const games = projects.filter((p) => p.projectType === 'game' && p.title !== 'Games');
+    const software = projects.filter((p) => p.projectType === 'software' && p.title !== 'Software');
+    setGamesList(games);
+    setSoftwareList(software);
     setSelectedProject(projects[1]);
-    // only want to run this once for initalizization
+    // only want to run this once for initialization
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -45,11 +40,11 @@ const ProjectList = ({
     <div className={styles.wrapper}>
       <MenuList className={styles.menuList}>
         <ListItem className={styles.menuItem} key="Games" onClick={handleGamesClick}>
-          <ListItemText>Games</ListItemText>
+          <ListItemText primary="Games" className={styles.menuItemText} />
           {gamesOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={gamesOpen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
+          <List component="div" className={styles.subMenuList}>
             {gamesList.map((game: Project) => {
               const { title } = game;
               return (
@@ -66,11 +61,11 @@ const ProjectList = ({
           </List>
         </Collapse>
         <ListItem className={styles.menuItem} key="Software" onClick={handleSoftwareClick}>
-          <ListItemText>Software</ListItemText>
+          <ListItemText primary="Software" className={styles.menuItemText} />
           {softwareOpen ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={softwareOpen} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
+          <List component="div" className={styles.subMenuList}>
             {softwareList.map((software: Project) => {
               const { title } = software;
               return (

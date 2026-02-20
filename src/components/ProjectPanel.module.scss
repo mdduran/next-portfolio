@@ -55,17 +55,15 @@
   width: 100%;
 }
 
-.videoBox {
-  width: 100%;
-  margin-top: 1rem;
-  padding: 0 20px;
-}
 
 .projectCardBox {
   padding-top: 3rem;
   background-color: var(--color-primary-main);
   /* Let the inner card manage its own scrolling */
   overflow: visible;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* Breakpoints: xxs:0, sm:700, md:900 */
@@ -85,16 +83,12 @@
 @include bp.up(sm) {
   .innerBox,
   .modelWrapper {
-    width: 400px;
+    width: 100%;
     height: 300px;
   }
   .canvas {
-    width: 400px;
+    width: 100%;
     height: 300px;
-  }
-  .videoBox {
-    padding: 0;
-    width: 400px;
   }
 }
 
@@ -106,20 +100,17 @@
   }
 
   .visualsColumn {
-    width: 600px;
+    width: 100%;
   }
 
   .innerBox,
   .modelWrapper {
-    width: 600px;
+    width: 100%;
     height: 450px;
     margin: 0;
   }
   .canvas {
-    width: 600px;
+    width: 100%;
     height: 450px;
-  }
-  .videoBox {
-    width: 600px;
   }
 }
