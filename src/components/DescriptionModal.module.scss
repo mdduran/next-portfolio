@@ -1,3 +1,4 @@
+@use '../styles/breakpoints' as bp;
 .descriptionModal {
   position: absolute;
   top: 50%;
@@ -27,6 +28,11 @@
   & > #modal-modal-close {
     justify-content: center;
     margin-top: 20px;
+
+    @include bp.up(md) {
+      padding: 12px 24px;
+      font-size: 1.1rem;
+    }
   }
 
   & > .description-container {

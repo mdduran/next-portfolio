@@ -39,9 +39,15 @@ const ProjectList = ({
   return (
     <div className={styles.wrapper}>
       <MenuList className={styles.menuList}>
-        <ListItem className={styles.menuItem} key="Games" onClick={handleGamesClick}>
+        <ListItem
+          className={styles.menuItem}
+          key="Games"
+          onClick={handleGamesClick}
+          component="button"
+          aria-expanded={gamesOpen}
+        >
           <ListItemText primary="Games" className={styles.menuItemText} />
-          {gamesOpen ? <ExpandLess /> : <ExpandMore />}
+          {gamesOpen ? <ExpandLess aria-hidden="true" /> : <ExpandMore aria-hidden="true" />}
         </ListItem>
         <Collapse in={gamesOpen} timeout="auto" unmountOnExit>
           <List component="div" className={styles.subMenuList}>
@@ -60,9 +66,15 @@ const ProjectList = ({
             })}
           </List>
         </Collapse>
-        <ListItem className={styles.menuItem} key="Software" onClick={handleSoftwareClick}>
+        <ListItem
+          className={styles.menuItem}
+          key="Software"
+          onClick={handleSoftwareClick}
+          component="button"
+          aria-expanded={softwareOpen}
+        >
           <ListItemText primary="Software" className={styles.menuItemText} />
-          {softwareOpen ? <ExpandLess /> : <ExpandMore />}
+          {softwareOpen ? <ExpandLess aria-hidden="true" /> : <ExpandMore aria-hidden="true" />}
         </ListItem>
         <Collapse in={softwareOpen} timeout="auto" unmountOnExit>
           <List component="div" className={styles.subMenuList}>

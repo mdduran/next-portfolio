@@ -9,6 +9,25 @@ import 'augmented-ui/augmented-ui.min.css';
 import 'styles/globals.scss';
 
 export default function App({ Component, pageProps }: AppProps): React.ReactElement {
+  React.useEffect(() => {
+    // Suppress specific THREE.js deprecation warnings coming from library internals
+    if (typeof window !== 'undefined' && !(window as any).__THREE_WARNINGS_SUPPRESSED__) {
+      (window as any).__THREE_WARNINGS_SUPPRESSED__ = true;
+      const originalWarn = console.warn;
+      console.warn = (...args) => {
+        if (
+          args[0] &&
+          typeof args[0] === 'string' &&
+          (args[0].includes('Clock: This module has been deprecated') ||
+            args[0].includes('WebGLShadowMap: PCFSoftShadowMap has been deprecated'))
+        ) {
+          return;
+        }
+        originalWarn(...args);
+      };
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <Head>

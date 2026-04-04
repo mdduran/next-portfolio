@@ -1,7 +1,6 @@
 import type { Project } from 'types/types';
 import * as React from 'react';
 import { Box, Card, CardContent, Modal, Typography, List, ListItem, ListItemText, Link, Button, CardMedia } from '@mui/material';
-import { isMobile } from 'react-device-detect';
 import DescriptionModal from './DescriptionModal';
 import styles from './ProjectCard.module.scss';
 
@@ -51,7 +50,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
           )}
           {shortDescription && (
             <>
-              <ListItem sx={{ marginBottom: isMobile ? 0 : '48px', paddingBottom: '48px' }}>
+              <ListItem className={styles.shortDescription}>
                 <ListItemText>Short Description: {shortDescription}</ListItemText>
               </ListItem>
               <ListItem>
@@ -65,7 +64,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
             </>
           )}
           {!shortDescription && (
-            <ListItem sx={{ marginBottom: isMobile ? '25px' : '200px', paddingBottom: '32px' }}>
+            <ListItem className={styles.longDescription}>
               <ListItemText>Description: {description}</ListItemText>
             </ListItem>
           )}
@@ -74,7 +73,7 @@ const ProjectCard = ({ selectedProject }: { selectedProject: Project }): React.R
           <Box className={styles.trailerWrapper}>
             <CardMedia
               component="iframe"
-              title={title}
+              title={`${title} Trailer`}
               src={trailer}
               className={styles.trailer}
             />

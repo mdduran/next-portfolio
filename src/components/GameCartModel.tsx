@@ -1,15 +1,16 @@
 /* eslint-disable no-param-reassign */
 import * as React from 'react';
 import { useGLTF, useTexture, Stage } from '@react-three/drei';
-import { MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry, Group } from 'three';
+import { Texture, Material, BufferGeometry, Group } from 'three';
 import { Project } from '@type';
-import { extend, Vector3 } from '@react-three/fiber';
+import { extend } from '@react-three/fiber';
+import type { Vector3 } from '@react-three/fiber';
 
 extend({ Texture, Material, BufferGeometry, Group });
 
-const modelPath = './gltf/gamecart/gamecart.gltf';
-const baseTexturePath = './webp/cartLabelBlank.webp';
-const laikaTexturePath = './gltf/LaikasJourneyLabel.png';
+const modelPath = '/gltf/gamecart/gamecart.gltf';
+const baseTexturePath = '/webp/cartLabelBlank.webp';
+const laikaTexturePath = '/gltf/LaikasJourneyLabel.png';
 
 useTexture.preload(laikaTexturePath);
 useTexture.preload(baseTexturePath);
@@ -24,17 +25,13 @@ export function GameCartModelInner({ selectedProject, position }: GameCartModelP
   const [laikaTextureRaw, baseTextureRaw] = useTexture([laikaTexturePath, baseTexturePath]) as Texture[];
   const laikaTexture = React.useMemo(() => {
     const laikaTexture = laikaTextureRaw.clone();
-    laikaTexture.rotation = MathUtils.degToRad(180);
-    laikaTexture.wrapS = MirroredRepeatWrapping;
-    laikaTexture.wrapT = RepeatWrapping;
+    laikaTexture.flipY = false;
     laikaTexture.needsUpdate = true;
     return laikaTexture;
   }, [laikaTextureRaw]);
   const baseTexture = React.useMemo(() => {
     const baseTexture = baseTextureRaw.clone();
-    baseTexture.rotation = MathUtils.degToRad(180);
-    baseTexture.wrapS = MirroredRepeatWrapping;
-    baseTexture.wrapT = RepeatWrapping;
+    baseTexture.flipY = false;
     baseTexture.needsUpdate = true;
     return baseTexture;
   }, [baseTextureRaw]);
@@ -56,7 +53,7 @@ export function GameCartModelInner({ selectedProject, position }: GameCartModelP
       <group ref={group} dispose={null} position={position}>
         <mesh castShadow receiveShadow geometry={outerMeshGeometry} material={plasticMaterial} />
         <mesh castShadow receiveShadow geometry={innerMeshGeometry}>
-          {/*<meshStandardMaterial map={currentTexture} />*/}
+          <meshStandardMaterial map={currentTexture} />
         </mesh>
       </group>
     </Stage>
@@ -73,9 +70,5 @@ function LoadingModel(): React.ReactElement {
 }
 
 export default function GameCartModel(props: GameCartModelProps): React.ReactElement {
-  return (
-    <React.Suspense fallback={LoadingModel()}>
-      <GameCartModelInner {...props} />
-    </React.Suspense>
-  );
+  return <GameCartModelInner {...props} />;
 }

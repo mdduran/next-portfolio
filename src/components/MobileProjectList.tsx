@@ -19,34 +19,40 @@ const findByTitle = (items: Project[], title: string) => items.find((p) => p.tit
 const MobileProjectList = ({
   projects,
   selectedProject,
-  setSelectedProject
+  setSelectedProject,
+  userHasSelected,
+  onSelectionChange
 }: {
   projects: Project[];
   selectedProject: Project;
   setSelectedProject: React.Dispatch<React.SetStateAction<Project>>;
+  userHasSelected: boolean;
+  onSelectionChange: () => void;
 }): React.ReactElement => {
   const gamesList = React.useMemo(() => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.GAME, GROUP_LABEL.GAMES)), [projects]);
   const softwareList = React.useMemo(() => projects.filter(byTypeExcludingLabel(PROJECT_TYPE.SOFTWARE, GROUP_LABEL.SOFTWARE)), [projects]);
-  const [userHasSelected, setUserHasSelected] = React.useState(false);
 
   const handleProjectChange = (event: SelectChangeEvent<string>) => {
     const nextTitle = event.target.value as string;
     const next = findByTitle(projects, nextTitle);
     if (next) {
       setSelectedProject(next);
-      setUserHasSelected(true);
+      onSelectionChange();
     }
   };
 
   return (
     <div id={styles['mobile-project-list']}>
-      <InputLabel id="selected-project">Selected Project</InputLabel>
+      <InputLabel id="selected-project-label">Selected Project</InputLabel>
       <Select
-        labelId="selected-project"
+        labelId="selected-project-label"
         native
         defaultValue={selectedProject.title}
         value={selectedProject.title}
         onChange={handleProjectChange}
+        inputProps={{
+          'aria-labelledby': 'selected-project-label',
+        }}
       >
         <optgroup label="-" aria-hidden={userHasSelected} hidden={userHasSelected}>
           <option

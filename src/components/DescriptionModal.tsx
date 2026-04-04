@@ -10,10 +10,10 @@ const DescriptionModalInner = ({ description, handleClose }: DescriptionModalTyp
   return (
     <Box className={styles.descriptionModal} data-augmented-ui="t-round-x b-round-x r-round-xy l-round-xy both">
       <Typography id="modal-title" variant="h6" component="h2">
-        Description
+        {description ? 'Project Description' : 'Description'}
       </Typography>
       <div className="description-container">
-        <Typography id="modal-description" sx={{ mt: 2 }}>
+        <Typography id="modal-description">
           {description}
         </Typography>
       </div>

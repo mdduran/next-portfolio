@@ -11,11 +11,28 @@
 }
 
 .innerBox {
-  background-color: var(--color-secondary-main);
-  border: 2px solid;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: visible;
+
+  --aug-border-all: 1px;
+  --aug-border-bg: rgba(255, 255, 255, 0.05);
+  --aug-inlay-all: 0px;
+  --aug-inlay-bg: rgba(0, 0, 0, 0.2);
+  --aug-tl-clip-x1: 24px;
+  --aug-tr-clip-x1: 24px;
+  --aug-br-clip-x1: 24px;
+  --aug-bl-clip-x1: 24px;
+
+  @include bp.down(sm) {
+    --aug-tl-clip-x1: 16px;
+    --aug-tr-clip-x1: 16px;
+    --aug-br-clip-x1: 16px;
+    --aug-bl-clip-x1: 16px;
+  }
 }
 
 .modelWrapper {
@@ -27,18 +44,186 @@
 
 .modelControls {
   z-index: 2;
-  background-color: rgba(0,0,0,0.35);
-  padding: 1rem;
-  border-radius: 4px;
-  backdrop-filter: blur(2px);
-  width: 100%;
-  @include bp.down(md) {
-    max-width: 400px;
+  padding: 0.75rem 1rem;
+  backdrop-filter: blur(12px);
+  width: auto;
+  min-width: 280px;
+  max-width: calc(100% - 40px);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+  background: rgba(15, 15, 15, 0.4);
+  margin-bottom: 16px;
+
+  --aug-border-all: 1px;
+  --aug-border-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.15) 100%);
+  --aug-inlay-all: 0px;
+  --aug-inlay-bg: rgba(0, 0, 0, 0.1);
+  --aug-tl-clip-x1: 20px;
+  --aug-tr-clip-x1: 8px;
+  --aug-br-clip-x1: 20px;
+  --aug-bl-clip-x1: 8px;
+
+  @include bp.up(md) {
+    padding: 1.25rem 2rem;
+    min-width: 380px;
   }
+
   @include bp.down(sm) {
-    max-width: 300px;
+    --aug-tl-clip-x1: 12px;
+    --aug-tr-clip-x1: 4px;
+    --aug-br-clip-x1: 12px;
+    --aug-bl-clip-x1: 4px;
+    margin-bottom: 8px;
+    padding: 0.4rem 0.6rem;
+    min-width: 210px;
   }
-  margin-top: 1rem;
+}
+
+.controlButton {
+  color: #fff !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 2px !important;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 8px !important;
+  transition: all 0.2s ease !important;
+
+  @include bp.up(md) {
+    width: 48px !important;
+    height: 48px !important;
+    padding: 12px !important;
+  }
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15) !important;
+    border-color: var(--color-secondary-light) !important;
+  }
+
+  @include bp.down(sm) {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 4px !important;
+  }
+
+  &.active {
+    color: var(--color-success-light) !important;
+  }
+
+  svg {
+    font-size: 1.25rem !important;
+
+    @include bp.up(md) {
+      font-size: 1.6rem !important;
+    }
+
+    @include bp.down(sm) {
+      font-size: 0.9rem !important;
+    }
+  }
+}
+
+.sliderStack {
+  flex-grow: 1;
+  margin-left: 1rem;
+
+  @include bp.up(md) {
+    margin-left: 2rem;
+  }
+
+  @include bp.down(sm) {
+    margin-left: 0.5rem;
+  }
+
+  svg {
+    color: #fff;
+    opacity: 0.5;
+    font-size: 1.25rem;
+
+    @include bp.up(md) {
+      font-size: 1.6rem;
+    }
+
+    @include bp.down(sm) {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.slider {
+  color: var(--color-secondary-light) !important;
+  height: 2px !important;
+  padding: 13px 0 !important;
+
+  :global(.MuiSlider-thumb) {
+    height: 14px !important;
+    width: 5px !important;
+    border-radius: 0 !important;
+    background-color: #fff !important;
+
+    @include bp.up(md) {
+      height: 20px !important;
+      width: 7px !important;
+    }
+
+    &:before {
+      display: none !important;
+    }
+
+    &:hover,
+    &.Mui-focusVisible {
+      box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.1) !important;
+    }
+
+    &.Mui-active {
+      box-shadow: 0 0 0 14px rgba(255, 255, 255, 0.15) !important;
+    }
+
+    @include bp.down(sm) {
+      height: 10px !important;
+      width: 3px !important;
+    }
+  }
+
+  :global(.MuiSlider-track) {
+    border: none !important;
+    background-color: var(--color-secondary-light) !important;
+  }
+
+  :global(.MuiSlider-rail) {
+    opacity: 0.2 !important;
+    background-color: #fff !important;
+  }
+}
+
+.fallbackContainer {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.controlsStack {
+  gap: 1.5rem;
+
+  @include bp.up(md) {
+    gap: 2rem;
+  }
+
+  @include bp.down(sm) {
+    gap: 0.5rem;
+  }
+}
+
+.mainControlsStack {
+  gap: 1.5rem;
+
+  @include bp.up(md) {
+    gap: 2rem;
+  }
+
+  @include bp.down(sm) {
+    gap: 0.5rem;
+  }
 }
 
 .contentLayout {
@@ -64,19 +249,35 @@
   width: 100%;
   display: flex;
   justify-content: center;
+
+  @include bp.down(sm) {
+    padding-top: 1.5rem;
+  }
 }
 
-/* Breakpoints: xxs:0, sm:700, md:900 */
+/* Breakpoints: xxs:0, xs:350, sm:700, md:900 */
 @include bp.up(xxs) {
   .innerBox,
   .modelWrapper {
-    width: 240px;
-    height: 200px;
-    margin: 0 20px;
+    width: calc(100% - 32px);
+    max-width: 320px;
+    height: 220px;
+    margin: 0 auto;
   }
   .canvas {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 220px;
+  }
+}
+
+@include bp.up(xs) {
+  .innerBox,
+  .modelWrapper {
+    max-width: 450px;
+    height: 280px;
+  }
+  .canvas {
+    height: 280px;
   }
 }
 
@@ -84,11 +285,13 @@
   .innerBox,
   .modelWrapper {
     width: 100%;
-    height: 300px;
+    max-width: none;
+    height: 350px;
+    margin: 0;
   }
   .canvas {
     width: 100%;
-    height: 300px;
+    height: 350px;
   }
 }
 
