@@ -24,7 +24,7 @@
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.0",
     "augmented-ui": "^2.0.0",
-    "next": "16.1.6",
+    "next": "16.2.6",
     "react": "^19.2.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^19.2.0",
