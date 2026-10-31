@@ -1,0 +1,59 @@
+@use '../../src/styles/breakpoints' as bp;
+
+/* The site disables page-level scrolling, so each page owns its scroll area */
+.page {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--color-primary-main);
+}
+
+.container {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.section + .section {
+  margin-top: 2.5rem;
+}
+
+.heading {
+  color: #fff;
+  margin-bottom: 1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include bp.up(sm) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include bp.up(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.card {
+  --aug-inlay: initial;
+  --aug-delegated-inlay: initial;
+  --aug-border-all: 4px;
+  --aug-tl: 16px;
+  --aug-br: 16px;
+  height: 100%;
+}
+
+.cardAction {
+  height: 100%;
+  align-items: flex-start;
+}
+
+.cardTitle {
+  font-size: 1rem;
+}
+
+.cardYear {
+  opacity: 0.7;
+  margin: 0.25rem 0 0.75rem;
+}

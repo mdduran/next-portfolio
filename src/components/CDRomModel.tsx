@@ -5,8 +5,8 @@ import { extend, ThreeElements } from '@react-three/fiber';
 
 extend({ Texture, Material, BufferGeometry, Group, Object3D });
 
-const modelPath = './gltf/lowpoly_cd/lowpolycd.gltf';
-const texturePath = './gltf/lowpoly_cd/textures/lambert2SG_baseColor.png';
+const modelPath = '/gltf/lowpoly_cd/lowpolycd.gltf';
+const texturePath = '/gltf/lowpoly_cd/textures/lambert2SG_baseColor.png';
 export default function CDRomModel(props: ThreeElements['group']): React.ReactElement {
   const { position } = props;
   const group = React.useRef<Group>(null);
