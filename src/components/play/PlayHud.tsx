@@ -1,4 +1,5 @@
 import * as React from 'react';
+import type { ZoneLayout } from './level';
 import type { PlayerInput } from './physics';
 import styles from './PlayHud.module.scss';
 
@@ -74,4 +75,23 @@ export const TouchControls = ({ inputRef, canOpen, onOpen }: TouchControlsProps)
   );
 };
 
-export const KeyboardHint = (): React.ReactElement => <p className={styles.keyboardHint}>← → move · Space jump · E open</p>;
+export const KeyboardHint = (): React.ReactElement => <p className={styles.keyboardHint}>← → move · Space jump · E open · 1-2 fly</p>;
+
+type TravelBarProps = {
+  zones: ZoneLayout[];
+  onTravel: (index: number) => void;
+  disabled: boolean;
+};
+
+// Fast travel buttons, one per zone (number keys 1..n on keyboard)
+export const TravelBar = ({ zones, onTravel, disabled }: TravelBarProps): React.ReactElement => (
+  <nav className={styles.travel} aria-label="Fast travel">
+    <span className={styles.travelLabel}>Fly to</span>
+    {zones.map((zone, i) => (
+      <button key={zone.type} type="button" className={styles.travelButton} onClick={() => onTravel(i)} disabled={disabled}>
+        {zone.label}
+        <kbd className={styles.travelKey}>{i + 1}</kbd>
+      </button>
+    ))}
+  </nav>
+);

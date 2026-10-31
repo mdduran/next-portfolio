@@ -11,12 +11,13 @@ const GAME_KEYS = [...LEFT_KEYS, ...RIGHT_KEYS, ...JUMP_KEYS, ...INTERACT_KEYS];
 const isInteractiveTarget = (target: EventTarget | null) => target instanceof HTMLElement && !!target.closest('a, button, input');
 
 // Keyboard controls for the platformer. Returns a mutable input object the game
-// loop reads every frame (touch controls write to the same object).
-export function usePlayControls(onInteract: () => void, enabled: boolean): React.RefObject<PlayerInput> {
+// loop reads every frame (touch controls write to the same object). Number keys
+// call onTravel with a zero-based index.
+export function usePlayControls(onInteract: () => void, onTravel: (index: number) => void, enabled: boolean): React.RefObject<PlayerInput> {
   const input = React.useRef<PlayerInput>({ left: false, right: false, jumpHeld: false, jumpQueued: false });
-  const onInteractRef = React.useRef(onInteract);
+  const callbacks = React.useRef({ onInteract, onTravel });
   React.useEffect(() => {
-    onInteractRef.current = onInteract;
+    callbacks.current = { onInteract, onTravel };
   });
 
   React.useEffect(() => {
@@ -32,6 +33,11 @@ export function usePlayControls(onInteract: () => void, enabled: boolean): React
     }
 
     const onKey = (event: KeyboardEvent) => {
+      const digit = /^Digit([1-9])$/.exec(event.code);
+      if (digit && event.type === 'keydown' && !event.repeat && !isInteractiveTarget(event.target)) {
+        callbacks.current.onTravel(Number(digit[1]) - 1);
+        return;
+      }
       if (!GAME_KEYS.includes(event.code) || event.metaKey || event.ctrlKey || event.altKey) return;
       if (isInteractiveTarget(event.target) && (event.code === 'Enter' || event.code === 'Space')) return;
       event.preventDefault();
@@ -42,7 +48,7 @@ export function usePlayControls(onInteract: () => void, enabled: boolean): React
         if (down && !event.repeat) state.jumpQueued = true;
         state.jumpHeld = down;
       }
-      if (INTERACT_KEYS.includes(event.code) && down && !event.repeat) onInteractRef.current();
+      if (INTERACT_KEYS.includes(event.code) && down && !event.repeat) callbacks.current.onInteract();
     };
 
     window.addEventListener('keydown', onKey);

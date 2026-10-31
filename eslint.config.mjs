@@ -43,6 +43,8 @@ export default defineConfig([
                     "attach",
                     "object",
                     "toneMapped",
+                    "visible",
+                    "transparent",
                 ],
             }],
 

@@ -100,3 +100,31 @@ export function stepPlayer(state: PlayerState, input: PlayerInput, dt: number, l
 
   return state;
 }
+
+// Fast travel: a scripted jetpack flight that arcs over the level
+const FLIGHT_PEAK = 5.5;
+
+export type Flight = {
+  fromX: number;
+  fromY: number;
+  toX: number;
+  elapsed: number;
+  duration: number;
+};
+
+// Longer trips take longer, within limits; 0 skips the flight entirely
+export function flightDuration(fromX: number, toX: number, instant: boolean): number {
+  if (instant) return 0;
+  return Math.min(2.2, Math.max(0.8, 0.6 + Math.abs(toX - fromX) * 0.02));
+}
+
+const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+
+// Position along the flight at progress t (0..1); lands on the floor at t = 1
+export function flightPosition(flight: Flight, t: number): { x: number; y: number } {
+  const eased = easeInOutCubic(t);
+  return {
+    x: flight.fromX + (flight.toX - flight.fromX) * eased,
+    y: flight.fromY * (1 - t) + 4 * FLIGHT_PEAK * t * (1 - t)
+  };
+}
