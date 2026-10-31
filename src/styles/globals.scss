@@ -43,6 +43,14 @@ body {
   min-height: 0; /* allow children to manage their own height/scroll without forcing page overflow */
 }
 
+/* Wrapper animated between routes in _app; passes the flex layout through */
+.page-transition {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  min-width: 0;
+}
+
 #__next,
 #__next > div,
 main {

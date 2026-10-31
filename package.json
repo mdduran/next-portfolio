@@ -29,6 +29,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
     "gray-matter": "^4.0.3",
+    "motion": "^14.8.0",
     "next": "16.2.10",
     "react": "19.2.7",
     "react-dom": "19.2.7",
