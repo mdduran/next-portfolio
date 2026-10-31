@@ -106,3 +106,10 @@
     font-size: 24px;
   }
 }
+
+/* Section of the page being viewed */
+.current {
+  color: #fff !important;
+  border-bottom: 2px solid var(--color-success-light) !important;
+  border-radius: 0 !important;
+}

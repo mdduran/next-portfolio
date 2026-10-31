@@ -7,9 +7,14 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styles from './Header.module.scss';
 
 const Header = (): React.ReactElement => {
+  const { pathname } = useRouter();
+  // A section is current on its own page and any page under it (e.g. /projects/[slug])
+  const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const navClass = (href: string) => `${styles.iconButton} ${isCurrent(href) ? styles.current : ''}`;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -30,8 +35,8 @@ const Header = (): React.ReactElement => {
           </Link>
           <div className={styles.divGrow} />
           <Box className={styles.navItems}>
-            <Link className={styles.link} href="/play" passHref>
-              <IconButton className={styles.iconButton} size="small" aria-label="Play">
+            <Link className={styles.link} href="/play" passHref aria-current={isCurrent('/play') ? 'page' : undefined}>
+              <IconButton className={navClass('/play')} size="small" aria-label="Play">
                 <Grid container spacing={0} alignItems="center" wrap="nowrap">
                   <Grid>
                     <PlayIcon className={styles.icon} />
@@ -44,8 +49,8 @@ const Header = (): React.ReactElement => {
                 </Grid>
               </IconButton>
             </Link>
-            <Link className={styles.link} href="/projects" passHref>
-              <IconButton className={styles.iconButton} size="small" aria-label="Projects">
+            <Link className={styles.link} href="/projects" passHref aria-current={isCurrent('/projects') ? 'page' : undefined}>
+              <IconButton className={navClass('/projects')} size="small" aria-label="Projects">
                 <Grid container spacing={0} alignItems="center" wrap="nowrap">
                   <Grid>
                     <FolderIcon className={styles.icon} />
