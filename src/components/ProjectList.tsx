@@ -13,8 +13,14 @@ const ProjectList = ({
   selectedProject: Project;
   setSelectedProject: React.Dispatch<React.SetStateAction<Project>>;
 }): React.ReactElement => {
-  const [gamesList, setGamesList] = React.useState<Project[]>([]);
-  const [softwareList, setSoftwareList] = React.useState<Project[]>([]);
+  const gamesList = React.useMemo(
+    () => projects.filter((p) => p.projectType === 'game' && p.title !== 'Games'),
+    [projects]
+  );
+  const softwareList = React.useMemo(
+    () => projects.filter((p) => p.projectType === 'software' && p.title !== 'Software'),
+    [projects]
+  );
   const [gamesOpen, setGamesOpen] = React.useState(true);
   const [softwareOpen, setSoftwareOpen] = React.useState(true);
 
@@ -25,16 +31,6 @@ const ProjectList = ({
   const handleSoftwareClick = () => {
     setSoftwareOpen(!softwareOpen);
   };
-
-  React.useEffect(() => {
-    const games = projects.filter((p) => p.projectType === 'game' && p.title !== 'Games');
-    const software = projects.filter((p) => p.projectType === 'software' && p.title !== 'Software');
-    setGamesList(games);
-    setSoftwareList(software);
-    setSelectedProject(projects[1]);
-    // only want to run this once for initialization
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className={styles.wrapper}>

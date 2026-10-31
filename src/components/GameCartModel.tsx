@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import * as React from 'react';
 import { useGLTF, useTexture, Stage } from '@react-three/drei';
 import { MathUtils, RepeatWrapping, MirroredRepeatWrapping, Texture, Material, BufferGeometry, Group } from 'three';

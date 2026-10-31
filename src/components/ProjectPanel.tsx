@@ -20,29 +20,29 @@ const CDRomModel = dynamic(() => import('./CDRomModel'), {
   loading: () => <ModelLoader />
 });
 
+let webglSupportedCache: boolean | undefined;
+const getWebglSupported = (): boolean => {
+  if (webglSupportedCache === undefined) {
+    try {
+      const canvas = document.createElement('canvas');
+      webglSupportedCache = !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
+    } catch (e) {
+      webglSupportedCache = false;
+    }
+  }
+  return webglSupportedCache;
+};
+const subscribeNoop = (): (() => void) => () => {};
+
 const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
   const controlsRef = React.useRef<any>(null);
   const [autoRotate, setAutoRotate] = React.useState(true);
   const [autoRotateSpeed, setAutoRotateSpeed] = React.useState(5);
-  const [currentProjectType, setCurrentProjectType] = React.useState(selectedProject.projectType);
-  React.useEffect(() => {
-    setCurrentProjectType(selectedProject.projectType);
-  }, [selectedProject]);
+  const currentProjectType = selectedProject.projectType;
   const modelPosition: Vector3 = currentProjectType === 'game' ? [0, 0, 0] : [0, -5, 0];
 
-  // Detect WebGL support on client
-  const [webglSupported, setWebglSupported] = React.useState<boolean | null>(null);
-  React.useEffect(() => {
-    const isSupported = (): boolean => {
-      try {
-        const canvas = document.createElement('canvas');
-        return !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
-      } catch (e) {
-        return false;
-      }
-    };
-    setWebglSupported(isSupported());
-  }, []);
+  // Detect WebGL support on client (null during SSR)
+  const webglSupported = React.useSyncExternalStore(subscribeNoop, getWebglSupported, () => null);
 
   const fallbackSrc = React.useMemo(() => {
     if (currentProjectType === 'game') {

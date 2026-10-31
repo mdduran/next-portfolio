@@ -11,10 +11,16 @@ export default function CDRomModel(props: ThreeElements['group']): React.ReactEl
   const { position } = props;
   const group = React.useRef<Group>(null);
   const { nodes, materials } = useGLTF(modelPath);
-  const texture: Texture = useTexture(texturePath);
-  texture.rotation = MathUtils.degToRad(180);
-  texture.wrapS = MirroredRepeatWrapping;
-  texture.wrapT = RepeatWrapping;
+  const textureRaw: Texture = useTexture(texturePath);
+  // Clone rather than mutate the texture cached by useTexture
+  const texture = React.useMemo(() => {
+    const texture = textureRaw.clone();
+    texture.rotation = MathUtils.degToRad(180);
+    texture.wrapS = MirroredRepeatWrapping;
+    texture.wrapT = RepeatWrapping;
+    texture.needsUpdate = true;
+    return texture;
+  }, [textureRaw]);
   const meshMaterial: Material = materials.lambert2SG;
   // TODO: Wtf is this type?!
   const objectNode: any = nodes.Object_2;

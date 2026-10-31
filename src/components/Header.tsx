@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-bind */
 import { AppBar, Box, IconButton, MenuItem, Toolbar, Link as MLink, Button, Menu, Typography, Grid } from '@mui/material';
 import ContactIcon from '@mui/icons-material/ContactMail';
 import FolderIcon from '@mui/icons-material/Folder';
