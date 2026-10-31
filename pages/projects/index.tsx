@@ -1,19 +1,24 @@
 import * as React from 'react';
 import type { GetStaticProps } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
-import { Card, CardActionArea, CardContent, Container, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
+import { AnimatePresence, motion } from 'motion/react';
+import { Chip, Container, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import type { Project } from '@type';
 import { getAllProjects } from '@lib/projects';
+import ProjectTile from '@components/ProjectTile';
 import styles from './ProjectIndex.module.scss';
 
 type ProjectsProps = {
   projects: Project[];
 };
 
-const SECTIONS: { type: Project['type']; heading: string }[] = [
-  { type: 'game', heading: 'Games' },
-  { type: 'software', heading: 'Software' }
+type TypeFilter = Project['type'] | 'all';
+
+const TYPE_FILTERS: { value: TypeFilter; label: string }[] = [
+  { value: 'all', label: 'All' },
+  { value: 'game', label: 'Games' },
+  { value: 'software', label: 'Software' }
 ];
 
 export const getStaticProps: GetStaticProps<ProjectsProps> = () => {
@@ -21,6 +26,21 @@ export const getStaticProps: GetStaticProps<ProjectsProps> = () => {
 };
 
 function Projects({ projects }: ProjectsProps): React.ReactNode {
+  const router = useRouter();
+
+  // Filters live in the URL (?type=game&tag=unity) so they're shareable
+  const type: TypeFilter = router.query.type === 'game' || router.query.type === 'software' ? router.query.type : 'all';
+  const tag = typeof router.query.tag === 'string' ? router.query.tag : null;
+
+  const setFilters = (next: { type: TypeFilter; tag: string | null }) => {
+    const query: Record<string, string> = {};
+    if (next.type !== 'all') query.type = next.type;
+    if (next.tag) query.tag = next.tag;
+    router.replace({ pathname: '/projects', query }, undefined, { shallow: true, scroll: false });
+  };
+
+  const visible = projects.filter((project) => (type === 'all' || project.type === type) && (!tag || project.tags.includes(tag)));
+
   return (
     <div className={styles.page}>
       <Head>
@@ -28,32 +48,44 @@ function Projects({ projects }: ProjectsProps): React.ReactNode {
         <meta name="description" content="Games and software projects by Marco Daniel Duran." />
       </Head>
       <Container className={styles.container}>
-        {SECTIONS.map(({ type, heading }) => (
-          <section key={type} className={styles.section}>
-            <Typography className={styles.heading} variant="h5" component="h2">
-              {heading}
-            </Typography>
-            <div className={styles.grid}>
-              {projects
-                .filter((project) => project.type === type)
-                .map((project) => (
-                  <Card key={project.slug} className={styles.card} data-augmented-ui="tl-clip br-clip both">
-                    <CardActionArea className={styles.cardAction} component={Link} href={`/projects/${project.slug}`}>
-                      <CardContent>
-                        <Typography className={styles.cardTitle} variant="h6" component="h3">
-                          {project.title}
-                        </Typography>
-                        <Typography className={styles.cardYear} variant="body2">
-                          {project.year}
-                        </Typography>
-                        <Typography variant="body2">{project.summary}</Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                ))}
-            </div>
-          </section>
-        ))}
+        <div className={styles.toolbar}>
+          <ToggleButtonGroup
+            className={styles.typeFilter}
+            value={type}
+            exclusive
+            size="small"
+            aria-label="Project type"
+            onChange={(_, value: TypeFilter | null) => value && setFilters({ type: value, tag })}
+          >
+            {TYPE_FILTERS.map(({ value, label }) => (
+              <ToggleButton key={value} value={value}>
+                {label}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+          {tag && <Chip label={`Tag: ${tag}`} color="success" onDelete={() => setFilters({ type, tag: null })} />}
+          <Typography className={styles.count} variant="body2" aria-live="polite">
+            {visible.length} {visible.length === 1 ? 'project' : 'projects'}
+          </Typography>
+        </div>
+
+        <motion.ul className={styles.grid} layout>
+          <AnimatePresence mode="popLayout" initial={false}>
+            {visible.map((project) => (
+              <motion.li
+                key={project.slug}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.25 }}
+              >
+                <ProjectTile project={project} activeTag={tag} onTagClick={(t) => setFilters({ type, tag: t === tag ? null : t })} />
+              </motion.li>
+            ))}
+          </AnimatePresence>
+        </motion.ul>
+        {visible.length === 0 && <Typography className={styles.empty}>No projects match these filters.</Typography>}
       </Container>
     </div>
   );
