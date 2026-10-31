@@ -10,7 +10,7 @@ import { getAllProjects } from '@lib/projects';
 import { useWebglSupported } from '@lib/webgl';
 import { buildLevel } from '@components/play/level';
 import { usePlayControls } from '@components/play/usePlayControls';
-import { KeyboardHint, PreviewCard, TouchControls } from '@components/play/PlayHud';
+import { KeyboardHint, TouchControls } from '@components/play/PlayHud';
 import styles from './Play.module.scss';
 
 // three.js only runs in the browser; keep it out of the server render and other pages
@@ -78,8 +78,7 @@ function Play({ projects }: PlayProps): React.ReactNode {
       {webglSupported !== false && !sceneReady && <p className={styles.status}>Loading level…</p>}
 
       <KeyboardHint />
-      {near && <PreviewCard project={near} onOpen={open} />}
-      <TouchControls inputRef={inputRef} />
+      <TouchControls inputRef={inputRef} canOpen={!!near && !openingSlug} onOpen={open} />
       <p className={styles.visuallyHidden} aria-live="polite">
         {near ? `${near.title}. Press E or Enter to open.` : ''}
       </p>

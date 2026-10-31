@@ -1,24 +1,6 @@
 import * as React from 'react';
-import { Button, Typography } from '@mui/material';
-import type { Project } from '@type';
-import ProjectArt from '@components/ProjectArt';
 import type { PlayerInput } from './physics';
 import styles from './PlayHud.module.scss';
-
-export const PreviewCard = ({ project, onOpen }: { project: Project; onOpen: () => void }): React.ReactElement => (
-  <div className={styles.preview} data-augmented-ui="tl-clip br-clip both">
-    <ProjectArt project={project} className={styles.previewArt} />
-    <div className={styles.previewBody}>
-      <Typography className={styles.previewTitle} variant="h6" component="h2">
-        {project.title}
-      </Typography>
-      <Typography variant="body2">{project.summary}</Typography>
-      <Button className={styles.openButton} variant="contained" color="success" onClick={onOpen}>
-        Open ▶ <span className={styles.keyHint}>(E)</span>
-      </Button>
-    </div>
-  </div>
-);
 
 type HoldButtonProps = {
   label: string;
@@ -47,7 +29,14 @@ const HoldButton = ({ label, className, onPress, onRelease, children }: HoldButt
 );
 
 // On-screen controls, only shown on touch devices (see PlayHud.module.scss)
-export const TouchControls = ({ inputRef }: { inputRef: React.RefObject<PlayerInput> }): React.ReactElement => {
+type TouchControlsProps = {
+  inputRef: React.RefObject<PlayerInput>;
+  // Open is only offered while a station is in reach
+  canOpen: boolean;
+  onOpen: () => void;
+};
+
+export const TouchControls = ({ inputRef, canOpen, onOpen }: TouchControlsProps): React.ReactElement => {
   const set = (key: 'left' | 'right', value: boolean) => {
     inputRef.current[key] = value;
   };
@@ -61,19 +50,26 @@ export const TouchControls = ({ inputRef }: { inputRef: React.RefObject<PlayerIn
           ▶
         </HoldButton>
       </div>
-      <HoldButton
-        label="Jump"
-        className={styles.jump}
-        onPress={() => {
-          inputRef.current.jumpQueued = true;
-          inputRef.current.jumpHeld = true;
-        }}
-        onRelease={() => {
-          inputRef.current.jumpHeld = false;
-        }}
-      >
-        ▲
-      </HoldButton>
+      <div className={styles.touchGroup}>
+        {canOpen && (
+          <button type="button" className={`${styles.touchButton} ${styles.open}`} onClick={onOpen}>
+            Open
+          </button>
+        )}
+        <HoldButton
+          label="Jump"
+          className={styles.jump}
+          onPress={() => {
+            inputRef.current.jumpQueued = true;
+            inputRef.current.jumpHeld = true;
+          }}
+          onRelease={() => {
+            inputRef.current.jumpHeld = false;
+          }}
+        >
+          ▲
+        </HoldButton>
+      </div>
     </div>
   );
 };
