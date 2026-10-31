@@ -9,12 +9,14 @@ import styles from './ProjectTile.module.scss';
 type ProjectTileProps = {
   project: Project;
   activeTag: string | null;
+  // Hidden when the gallery is already filtered to one type
+  showType: boolean;
   onTagClick: (tag: string) => void;
 };
 
 const TYPE_LABELS: Record<Project['type'], string> = { game: 'Game', software: 'Software' };
 
-const ProjectTile = ({ project, activeTag, onTagClick }: ProjectTileProps): React.ReactElement => {
+const ProjectTile = ({ project, activeTag, showType, onTagClick }: ProjectTileProps): React.ReactElement => {
   const { slug, title, type, year, summary, tags } = project;
 
   return (
@@ -22,7 +24,6 @@ const ProjectTile = ({ project, activeTag, onTagClick }: ProjectTileProps): Reac
       <article className={styles.tile} data-augmented-ui="tl-clip br-clip both">
         <div className={styles.artWrapper}>
           <ProjectArt project={project} className={styles.art} />
-          <span className={styles.badge}>{TYPE_LABELS[type]}</span>
         </div>
         <div className={styles.body}>
           <Typography className={styles.title} variant="h6" component="h2">
@@ -31,9 +32,12 @@ const ProjectTile = ({ project, activeTag, onTagClick }: ProjectTileProps): Reac
               {title}
             </Link>
           </Typography>
-          <Typography className={styles.year} variant="body2">
-            {year}
-          </Typography>
+          <div className={styles.meta}>
+            <Typography className={styles.year} variant="body2">
+              {year}
+            </Typography>
+            {showType && <span className={`${styles.type} ${styles[type]}`}>{TYPE_LABELS[type]}</span>}
+          </div>
           <Typography className={styles.summary} variant="body2">
             {summary}
           </Typography>
