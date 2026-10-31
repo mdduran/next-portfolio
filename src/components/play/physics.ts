@@ -18,7 +18,7 @@ const MAX_FALL_SPEED = 25;
 const COYOTE_TIME = 0.1;
 const JUMP_BUFFER_TIME = 0.12;
 // Jetpack hover: holding jump while falling slows to a gentle sink, using fuel
-// that only recharges on the ground
+// that recharges whenever jump is released (in the air too) or on the ground
 const HOVER_SINK_SPEED = 0.6;
 const HOVER_RESPONSIVENESS = 12;
 const HOVER_DURATION = 1.5;
@@ -84,7 +84,7 @@ export function stepPlayer(state: PlayerState, input: PlayerInput, dt: number, l
     state.fuel = Math.max(0, state.fuel - dt / HOVER_DURATION);
     state.vy += (-HOVER_SINK_SPEED - state.vy) * Math.min(1, dt * HOVER_RESPONSIVENESS);
   } else {
-    if (state.grounded) state.fuel = Math.min(1, state.fuel + dt / HOVER_RECHARGE_TIME);
+    if (state.grounded || !input.jumpHeld) state.fuel = Math.min(1, state.fuel + dt / HOVER_RECHARGE_TIME);
     const gravity = state.vy > 0 && !input.jumpHeld ? GRAVITY * JUMP_CUT_MULTIPLIER : GRAVITY;
     state.vy = Math.max(-MAX_FALL_SPEED, state.vy - gravity * dt);
   }
