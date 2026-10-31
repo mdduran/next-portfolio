@@ -39,6 +39,12 @@ export default defineConfig([
                     "map",
                     "intensity",
                     "wireframe",
+                    "args",
+                    "attach",
+                    "object",
+                    "toneMapped",
+                    "visible",
+                    "transparent",
                 ],
             }],
 

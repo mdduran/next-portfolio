@@ -68,18 +68,11 @@
   flex-shrink: 1;
 }
 
-/* Desktop label shown next to icons */
+/* Label shown next to icons; phones get icons only (buttons keep aria-labels) */
 .buttonText {
-  display: inline-block;
-  @include bp.up(xxs) {
-    font-size: 6px !important;
-    padding-left: 2px;
-  }
-  @include bp.up(xs) {
-    font-size: 8px !important;
-    padding-left: 2px;
-  }
+  display: none;
   @include bp.up(sm) {
+    display: inline-block;
     font-size: 10px !important;
     margin-left: 4px;
   }
@@ -91,13 +84,10 @@
 .navItems {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   flex-wrap: nowrap;
   min-width: 0; /* allow children to shrink */
   flex-shrink: 1;
-  @include bp.up(xs) {
-    gap: 2px;
-  }
   @include bp.up(sm) {
     gap: 6px;
   }
@@ -107,7 +97,7 @@
 }
 
 .icon {
-  font-size: 14px;
+  font-size: 20px;
   flex-shrink: 0;
   @include bp.up(sm) {
     font-size: 20px;
@@ -115,4 +105,11 @@
   @include bp.up(md) {
     font-size: 24px;
   }
+}
+
+/* Section of the page being viewed */
+.current {
+  color: #fff !important;
+  border-bottom: 2px solid var(--color-success-light) !important;
+  border-radius: 0 !important;
 }

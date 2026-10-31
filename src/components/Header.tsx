@@ -1,14 +1,20 @@
 import { AppBar, Box, IconButton, MenuItem, Toolbar, Link as MLink, Button, Menu, Typography, Grid } from '@mui/material';
 import ContactIcon from '@mui/icons-material/ContactMail';
 import FolderIcon from '@mui/icons-material/Folder';
+import PlayIcon from '@mui/icons-material/SportsEsports';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import * as React from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styles from './Header.module.scss';
 
 const Header = (): React.ReactElement => {
+  const { pathname } = useRouter();
+  // A section is current on its own page and any page under it (e.g. /projects/[slug])
+  const isCurrent = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const navClass = (href: string) => `${styles.iconButton} ${isCurrent(href) ? styles.current : ''}`;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -29,8 +35,22 @@ const Header = (): React.ReactElement => {
           </Link>
           <div className={styles.divGrow} />
           <Box className={styles.navItems}>
-            <Link className={styles.link} href="/projects" passHref>
-              <IconButton className={styles.iconButton} size="small" aria-label="Projects">
+            <Link className={styles.link} href="/play" passHref aria-current={isCurrent('/play') ? 'page' : undefined}>
+              <IconButton className={navClass('/play')} size="small" aria-label="Play">
+                <Grid container spacing={0} alignItems="center" wrap="nowrap">
+                  <Grid>
+                    <PlayIcon className={styles.icon} />
+                  </Grid>
+                  <Grid>
+                    <Typography className={styles.buttonText} variant="button">
+                      Play
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </IconButton>
+            </Link>
+            <Link className={styles.link} href="/projects" passHref aria-current={isCurrent('/projects') ? 'page' : undefined}>
+              <IconButton className={navClass('/projects')} size="small" aria-label="Projects">
                 <Grid container spacing={0} alignItems="center" wrap="nowrap">
                   <Grid>
                     <FolderIcon className={styles.icon} />
