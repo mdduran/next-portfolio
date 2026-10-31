@@ -12,6 +12,7 @@ const CAMERA_DISTANCE = 13;
 const CAMERA_HEIGHT = 3;
 // How close (in x) the player must be to a station to interact with it
 const STATION_REACH = 1.8;
+const GRASS_HEIGHT = 0.1;
 
 export type PlaySceneProps = {
   level: Level;
@@ -34,14 +35,17 @@ function Platform({ box }: { box: Box }): React.ReactElement {
   // The floor and pedestals extend back under the stations; floating platforms are thin
   const depth = box.oneWay ? 1.5 : 4;
   const z = box.oneWay ? 0 : -1;
+  // The grass strip sits on top of the body rather than overlapping it; coplanar
+  // faces z-fight and flicker as the camera moves
+  const bodyHeight = box.h - GRASS_HEIGHT;
   return (
     <group position={[box.x + box.w / 2, 0, z]}>
-      <mesh position={[0, box.y + box.h / 2, 0]}>
-        <boxGeometry args={[box.w, box.h, depth]} />
+      <mesh position={[0, box.y + bodyHeight / 2, 0]}>
+        <boxGeometry args={[box.w, bodyHeight, depth]} />
         <meshStandardMaterial color={box.oneWay ? colors.feldgrau : colors.outerSpaceCrayola} />
       </mesh>
-      <mesh position={[0, box.y + box.h - 0.05, 0]}>
-        <boxGeometry args={[box.w + 0.02, 0.1, depth + 0.02]} />
+      <mesh position={[0, box.y + bodyHeight + GRASS_HEIGHT / 2, 0]}>
+        <boxGeometry args={[box.w + 0.02, GRASS_HEIGHT, depth + 0.02]} />
         <meshStandardMaterial color={colors.caribbeanGreen} />
       </mesh>
     </group>
@@ -75,8 +79,9 @@ function Backdrop({ level }: { level: Level }): React.ReactElement {
   }, [level]);
   return (
     <group position={[0, 0, -14]}>
-      {hills.map(({ x, h }) => (
-        <mesh key={x} position={[x, h / 2 - 1, 0]}>
+      {hills.map(({ x, h }, i) => (
+        // Neighbors overlap slightly; stagger depth so their faces don't z-fight
+        <mesh key={x} position={[x, h / 2 - 1, (i % 2) * 0.3]}>
           <boxGeometry args={[5.2, h, 1]} />
           <meshStandardMaterial color={colors.phthaloGreen} />
         </mesh>
