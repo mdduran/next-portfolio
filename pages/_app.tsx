@@ -10,8 +10,9 @@ import 'augmented-ui/augmented-ui.min.css';
 import 'styles/globals.scss';
 
 export default function App({ Component, pageProps, router }: AppProps): React.ReactElement {
-  // Animate between pages, but not when only the query changes (e.g. gallery filters)
-  const routeKey = router.asPath.split(/[?#]/)[0];
+  // Animate between routes, keyed by the route pattern: query changes (gallery
+  // filters) and moving between projects (/projects/[slug]) keep the page mounted
+  const routeKey = router.pathname;
 
   return (
     <ThemeProvider theme={theme}>
