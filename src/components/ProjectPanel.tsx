@@ -2,22 +2,25 @@ import type { Project } from '@type';
 import * as React from 'react';
 import { Box, Button, ButtonGroup, Slider, Stack } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Html, useProgress, Preload } from '@react-three/drei';
+import { OrbitControls, useProgress, Preload } from '@react-three/drei';
 import dynamic from 'next/dynamic';
 import type { Vector3 } from '@react-three/fiber';
 import ProjectCard from './ProjectCard';
 import styles from './ProjectPanel.module.scss';
 
-function ModelLoader(): React.ReactElement {
-  const { progress } = useProgress();
-  return <Html center>{progress} % loaded</Html>;
+// Rendered as a DOM overlay outside the Canvas. drei's <Html> inside the Canvas
+// mounts a separate React root that crashes (removeChild) when the Canvas unmounts.
+function ModelLoader(): React.ReactElement | null {
+  const { active, progress } = useProgress();
+  if (!active) return null;
+  return <div className={styles.loader}>{Math.round(progress)}% loaded</div>;
 }
 
 const GameCartModel = dynamic(() => import('./GameCartModel'), {
-  loading: () => <ModelLoader />
+  loading: () => null
 });
 const CDRomModel = dynamic(() => import('./CDRomModel'), {
-  loading: () => <ModelLoader />
+  loading: () => null
 });
 
 let webglSupportedCache: boolean | undefined;
@@ -95,6 +98,7 @@ const ProjectPanel = ({ project, children }: ProjectPanelProps): React.ReactElem
                     )}
                     <Preload all />
                   </Canvas>
+                  <ModelLoader />
                 </div>
               </Box>
               <Box className={styles.modelControls}>

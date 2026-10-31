@@ -25,6 +25,16 @@
   align-items: center;
 }
 
+.loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  pointer-events: none;
+}
+
 .modelControls {
   z-index: 2;
   background-color: rgba(0,0,0,0.35);

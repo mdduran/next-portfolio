@@ -44,8 +44,7 @@ function ProjectPage({ project, prev, next }: ProjectPageProps): React.ReactNode
             All projects
           </Button>
         </nav>
-        {/* key remounts the 3D panel when navigating between projects */}
-        <ProjectPanel key={project.slug} project={project}>
+        <ProjectPanel project={project}>
           <MdxContent code={project.body} />
         </ProjectPanel>
         <nav className={styles.pager} aria-label="Project navigation">
