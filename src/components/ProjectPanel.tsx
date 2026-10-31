@@ -1,4 +1,4 @@
-import type { Project } from 'types/types';
+import type { Project } from '@type';
 import * as React from 'react';
 import { Box, Button, ButtonGroup, Slider, Stack } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
@@ -34,11 +34,17 @@ const getWebglSupported = (): boolean => {
 };
 const subscribeNoop = (): (() => void) => () => {};
 
-const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.ReactElement => {
+type ProjectPanelProps = {
+  project: Project;
+  // Rendered long-form description, passed through to ProjectCard
+  children?: React.ReactNode;
+};
+
+const ProjectPanel = ({ project, children }: ProjectPanelProps): React.ReactElement => {
   const controlsRef = React.useRef<any>(null);
   const [autoRotate, setAutoRotate] = React.useState(true);
   const [autoRotateSpeed, setAutoRotateSpeed] = React.useState(5);
-  const currentProjectType = selectedProject.projectType;
+  const currentProjectType = project.type;
   const modelPosition: Vector3 = currentProjectType === 'game' ? [0, 0, 0] : [0, -5, 0];
 
   // Detect WebGL support on client (null during SSR)
@@ -52,80 +58,78 @@ const ProjectPanel = ({ selectedProject }: { selectedProject: Project }): React.
   }, [currentProjectType]);
 
   return (
-    selectedProject && (
-      <Box className={styles.outerBox}>
-        <Box className={styles.contentLayout}>
-          <Box className={styles.visualsColumn}>
-            {webglSupported === false ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                  <img
-                    src={fallbackSrc}
-                    alt={currentProjectType === 'game' ? 'Game cartridge preview' : 'CD-ROM preview'}
-                    style={{ maxWidth: '100%', height: 'auto' }}
+    <Box className={styles.outerBox}>
+      <Box className={styles.contentLayout}>
+        <Box className={styles.visualsColumn}>
+          {webglSupported === false ? (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+              <img
+                src={fallbackSrc}
+                alt={currentProjectType === 'game' ? 'Game cartridge preview' : 'CD-ROM preview'}
+                style={{ maxWidth: '100%', height: 'auto' }}
+              />
+            </Box>
+          ) : (
+            <>
+              <Box className={styles.innerBox}>
+                <div className={styles.modelWrapper}>
+                  <Canvas className={styles.canvas}>
+                    <OrbitControls
+                      ref={controlsRef}
+                      autoRotate={autoRotate}
+                      autoRotateSpeed={autoRotateSpeed}
+                      addEventListener={undefined}
+                      hasEventListener={undefined}
+                      removeEventListener={undefined}
+                      dispatchEvent={undefined}
+                      position0={modelPosition}
+                    />
+                    {currentProjectType === 'game' ? (
+                      <React.Suspense fallback={null}>
+                        <GameCartModel project={project} position={modelPosition} />
+                      </React.Suspense>
+                    ) : (
+                      <React.Suspense fallback={null}>
+                        <CDRomModel position={modelPosition} />
+                      </React.Suspense>
+                    )}
+                    <Preload all />
+                  </Canvas>
+                </div>
+              </Box>
+              <Box className={styles.modelControls}>
+                <Stack spacing={1} alignItems="center">
+                  <ButtonGroup size="small" variant="contained">
+                    <Button onClick={() => setAutoRotate(true)} disabled={autoRotate}>
+                      Start
+                    </Button>
+                    <Button onClick={() => setAutoRotate(false)} disabled={!autoRotate}>
+                      Stop
+                    </Button>
+                  </ButtonGroup>
+                </Stack>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Box sx={{ color: '#fff', fontSize: 12, minWidth: 36 }}>Speed</Box>
+                  <Slider
+                    size="medium"
+                    min={0}
+                    max={10}
+                    step={0.5}
+                    value={autoRotateSpeed}
+                    onChange={(_, v) => setAutoRotateSpeed(v as number)}
+                    sx={{ width: '90%', color: '#fff' }}
                   />
-                </Box>
-              ):(
-                <>
-                  <Box className={styles.innerBox}>
-                    <div className={styles.modelWrapper}>
-                      <Canvas className={styles.canvas}>
-                        <OrbitControls
-                          ref={controlsRef}
-                          autoRotate={autoRotate}
-                          autoRotateSpeed={autoRotateSpeed}
-                          addEventListener={undefined}
-                          hasEventListener={undefined}
-                          removeEventListener={undefined}
-                          dispatchEvent={undefined}
-                          position0={modelPosition}
-                        />
-                        {currentProjectType === 'game' ? (
-                          <React.Suspense fallback={null}>
-                            <GameCartModel selectedProject={selectedProject} position={modelPosition} />
-                          </React.Suspense>
-                        ) : (
-                          <React.Suspense fallback={null}>
-                            <CDRomModel position={modelPosition} />
-                          </React.Suspense>
-                        )}
-                        <Preload all />
-                      </Canvas>
-                    </div>
-                  </Box>
-                  <Box className={styles.modelControls}>
-                    <Stack spacing={1} alignItems="center">
-                      <ButtonGroup size="small" variant="contained">
-                        <Button onClick={() => setAutoRotate(true)} disabled={autoRotate}>
-                          Start
-                        </Button>
-                        <Button onClick={() => setAutoRotate(false)} disabled={!autoRotate}>
-                          Stop
-                        </Button>
-                      </ButtonGroup>
-                    </Stack>
-                    <Stack direction="row" spacing={1} alignItems="center">
-                      <Box sx={{ color: '#fff', fontSize: 12, minWidth: 36 }}>Speed</Box>
-                      <Slider
-                        size="medium"
-                        min={0}
-                        max={10}
-                        step={0.5}
-                        value={autoRotateSpeed}
-                        onChange={(_, v) => setAutoRotateSpeed(v as number)}
-                        sx={{ width: '90%', color: '#fff' }}
-                      />
-                    </Stack>
-                  </Box>
-                </>
-              )}
-          </Box>
+                </Stack>
+              </Box>
+            </>
+          )}
+        </Box>
 
-          <Box className={styles.projectCardBox} sx={{ justifyContent: 'center' }}>
-            <ProjectCard selectedProject={selectedProject} />
-          </Box>
+        <Box className={styles.projectCardBox} sx={{ justifyContent: 'center' }}>
+          <ProjectCard project={project}>{children}</ProjectCard>
         </Box>
       </Box>
-    )
+    </Box>
   );
 };
 

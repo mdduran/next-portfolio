@@ -6,7 +6,6 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
 import * as React from 'react';
 import Link from 'next/link';
-import { isMobile } from 'react-device-detect';
 import styles from './Header.module.scss';
 
 const Header = (): React.ReactElement => {

@@ -1,0 +1,22 @@
+/* The site disables page-level scrolling, so each page owns its scroll area */
+.page {
+  flex: 1;
+  overflow-y: auto;
+  background-color: var(--color-primary-main);
+}
+
+.container {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.topNav {
+  color: #fff;
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}

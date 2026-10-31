@@ -6,20 +6,20 @@ import { extend, Vector3 } from '@react-three/fiber';
 
 extend({ Texture, Material, BufferGeometry, Group });
 
-const modelPath = './gltf/gamecart/gamecart.gltf';
-const baseTexturePath = './webp/cartLabelBlank.webp';
-const laikaTexturePath = './gltf/LaikasJourneyLabel.png';
+const modelPath = '/gltf/gamecart/gamecart.gltf';
+const baseTexturePath = '/webp/cartLabelBlank.webp';
+const laikaTexturePath = '/gltf/LaikasJourneyLabel.png';
 
 useTexture.preload(laikaTexturePath);
 useTexture.preload(baseTexturePath);
 useGLTF.preload(modelPath);
 
 type GameCartModelProps = {
-  selectedProject: Project;
+  project: Project;
   position: Vector3;
 };
 
-export function GameCartModelInner({ selectedProject, position }: GameCartModelProps): React.ReactElement {
+export function GameCartModelInner({ project, position }: GameCartModelProps): React.ReactElement {
   const [laikaTextureRaw, baseTextureRaw] = useTexture([laikaTexturePath, baseTexturePath]) as Texture[];
   const laikaTexture = React.useMemo(() => {
     const laikaTexture = laikaTextureRaw.clone();
@@ -39,8 +39,8 @@ export function GameCartModelInner({ selectedProject, position }: GameCartModelP
   }, [baseTextureRaw]);
 
   const currentTexture = React.useMemo(() => {
-    return selectedProject.title === `Laika's Journey` ? laikaTexture : baseTexture;
-  }, [selectedProject.title, laikaTexture, baseTexture]);
+    return project.slug === 'laikas-journey' ? laikaTexture : baseTexture;
+  }, [project.slug, laikaTexture, baseTexture]);
 
   const group = React.useRef<Group>(null);
   const { nodes, materials } = useGLTF(modelPath);
