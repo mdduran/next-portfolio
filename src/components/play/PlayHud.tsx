@@ -75,7 +75,9 @@ export const TouchControls = ({ inputRef, canOpen, onOpen }: TouchControlsProps)
   );
 };
 
-export const KeyboardHint = (): React.ReactElement => <p className={styles.keyboardHint}>← → move · Space jump · E open · 1-2 fly</p>;
+export const KeyboardHint = (): React.ReactElement => (
+  <p className={styles.keyboardHint}>← → move · Space jump (hold to hover) · E open · 1-2 fly</p>
+);
 
 type TravelBarProps = {
   zones: ZoneLayout[];

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Group, Mesh, Vector3 } from 'three';
+import { Group, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import type { Project } from '@type';
 import colors from 'styles/colors.json';
 import type { Box, Level, SignLayout, StationLayout } from './level';
@@ -15,6 +15,8 @@ const STATION_REACH = 1.8;
 const GRASS_HEIGHT = 0.1;
 const TRAIL_LENGTH = 12;
 const LANDING_SQUASH_TIME = 0.25;
+const GAUGE_WIDTH = 0.9;
+const LOW_FUEL = 0.25;
 
 // A fast travel request; id distinguishes repeated trips to the same place
 export type TravelRequest = { toX: number; id: number };
@@ -152,6 +154,8 @@ function World({
   const lastTravelId = React.useRef<number | null>(null);
   const trail = React.useRef<Vector3[]>([]);
   const landingSquash = React.useRef(0);
+  const gaugeRef = React.useRef<Group>(null);
+  const gaugeFillRef = React.useRef<Mesh<any, MeshBasicMaterial>>(null);
   const lookAt = React.useRef(new Vector3(spawn.x, CAMERA_HEIGHT - 1.5, 0));
   const nearSlug = React.useRef<string | null>(null);
   const [activeSlug, setActiveSlug] = React.useState<string | null>(null);
@@ -202,13 +206,23 @@ function World({
       // Lean forward while flying
       avatarRef.current.rotation.z = flying ? -state.facing * 0.3 : 0;
       const running = state.grounded && Math.abs(state.vx) > 0.5;
-      const stretch = flying ? 1.1 : state.grounded ? 1 : state.vy > 0 ? 1.1 : 0.95;
+      const stretch = flying ? 1.1 : state.grounded || state.hovering ? 1 : state.vy > 0 ? 1.1 : 0.95;
       const squash = (landingSquash.current / LANDING_SQUASH_TIME) * 0.3;
       avatarRef.current.scale.y = stretch - squash + (running ? Math.sin(clock.elapsedTime * 20) * 0.05 : 0);
     }
     if (flameRef.current) {
-      flameRef.current.visible = !!flying;
-      flameRef.current.scale.y = 1 + Math.sin(clock.elapsedTime * 40) * 0.3;
+      // Full flame for fast travel, a smaller one while hovering
+      flameRef.current.visible = !!flying || state.hovering;
+      flameRef.current.scale.y = (flying ? 1 : 0.6) + Math.sin(clock.elapsedTime * 40) * 0.3;
+    }
+
+    // Jetpack fuel gauge above the player, shown while not full
+    if (gaugeRef.current && gaugeFillRef.current) {
+      gaugeRef.current.visible = state.fuel < 0.999 && !flying;
+      gaugeRef.current.position.set(state.x, state.y + PLAYER_HEIGHT + 0.45, 0.4);
+      gaugeFillRef.current.scale.x = Math.max(state.fuel, 0.001);
+      gaugeFillRef.current.position.x = -(1 - state.fuel) * (GAUGE_WIDTH / 2);
+      gaugeFillRef.current.material.color.set(state.fuel < LOW_FUEL ? colors.popstar : colors.caribbeanGreen);
     }
 
     // Trail of recent positions while flying; it shrinks away after landing
@@ -261,6 +275,16 @@ function World({
         <Station key={station.project.slug} station={station} active={station.project.slug === activeSlug} />
       ))}
       <PlayerAvatar avatarRef={avatarRef} flameRef={flameRef} />
+      <group ref={gaugeRef} visible={false}>
+        <mesh>
+          <planeGeometry args={[GAUGE_WIDTH + 0.08, 0.2]} />
+          <meshBasicMaterial color={colors.blackCoffee} />
+        </mesh>
+        <mesh ref={gaugeFillRef} position={[0, 0, 0.01]}>
+          <planeGeometry args={[GAUGE_WIDTH, 0.12]} />
+          <meshBasicMaterial color={colors.caribbeanGreen} />
+        </mesh>
+      </group>
       <group ref={trailRef}>
         {Array.from({ length: TRAIL_LENGTH }, (_, i) => (
           <mesh key={i} visible={false}>

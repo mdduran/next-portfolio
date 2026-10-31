@@ -17,6 +17,12 @@ const MAX_FALL_SPEED = 25;
 // Grace periods that make jumping feel forgiving
 const COYOTE_TIME = 0.1;
 const JUMP_BUFFER_TIME = 0.12;
+// Jetpack hover: holding jump while falling slows to a gentle sink, using fuel
+// that only recharges on the ground
+const HOVER_SINK_SPEED = 0.6;
+const HOVER_RESPONSIVENESS = 12;
+const HOVER_DURATION = 1.5;
+const HOVER_RECHARGE_TIME = 0.75;
 const EPSILON = 0.001;
 
 export type PlayerState = {
@@ -29,6 +35,9 @@ export type PlayerState = {
   facing: 1 | -1;
   coyote: number;
   jumpBuffer: number;
+  // Jetpack charge, 0..1
+  fuel: number;
+  hovering: boolean;
 };
 
 export type PlayerInput = {
@@ -40,7 +49,7 @@ export type PlayerInput = {
 };
 
 export function createPlayer(x: number, y = 0): PlayerState {
-  return { x, y, vx: 0, vy: 0, grounded: true, facing: 1, coyote: 0, jumpBuffer: 0 };
+  return { x, y, vx: 0, vy: 0, grounded: true, facing: 1, coyote: 0, jumpBuffer: 0, fuel: 1, hovering: false };
 }
 
 const overlapsX = (state: PlayerState, box: Box) => state.x + PLAYER_HALF_WIDTH > box.x && state.x - PLAYER_HALF_WIDTH < box.x + box.w;
@@ -69,8 +78,16 @@ export function stepPlayer(state: PlayerState, input: PlayerInput, dt: number, l
     state.grounded = false;
   }
 
-  const gravity = state.vy > 0 && !input.jumpHeld ? GRAVITY * JUMP_CUT_MULTIPLIER : GRAVITY;
-  state.vy = Math.max(-MAX_FALL_SPEED, state.vy - gravity * dt);
+  // Hover once past the top of a jump (or after walking off a ledge)
+  state.hovering = !state.grounded && input.jumpHeld && state.vy <= 0 && state.fuel > 0;
+  if (state.hovering) {
+    state.fuel = Math.max(0, state.fuel - dt / HOVER_DURATION);
+    state.vy += (-HOVER_SINK_SPEED - state.vy) * Math.min(1, dt * HOVER_RESPONSIVENESS);
+  } else {
+    if (state.grounded) state.fuel = Math.min(1, state.fuel + dt / HOVER_RECHARGE_TIME);
+    const gravity = state.vy > 0 && !input.jumpHeld ? GRAVITY * JUMP_CUT_MULTIPLIER : GRAVITY;
+    state.vy = Math.max(-MAX_FALL_SPEED, state.vy - gravity * dt);
+  }
 
   // Move along x, then push out of solid boxes
   state.x += state.vx * dt;
