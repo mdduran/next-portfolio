@@ -37,10 +37,35 @@
 }
 
 .modelHint {
-  margin-top: 0.75rem;
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 1rem;
+  list-style: none;
   font-size: 0.6rem;
+  line-height: 1.8;
   color: #fff;
-  opacity: 0.8;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+
+  strong {
+    color: var(--color-success-light);
+    font-weight: normal;
+  }
+}
+
+/* Mouse/trackpad vs touch wording */
+.coarsePointer {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .finePointer {
+    display: none;
+  }
+
+  .coarsePointer {
+    display: list-item;
+  }
 }
 
 .contentLayout {

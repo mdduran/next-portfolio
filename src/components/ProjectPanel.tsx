@@ -1,6 +1,6 @@
 import type { Project } from '@type';
 import * as React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
 import { ContactShadows, OrbitControls, useProgress } from '@react-three/drei';
 import dynamic from 'next/dynamic';
@@ -14,6 +14,28 @@ function ModelLoader(): React.ReactElement | null {
   const { active, progress } = useProgress();
   if (!active) return null;
   return <div className={styles.loader}>{Math.round(progress)}% loaded</div>;
+}
+
+// How to interact with the model; pointer-specific lines are switched in CSS
+function ModelInstructions({ type }: { type: Project['type'] }): React.ReactElement {
+  const model = type === 'game' ? 'cartridge' : 'CD';
+  const otherSide = type === 'game' ? 'read the label on the back' : 'see its other side';
+  return (
+    <ul className={styles.modelHint} aria-label="Model controls">
+      <li>
+        <strong>Drag</strong> to spin the {model} around and look at it from any angle.
+      </li>
+      <li className={styles.finePointer}>
+        <strong>Click</strong> the {model} to flip it over and {otherSide}.
+      </li>
+      <li className={styles.coarsePointer}>
+        <strong>Tap</strong> the {model} to flip it over and {otherSide}.
+      </li>
+      <li className={styles.finePointer}>
+        <strong>Hover</strong> over it to pause the automatic rotation.
+      </li>
+    </ul>
+  );
 }
 
 const ArtifactShowcase = dynamic(() => import('./ArtifactShowcase'), {
@@ -62,9 +84,7 @@ const ProjectPanel = ({ project, children }: ProjectPanelProps): React.ReactElem
                   <ModelLoader />
                 </div>
               </Box>
-              <Typography className={styles.modelHint} variant="body2">
-                Drag to rotate · Click to flip
-              </Typography>
+              <ModelInstructions type={project.type} />
             </>
           )}
         </Box>
