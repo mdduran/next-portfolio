@@ -9,14 +9,12 @@ import styles from './ProjectTile.module.scss';
 type ProjectTileProps = {
   project: Project;
   activeTag: string | null;
-  // Hidden when the gallery is already filtered to one type
-  showType: boolean;
   onTagClick: (tag: string) => void;
 };
 
 const TYPE_LABELS: Record<Project['type'], string> = { game: 'Game', software: 'Software' };
 
-const ProjectTile = ({ project, activeTag, showType, onTagClick }: ProjectTileProps): React.ReactElement => {
+const ProjectTile = ({ project, activeTag, onTagClick }: ProjectTileProps): React.ReactElement => {
   const { slug, title, type, year, summary, tags } = project;
 
   return (
@@ -36,7 +34,7 @@ const ProjectTile = ({ project, activeTag, showType, onTagClick }: ProjectTilePr
             <Typography className={styles.year} variant="body2">
               {year}
             </Typography>
-            {showType && <span className={`${styles.type} ${styles[type]}`}>{TYPE_LABELS[type]}</span>}
+            <span className={`${styles.type} ${styles[type]}`}>{TYPE_LABELS[type]}</span>
           </div>
           <Typography className={styles.summary} variant="body2">
             {summary}

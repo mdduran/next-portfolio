@@ -80,12 +80,7 @@ function Projects({ projects }: ProjectsProps): React.ReactNode {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.25 }}
               >
-                <ProjectTile
-                  project={project}
-                  activeTag={tag}
-                  showType={type === 'all'}
-                  onTagClick={(t) => setFilters({ type, tag: t === tag ? null : t })}
-                />
+                <ProjectTile project={project} activeTag={tag} onTagClick={(t) => setFilters({ type, tag: t === tag ? null : t })} />
               </motion.li>
             ))}
           </AnimatePresence>
