@@ -36,20 +36,36 @@
   pointer-events: none;
 }
 
-.modelControls {
-  z-index: 2;
-  background-color: rgba(0,0,0,0.35);
-  padding: 1rem;
+.modelHint {
+  margin: 0.75rem 0 0;
+  padding: 0.75rem 1rem;
+  list-style: none;
+  font-size: 0.6rem;
+  line-height: 1.8;
+  color: #fff;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.25);
   border-radius: 4px;
-  backdrop-filter: blur(2px);
-  width: 100%;
-  @include bp.down(md) {
-    max-width: 400px;
+
+  strong {
+    color: var(--color-success-light);
+    font-weight: normal;
   }
-  @include bp.down(sm) {
-    max-width: 300px;
+}
+
+/* Mouse/trackpad vs touch wording */
+.coarsePointer {
+  display: none;
+}
+
+@media (pointer: coarse) {
+  .finePointer {
+    display: none;
   }
-  margin-top: 1rem;
+
+  .coarsePointer {
+    display: list-item;
+  }
 }
 
 .contentLayout {

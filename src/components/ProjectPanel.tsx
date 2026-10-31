@@ -1,10 +1,9 @@
 import type { Project } from '@type';
 import * as React from 'react';
-import { Box, Button, ButtonGroup, Slider, Stack } from '@mui/material';
+import { Box } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useProgress, Preload } from '@react-three/drei';
+import { ContactShadows, OrbitControls, useProgress } from '@react-three/drei';
 import dynamic from 'next/dynamic';
-import type { Vector3 } from '@react-three/fiber';
 import { useWebglSupported } from '@lib/webgl';
 import ProjectCard from './ProjectCard';
 import styles from './ProjectPanel.module.scss';
@@ -17,10 +16,29 @@ function ModelLoader(): React.ReactElement | null {
   return <div className={styles.loader}>{Math.round(progress)}% loaded</div>;
 }
 
-const GameCartModel = dynamic(() => import('./GameCartModel'), {
-  loading: () => null
-});
-const CDRomModel = dynamic(() => import('./CDRomModel'), {
+// How to interact with the model; pointer-specific lines are switched in CSS
+function ModelInstructions({ type }: { type: Project['type'] }): React.ReactElement {
+  const model = type === 'game' ? 'cartridge' : 'CD';
+  const otherSide = type === 'game' ? 'read the label on the back' : 'see its other side';
+  return (
+    <ul className={styles.modelHint} aria-label="Model controls">
+      <li>
+        <strong>Drag</strong> to spin the {model} around and look at it from any angle.
+      </li>
+      <li className={styles.finePointer}>
+        <strong>Click</strong> the {model} to flip it over and {otherSide}.
+      </li>
+      <li className={styles.coarsePointer}>
+        <strong>Tap</strong> the {model} to flip it over and {otherSide}.
+      </li>
+      <li className={styles.finePointer}>
+        <strong>Hover</strong> over it to pause the automatic rotation.
+      </li>
+    </ul>
+  );
+}
+
+const ArtifactShowcase = dynamic(() => import('./ArtifactShowcase'), {
   loading: () => null
 });
 
@@ -31,21 +49,12 @@ type ProjectPanelProps = {
 };
 
 const ProjectPanel = ({ project, children }: ProjectPanelProps): React.ReactElement => {
-  const controlsRef = React.useRef<any>(null);
-  const [autoRotate, setAutoRotate] = React.useState(true);
-  const [autoRotateSpeed, setAutoRotateSpeed] = React.useState(5);
-  const currentProjectType = project.type;
-  const modelPosition: Vector3 = currentProjectType === 'game' ? [0, 0, 0] : [0, -5, 0];
+  // Auto-rotation pauses while the pointer is over the model
+  const [hovered, setHovered] = React.useState(false);
 
   // Detect WebGL support on client (null during SSR)
   const webglSupported = useWebglSupported();
-
-  const fallbackSrc = React.useMemo(() => {
-    if (currentProjectType === 'game') {
-      return '/webp/game-placeholder.webp';
-    }
-    return '/webp/software-placeholder.webp';
-  }, [currentProjectType]);
+  const fallbackSrc = project.type === 'game' ? '/webp/game-placeholder.webp' : '/webp/software-placeholder.webp';
 
   return (
     <Box className={styles.outerBox}>
@@ -55,7 +64,7 @@ const ProjectPanel = ({ project, children }: ProjectPanelProps): React.ReactElem
             <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
               <img
                 src={fallbackSrc}
-                alt={currentProjectType === 'game' ? 'Game cartridge preview' : 'CD-ROM preview'}
+                alt={project.type === 'game' ? 'Game cartridge preview' : 'CD-ROM preview'}
                 style={{ maxWidth: '100%', height: 'auto' }}
               />
             </Box>
@@ -63,55 +72,19 @@ const ProjectPanel = ({ project, children }: ProjectPanelProps): React.ReactElem
             <>
               <Box className={styles.innerBox}>
                 <div className={styles.modelWrapper}>
-                  <Canvas className={styles.canvas}>
-                    <OrbitControls
-                      ref={controlsRef}
-                      autoRotate={autoRotate}
-                      autoRotateSpeed={autoRotateSpeed}
-                      addEventListener={undefined}
-                      hasEventListener={undefined}
-                      removeEventListener={undefined}
-                      dispatchEvent={undefined}
-                      position0={modelPosition}
-                    />
-                    {currentProjectType === 'game' ? (
-                      <React.Suspense fallback={null}>
-                        <GameCartModel project={project} position={modelPosition} />
-                      </React.Suspense>
-                    ) : (
-                      <React.Suspense fallback={null}>
-                        <CDRomModel position={modelPosition} />
-                      </React.Suspense>
-                    )}
-                    <Preload all />
+                  <Canvas className={styles.canvas} camera={{ position: [0, 0.4, 4.2], fov: 45 }}>
+                    <ambientLight intensity={0.7} />
+                    <directionalLight position={[3, 5, 4]} intensity={1.6} />
+                    <directionalLight position={[-3, 2, -4]} intensity={0.6} />
+                    <ArtifactShowcase project={project} onHoverChange={setHovered} />
+                    <ContactShadows position={[0, -1.4, 0]} opacity={0.45} blur={2.5} scale={6} />
+                    {/* Zoom and pan off so scrolling the page over the model still scrolls */}
+                    <OrbitControls autoRotate={!hovered} autoRotateSpeed={3} enableZoom={false} enablePan={false} />
                   </Canvas>
                   <ModelLoader />
                 </div>
               </Box>
-              <Box className={styles.modelControls}>
-                <Stack spacing={1} alignItems="center">
-                  <ButtonGroup size="small" variant="contained">
-                    <Button onClick={() => setAutoRotate(true)} disabled={autoRotate}>
-                      Start
-                    </Button>
-                    <Button onClick={() => setAutoRotate(false)} disabled={!autoRotate}>
-                      Stop
-                    </Button>
-                  </ButtonGroup>
-                </Stack>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Box sx={{ color: '#fff', fontSize: 12, minWidth: 36 }}>Speed</Box>
-                  <Slider
-                    size="medium"
-                    min={0}
-                    max={10}
-                    step={0.5}
-                    value={autoRotateSpeed}
-                    onChange={(_, v) => setAutoRotateSpeed(v as number)}
-                    sx={{ width: '90%', color: '#fff' }}
-                  />
-                </Stack>
-              </Box>
+              <ModelInstructions type={project.type} />
             </>
           )}
         </Box>

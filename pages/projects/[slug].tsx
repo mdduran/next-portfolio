@@ -3,6 +3,7 @@ import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { Button, Container } from '@mui/material';
+import { useReducedMotion } from 'motion/react';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import PlayIcon from '@mui/icons-material/SportsEsports';
@@ -30,8 +31,16 @@ export const getStaticProps: GetStaticProps<ProjectPageProps, { slug: string }> 
 };
 
 function ProjectPage({ project, prev, next }: ProjectPageProps): React.ReactNode {
+  // The page stays mounted between projects (so the 3D model can swap), so
+  // scroll back up from the prev/next links
+  const pageRef = React.useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+  React.useEffect(() => {
+    pageRef.current?.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+  }, [project.slug]);
+
   return (
-    <div className={styles.page}>
+    <div className={styles.page} ref={pageRef}>
       <Head>
         <title>{`${project.title} | Marco Daniel Duran`}</title>
         <meta name="description" content={project.summary} />

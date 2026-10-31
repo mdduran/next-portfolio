@@ -5,7 +5,8 @@ import type { Project } from '@type';
 import colors from 'styles/colors.json';
 import type { Box, Level, SignLayout, StationLayout } from './level';
 import { createPlayer, flightDuration, flightPosition, PLAYER_HEIGHT, stepPlayer, type Flight, type PlayerInput } from './physics';
-import { createSignTexture, useCanvasTexture } from './textures';
+import { useCanvasTexture } from '@components/three/canvasTexture';
+import { createSignTexture } from './textures';
 import Station from './Station';
 
 const CAMERA_DISTANCE = 13;
