@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button, Container } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import PlayIcon from '@mui/icons-material/SportsEsports';
 import type { ProjectLink, ProjectWithBody } from '@type';
 import { getAllProjects, getProjectPage } from '@lib/projects';
 import ProjectPanel from '@components/ProjectPanel';
@@ -42,6 +43,9 @@ function ProjectPage({ project, prev, next }: ProjectPageProps): React.ReactNode
         <nav className={styles.topNav}>
           <Button component={Link} href="/projects" startIcon={<ArrowBackIcon />} color="inherit">
             All projects
+          </Button>
+          <Button component={Link} href={`/play?at=${project.slug}`} startIcon={<PlayIcon />} color="inherit">
+            Visit in level
           </Button>
         </nav>
         <ProjectPanel project={project}>

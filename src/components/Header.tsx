@@ -1,6 +1,7 @@
 import { AppBar, Box, IconButton, MenuItem, Toolbar, Link as MLink, Button, Menu, Typography, Grid } from '@mui/material';
 import ContactIcon from '@mui/icons-material/ContactMail';
 import FolderIcon from '@mui/icons-material/Folder';
+import PlayIcon from '@mui/icons-material/SportsEsports';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailIcon from '@mui/icons-material/Email';
@@ -29,6 +30,20 @@ const Header = (): React.ReactElement => {
           </Link>
           <div className={styles.divGrow} />
           <Box className={styles.navItems}>
+            <Link className={styles.link} href="/play" passHref>
+              <IconButton className={styles.iconButton} size="small" aria-label="Play">
+                <Grid container spacing={0} alignItems="center" wrap="nowrap">
+                  <Grid>
+                    <PlayIcon className={styles.icon} />
+                  </Grid>
+                  <Grid>
+                    <Typography className={styles.buttonText} variant="button">
+                      Play
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </IconButton>
+            </Link>
             <Link className={styles.link} href="/projects" passHref>
               <IconButton className={styles.iconButton} size="small" aria-label="Projects">
                 <Grid container spacing={0} alignItems="center" wrap="nowrap">

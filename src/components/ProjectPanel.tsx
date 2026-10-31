@@ -5,6 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useProgress, Preload } from '@react-three/drei';
 import dynamic from 'next/dynamic';
 import type { Vector3 } from '@react-three/fiber';
+import { useWebglSupported } from '@lib/webgl';
 import ProjectCard from './ProjectCard';
 import styles from './ProjectPanel.module.scss';
 
@@ -23,20 +24,6 @@ const CDRomModel = dynamic(() => import('./CDRomModel'), {
   loading: () => null
 });
 
-let webglSupportedCache: boolean | undefined;
-const getWebglSupported = (): boolean => {
-  if (webglSupportedCache === undefined) {
-    try {
-      const canvas = document.createElement('canvas');
-      webglSupportedCache = !!(canvas.getContext('webgl') || canvas.getContext('experimental-webgl'));
-    } catch (e) {
-      webglSupportedCache = false;
-    }
-  }
-  return webglSupportedCache;
-};
-const subscribeNoop = (): (() => void) => () => {};
-
 type ProjectPanelProps = {
   project: Project;
   // Rendered long-form description, passed through to ProjectCard
@@ -51,7 +38,7 @@ const ProjectPanel = ({ project, children }: ProjectPanelProps): React.ReactElem
   const modelPosition: Vector3 = currentProjectType === 'game' ? [0, 0, 0] : [0, -5, 0];
 
   // Detect WebGL support on client (null during SSR)
-  const webglSupported = React.useSyncExternalStore(subscribeNoop, getWebglSupported, () => null);
+  const webglSupported = useWebglSupported();
 
   const fallbackSrc = React.useMemo(() => {
     if (currentProjectType === 'game') {
