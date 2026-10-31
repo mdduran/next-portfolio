@@ -9,7 +9,8 @@ import MobileProjectList from '@components/MobileProjectList';
 import styles from './Projects.module.scss';
 
 function Projects(): React.ReactNode {
-  const [selectedProject, setSelectedProject] = React.useState<Project>(projects[0]);
+  // projects[0] is the 'Games' group header, so start on the first real project
+  const [selectedProject, setSelectedProject] = React.useState<Project>(projects[1]);
 
   return (
     <Grid className={styles.grid} container>
