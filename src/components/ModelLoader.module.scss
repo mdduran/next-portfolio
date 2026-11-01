@@ -1,0 +1,10 @@
+.loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* along the bottom, clear of the model */
+  padding-bottom: 1rem;
+  color: #fff;
+  pointer-events: none;
+}

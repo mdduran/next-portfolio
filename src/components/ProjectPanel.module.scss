@@ -25,17 +25,6 @@
   align-items: center;
 }
 
-.loader {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end; /* below the wireframe placeholder */
-  padding-bottom: 1rem;
-  color: #fff;
-  pointer-events: none;
-}
-
 .modelHint {
   margin: 0.75rem 0 0;
   padding: 0.75rem 1rem;

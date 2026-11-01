@@ -2,19 +2,12 @@ import type { Project } from '@type';
 import * as React from 'react';
 import { Box } from '@mui/material';
 import { Canvas } from '@react-three/fiber';
-import { ContactShadows, OrbitControls, useProgress } from '@react-three/drei';
+import { ContactShadows, OrbitControls } from '@react-three/drei';
 import dynamic from 'next/dynamic';
 import { useWebglSupported } from '@lib/webgl';
+import ModelLoader from './ModelLoader';
 import ProjectCard from './ProjectCard';
 import styles from './ProjectPanel.module.scss';
-
-// Rendered as a DOM overlay outside the Canvas. drei's <Html> inside the Canvas
-// mounts a separate React root that crashes (removeChild) when the Canvas unmounts.
-function ModelLoader(): React.ReactElement | null {
-  const { active, progress } = useProgress();
-  if (!active) return null;
-  return <div className={styles.loader}>{Math.round(progress)}% loaded</div>;
-}
 
 // How to interact with the model; pointer-specific lines are switched in CSS
 function ModelInstructions({ type }: { type: Project['type'] }): React.ReactElement {
