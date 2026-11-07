@@ -1,10 +1,8 @@
 import * as React from 'react';
 import type { GetStaticProps } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
-import { Button, Typography } from '@mui/material';
 import type { Project } from '@type';
 import { getAllProjects } from '@lib/projects';
 import { useWebglSupported } from '@lib/webgl';
@@ -12,11 +10,16 @@ import { buildLevel } from '@components/play/level';
 import { usePlayControls } from '@components/play/usePlayControls';
 import { useReducedMotion } from 'motion/react';
 import { KeyboardHint, TouchControls, TravelBar } from '@components/play/PlayHud';
-import type { TravelRequest } from '@components/play/PlayScene';
+import type { TravelRequest } from '@components/play/simulation';
 import styles from './Play.module.scss';
 
 // three.js only runs in the browser; keep it out of the server render and other pages
 const PlayScene = dynamic(() => import('@components/play/PlayScene'), {
+  ssr: false,
+  loading: () => null
+});
+// Flat 2D version of the level for browsers without WebGL
+const PlayScene2D = dynamic(() => import('@components/play/PlayScene2D'), {
   ssr: false,
   loading: () => null
 });
@@ -55,6 +58,7 @@ function Play({ projects }: PlayProps): React.ReactNode {
   };
   const inputRef = usePlayControls(open, flyTo, !busy);
   const spawnSlug = typeof router.query.at === 'string' ? router.query.at : null;
+  const Scene = webglSupported ? PlayScene : PlayScene2D;
 
   return (
     <div className={styles.page}>
@@ -63,17 +67,9 @@ function Play({ projects }: PlayProps): React.ReactNode {
         <meta name="description" content="Explore Marco Daniel Duran's projects in a small platformer." />
       </Head>
 
-      {webglSupported === false && (
-        <div className={styles.status}>
-          <Typography>This level needs WebGL, which isn&apos;t available in this browser.</Typography>
-          <Button component={Link} href="/projects" variant="contained">
-            Browse projects instead
-          </Button>
-        </div>
-      )}
       {/* Wait for the router so a ?at= spawn point is known before the level mounts */}
-      {webglSupported && router.isReady && (
-        <PlayScene
+      {webglSupported !== null && router.isReady && (
+        <Scene
           level={level}
           inputRef={inputRef}
           spawnSlug={spawnSlug}
@@ -85,7 +81,7 @@ function Play({ projects }: PlayProps): React.ReactNode {
           onReady={() => setSceneReady(true)}
         />
       )}
-      {webglSupported !== false && !sceneReady && <p className={styles.status}>Loading level…</p>}
+      {!sceneReady && <p className={styles.status}>Loading level…</p>}
 
       <KeyboardHint />
       <TravelBar zones={level.zones} onTravel={flyTo} disabled={busy || !sceneReady} />
