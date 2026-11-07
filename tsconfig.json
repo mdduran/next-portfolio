@@ -15,7 +15,7 @@
         "styles/theme"
       ]
     },
-    "target": "es5",
+    "target": "es2025",
     "lib": [
       "dom",
       "dom.iterable",
