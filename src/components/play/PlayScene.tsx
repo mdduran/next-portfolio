@@ -3,24 +3,28 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Group, Mesh, MeshBasicMaterial, Vector3 } from 'three';
 import type { Project } from '@type';
 import colors from 'styles/colors.json';
-import type { Box, Level, SignLayout, StationLayout } from './level';
-import { createPlayer, flightDuration, flightPosition, PLAYER_HEIGHT, stepPlayer, type Flight, type PlayerInput } from './physics';
+import type { Box, Level, SignLayout } from './level';
+import { PLAYER_HEIGHT, type PlayerInput } from './physics';
+import {
+  clampDelta,
+  createGame,
+  LANDING_SQUASH_TIME,
+  LOW_FUEL,
+  spawnPoint,
+  stepGame,
+  TRAIL_LENGTH,
+  type TravelRequest
+} from './simulation';
 import { useCanvasTexture } from '@components/three/canvasTexture';
 import { createSignTexture } from './textures';
 import Station from './Station';
 
 const CAMERA_DISTANCE = 13;
 const CAMERA_HEIGHT = 3;
-// How close (in x) the player must be to a station to interact with it
-const STATION_REACH = 1.8;
 const GRASS_HEIGHT = 0.1;
-const TRAIL_LENGTH = 12;
-const LANDING_SQUASH_TIME = 0.25;
 const GAUGE_WIDTH = 0.9;
-const LOW_FUEL = 0.25;
 
-// A fast travel request; id distinguishes repeated trips to the same place
-export type TravelRequest = { toX: number; id: number };
+export type { TravelRequest };
 
 export type PlaySceneProps = {
   level: Level;
@@ -36,12 +40,6 @@ export type PlaySceneProps = {
   onTravelEnd: () => void;
   onReady?: () => void;
 };
-
-function spawnPoint(level: Level, slug: string | null): { x: number; y: number } {
-  const station = level.stations.find((s) => s.project.slug === slug);
-  // Just left of the station, within reach, standing on its pedestal if raised
-  return station ? { x: station.x - 1, y: station.y } : { x: level.spawnX, y: 0 };
-}
 
 function Platform({ box }: { box: Box }): React.ReactElement {
   // The floor and pedestals extend back under the stations; floating platforms are thin
@@ -147,14 +145,10 @@ function World({
   onTravelEnd
 }: PlaySceneProps): React.ReactElement {
   const spawn = spawnPoint(level, spawnSlug);
-  const player = React.useRef(createPlayer(spawn.x, spawn.y));
+  const game = React.useRef(createGame(level, spawnSlug));
   const avatarRef = React.useRef<Group>(null);
   const flameRef = React.useRef<Mesh>(null);
   const trailRef = React.useRef<Group>(null);
-  const flight = React.useRef<(Flight & { id: number }) | null>(null);
-  const lastTravelId = React.useRef<number | null>(null);
-  const trail = React.useRef<Vector3[]>([]);
-  const landingSquash = React.useRef(0);
   const gaugeRef = React.useRef<Group>(null);
   const gaugeFillRef = React.useRef<Mesh<any, MeshBasicMaterial>>(null);
   const lookAt = React.useRef(new Vector3(spawn.x, CAMERA_HEIGHT - 1.5, 0));
@@ -162,44 +156,10 @@ function World({
   const [activeSlug, setActiveSlug] = React.useState<string | null>(null);
 
   useFrame(({ camera, clock }, rawDelta) => {
-    // Clamp so a background tab doesn't teleport the player on return
-    const dt = Math.min(rawDelta, 1 / 30);
-    const state = player.current;
-
-    // Start a new fast travel flight
-    if (travel && travel.id !== lastTravelId.current) {
-      lastTravelId.current = travel.id;
-      flight.current = {
-        id: travel.id,
-        fromX: state.x,
-        fromY: state.y,
-        toX: travel.toX,
-        elapsed: 0,
-        duration: flightDuration(state.x, travel.toX, instantTravel)
-      };
-    }
-
-    const flying = flight.current;
-    if (flying) {
-      // Scripted flight replaces physics until landing
-      flying.elapsed += dt;
-      const progress = flying.duration > 0 ? Math.min(1, flying.elapsed / flying.duration) : 1;
-      const { x, y } = flightPosition(flying, progress);
-      if (x !== state.x) state.facing = x > state.x ? 1 : -1;
-      state.x = x;
-      state.y = y;
-      state.vx = 0;
-      state.vy = 0;
-      if (progress >= 1) {
-        flight.current = null;
-        state.grounded = true;
-        landingSquash.current = flying.duration > 0 ? LANDING_SQUASH_TIME : 0;
-        onTravelEnd();
-      }
-    } else {
-      stepPlayer(state, inputRef.current, dt, level);
-    }
-    landingSquash.current = Math.max(0, landingSquash.current - dt);
+    const dt = clampDelta(rawDelta);
+    const state = game.current.player;
+    const { flying, near, landed } = stepGame(game.current, { level, input: inputRef.current, dt, travel, instantTravel });
+    if (landed) onTravelEnd();
 
     if (avatarRef.current) {
       avatarRef.current.position.set(state.x, state.y, 0);
@@ -208,12 +168,12 @@ function World({
       avatarRef.current.rotation.z = flying ? -state.facing * 0.3 : 0;
       const running = state.grounded && Math.abs(state.vx) > 0.5;
       const stretch = flying ? 1.1 : state.grounded || state.hovering ? 1 : state.vy > 0 ? 1.1 : 0.95;
-      const squash = (landingSquash.current / LANDING_SQUASH_TIME) * 0.3;
+      const squash = (game.current.landingSquash / LANDING_SQUASH_TIME) * 0.3;
       avatarRef.current.scale.y = stretch - squash + (running ? Math.sin(clock.elapsedTime * 20) * 0.05 : 0);
     }
     if (flameRef.current) {
       // Full flame for fast travel, a smaller one while hovering
-      flameRef.current.visible = !!flying || state.hovering;
+      flameRef.current.visible = flying || state.hovering;
       flameRef.current.scale.y = (flying ? 1 : 0.6) + Math.sin(clock.elapsedTime * 40) * 0.3;
     }
 
@@ -226,24 +186,17 @@ function World({
       gaugeFillRef.current.material.color.set(state.fuel < LOW_FUEL ? colors.popstar : colors.caribbeanGreen);
     }
 
-    // Trail of recent positions while flying; it shrinks away after landing
-    const history = trail.current;
-    if (flying) history.unshift(new Vector3(state.x, state.y + 0.3, 0));
-    else history.pop();
-    if (history.length > TRAIL_LENGTH) history.length = TRAIL_LENGTH;
+    const history = game.current.trail;
     trailRef.current?.children.forEach((puff, i) => {
       const point = history[i];
       puff.visible = !!point;
       if (point) {
-        puff.position.copy(point);
+        puff.position.set(point.x, point.y, 0);
         puff.scale.setScalar((1 - i / TRAIL_LENGTH) * 0.35);
       }
     });
 
-    // Nearest station within reach, reported only when it changes (none mid-flight)
-    const near: StationLayout | undefined = flying
-      ? undefined
-      : level.stations.find((s) => Math.abs(state.x - s.x) < STATION_REACH && state.y >= s.y - 0.5 && state.y < s.y + PLAYER_HEIGHT * 2);
+    // Nearest station within reach, reported only when it changes
     const slug = near?.project.slug ?? null;
     if (slug !== nearSlug.current) {
       nearSlug.current = slug;
