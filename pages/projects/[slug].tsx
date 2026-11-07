@@ -43,9 +43,7 @@ function ProjectPage({ project, prev, next }: ProjectPageProps): React.ReactNode
     <div className={styles.page} ref={pageRef}>
       <Head>
         <title>{`${project.title} | Marco Daniel Duran`}</title>
-        <meta name="description" content={project.summary} />
         <meta property="og:title" content={project.title} />
-        <meta property="og:description" content={project.summary} />
         {project.cover && <meta property="og:image" content={project.cover} />}
       </Head>
       <Container className={styles.container}>

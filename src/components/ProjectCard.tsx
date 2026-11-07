@@ -10,16 +10,13 @@ type ProjectCardProps = {
 };
 
 const ProjectCard = ({ project, children }: ProjectCardProps): React.ReactElement => {
-  const { title, year, platform, genre, download, website, summary, highlights, tags, trailer } = project;
+  const { title, year, platform, genre, download, website, highlights, tags, trailer } = project;
 
   return (
     <Card className={styles.card} data-augmented-ui="tl-2-scoop-x tr-2-scoop-x br-round bl-round both">
       <CardContent>
         <Typography className={styles.title} variant="h4" component="h1">
           {title}
-        </Typography>
-        <Typography className={styles.summary} component="p">
-          {summary}
         </Typography>
         <List>
           <ListItem>

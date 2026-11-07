@@ -57,8 +57,8 @@ export default function Home({ featured }: HomeProps): React.ReactNode {
             </Typography>
 
             <Typography component="p">
-              Currently enjoying mastering front end web development but excited to further my development skills using game engines such
-              as <MLink href="https://www.unrealengine.com/en-US/">Unreal Engine</MLink> and <MLink href="https://unity.com/">Unity</MLink>.
+              Currently enjoying mastering web development but excited to further my development skills using game engines such
+              as <MLink href="https://godotengine.org/">Godot</MLink>, <MLink href="https://www.unrealengine.com/en-US/">Unreal Engine</MLink> and <MLink href="https://unity.com/">Unity</MLink>.
             </Typography>
           </CardContent>
         </Card>
